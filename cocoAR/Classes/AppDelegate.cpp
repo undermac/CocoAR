@@ -7,9 +7,14 @@
 //
 
 #include "AppDelegate.h"
-
+#include "ArScene.h"
 #include "cocos2d.h"
-#include "HelloWorldScene.h"
+
+// [TODO] ARREGLAR
+#define WIDTH 480
+#define HEIGHT 320
+
+#define DEBUG 1
 
 USING_NS_CC;
 
@@ -90,7 +95,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 	pDirector->setAnimationInterval(1.0 / 60);
 
 	// create a scene. it's an autorelease object
-	CCScene *pScene = HelloWorld::scene();
+	CCScene *pScene = ArScene::scene();
 
 	// run
 	pDirector->runWithScene(pScene);
