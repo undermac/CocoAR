@@ -41,10 +41,6 @@ GLfloat XCam=0.0f,YCam=1.5f,ZCam=0.0f;
 GLfloat XEye=0.0f,YEye=1.5f,ZEye=0.5f;
 GLfloat xrot3=0.0f,yrot3=0.0f,zrot3=0.0f;
 GLfloat xUp=0.0f, yUp =0.0f, zUp=0.1f;
-#define ACELERATION_MATRIX_MAX 8
-GLfloat XaccelerationMatrix [ACELERATION_MATRIX_MAX];
-GLfloat YaccelerationMatrix [ACELERATION_MATRIX_MAX];
-GLfloat ZaccelerationMatrix [ACELERATION_MATRIX_MAX];
 
 USING_NS_CC;
 
@@ -75,13 +71,12 @@ bool ArScene::init()
   
 	this->setIsTouchEnabled(true);
 	this->setIsAccelerometerEnabled(true);
-	this->setIsKeypadEnabled(true);
   CCLocationManager::sharedCCLocationManager()->addDelegate(this);
   
   test1Init();
   
   this->schedule( schedule_selector(ArScene::arUpdate) );
-  update(0);
+  
   CCDirector::sharedDirector()->resume();
   CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 	CCDirector::sharedDirector()->setDepthTest(true);
@@ -123,26 +118,27 @@ void ArScene::visit()
   CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);	
   CCDirector::sharedDirector()->applyOrientation();
   
-//    [TODO] ALPHA ...
+  //    [TODO] ALPHA ...
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   
   glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();		
 	
-//  gluLookAt(0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 500.0f, 1, 0, 0); // WORKING
+  //  gluLookAt(0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 500.0f, 1, 0, 0); // WORKING
   
-  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, 0);
+  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, 0.0f);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
 	glDisable(GL_CULL_FACE);	
   
 	//-----------------------------------------------
-
+  
   test1();
   
+  //  test2();
   //-------------------------------------------------------------------------------------------------
-
+  
 	glDisable(GL_CULL_FACE);	
 	glClearColor(0.0f,0.0f,0.0f,0.0f) ;		
 	glPopMatrix();	
@@ -189,9 +185,29 @@ void ArScene::updateHeading(CCHeading* newHeading){
 	float adjustment = tilt;			//This needs to be calibrated properly.
 	
 	//Adjust the heading due to our tilt and way we hold the phone.
-	float compassBearing = newHeading->trueHeading;
-	adjustedHeading = (compassBearing - 90) - adjustment;  //90 is because North is now east.
+	float compassBearing = newHeading->magneticHeading;
+  
+  switch (CCDirector::sharedDirector()->getDeviceOrientation()){
+    case CCDeviceOrientationPortrait:
+      adjustedHeading = (compassBearing + 90.0f) - adjustment;  
+      break; 
+    case CCDeviceOrientationPortraitUpsideDown:  
+      adjustedHeading = (compassBearing +  270.0f) - adjustment;
+      break; 
+    case CCDeviceOrientationLandscapeLeft:  
+      adjustedHeading = (compassBearing + 180.0f) - adjustment;
+      break; 
+    case CCDeviceOrientationLandscapeRight:  
+      adjustedHeading = compassBearing - adjustment;
+      break; 
+    default:  
+      break; 
+  }  
 	
+  if (zUp > -0.693298) {
+    adjustedHeading -= 180.0f;
+  }
+  
 	//Better to have things running from 0 to 360 degrees.
 	if(adjustedHeading < 0)
 	{
@@ -200,12 +216,14 @@ void ArScene::updateHeading(CCHeading* newHeading){
   
   XEye = (-sin(adjustedHeading*(_pi/180))*cos(zUp))*50;
   ZEye = (cos(adjustedHeading*(_pi/180))*cos(zUp))*50;
+  
+    printf("\nZup: %f, trueheading : %f", zUp, adjustedHeading);
 }
 void ArScene::LocationManagerDestroy(void){
-
+  
 }
 void ArScene::LocationManagerKeep(void){
-
+  
 }
 
 void test1Init(){
@@ -279,9 +297,50 @@ void test1(){
 }
 
 void test2Init(){
+  MdlModel[0].Init((char *)&MDLFILE01);
+	MdlModel[0].SetSequence(0);
+	MdlModel[1].Init((char *)&MDLFILE02);
+	MdlModel[1].SetSequence(1);
+	MdlModel[2].Init((char *)&MDLFILE03);
+	MdlModel[2].SetSequence(1);
+	MdlModel[3].Init((char *)&MDLFILE04);
+	MdlModel[3].SetSequence(1);
   
+	myMesh[0].LoadModel((char *)&MYMESH01);
+	myMesh[1].LoadModel((char *)&MYMESH02);
+	myMesh[2].LoadModel((char *)&MYMESH03);
+	myMesh[3].LoadModel((char *)&MYMESH04);
+	myMesh[4].LoadModel((char *)&MYMESH05);
+  myMesh[5].LoadModel((char *)&MYMESH07);
+  myMesh[6].LoadModel((char *)&MYMESH08);
 }
 
 void test2(){
+  glPushMatrix();
+  glTranslatef(0.0f, 0.0f, 1500.0f);
+	glScalef( 5.5f, 5.5f, 5.5f );
+  glRotatef(yrot3*3, 0, 1, 0);
+  myMesh[1].Draw();	
+	glPopMatrix();
   
+  glPushMatrix();
+  glTranslatef(-1500.0f, 0.0f, 0.0f);
+	glScalef( 5.5f, 5.5f, 5.5f );
+  glRotatef(yrot3*3, 0, 1, 0);
+  myMesh[2].Draw();	
+	glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(1500.0f, 0.0f, 0.0f);
+	glScalef( 5.5f, 5.5f, 5.5f );
+  glRotatef(yrot3*3, 0, 1, 0);
+  myMesh[5].Draw();	
+	glPopMatrix();
+  
+  glPushMatrix();
+  glTranslatef(0.0f, 0.0f, -1500.0f);
+	glScalef( 5.5f, 5.5f, 5.5f );
+  glRotatef(yrot3*3, 0, 1, 0);
+  myMesh[3].Draw();	
+	glPopMatrix();
 }

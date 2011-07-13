@@ -24,7 +24,7 @@ public:
 class Ar3DObjects: public ArObject,public Mesh
 {
   std::string model;
-  std::string modelType;
+  unsigned int modelType;
   
   double scale;
   double xRotate;

@@ -133,7 +133,6 @@
 		5971C57013CC6D1500C5A891 /* SimpleAudioEngine_objc.m in Sources */ = {isa = PBXBuildFile; fileRef = 5971C56F13CC6D1500C5A891 /* SimpleAudioEngine_objc.m */; };
 		5971C57513CC6D1500C5A891 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5971C57413CC6D1500C5A891 /* main.m */; };
 		5971C57F13CC6D1500C5A891 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */; };
-		5971C59613CC6D6800C5A891 /* AccelerometerFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5971C58D13CC6D6800C5A891 /* AccelerometerFilter.m */; };
 		5971C59713CC6D6800C5A891 /* ArScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C58F13CC6D6800C5A891 /* ArScene.cpp */; };
 		5971C59813CC6D6800C5A891 /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5971C59113CC6D6800C5A891 /* ArViewController.mm */; };
 		5971C59913CC6D6800C5A891 /* ARView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5971C59313CC6D6800C5A891 /* ARView.mm */; };
@@ -536,8 +535,6 @@
 		5971C57413CC6D1500C5A891 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ios/main.m; sourceTree = "<group>"; };
 		5971C57D13CC6D1500C5A891 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Classes/AppDelegate.h; sourceTree = "<group>"; };
 		5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
-		5971C58C13CC6D6800C5A891 /* AccelerometerFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerometerFilter.h; sourceTree = "<group>"; };
-		5971C58D13CC6D6800C5A891 /* AccelerometerFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerometerFilter.m; sourceTree = "<group>"; };
 		5971C58E13CC6D6800C5A891 /* ArScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArScene.h; sourceTree = "<group>"; };
 		5971C58F13CC6D6800C5A891 /* ArScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArScene.cpp; sourceTree = "<group>"; };
 		5971C59013CC6D6800C5A891 /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
@@ -1268,8 +1265,6 @@
 			children = (
 				5971C57D13CC6D1500C5A891 /* AppDelegate.h */,
 				5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */,
-				5971C58C13CC6D6800C5A891 /* AccelerometerFilter.h */,
-				5971C58D13CC6D6800C5A891 /* AccelerometerFilter.m */,
 				5971C58E13CC6D6800C5A891 /* ArScene.h */,
 				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
 				5902EA4F13CC90E0002EF11A /* ArObject.h */,
@@ -1773,7 +1768,6 @@
 				5971C57013CC6D1500C5A891 /* SimpleAudioEngine_objc.m in Sources */,
 				5971C57513CC6D1500C5A891 /* main.m in Sources */,
 				5971C57F13CC6D1500C5A891 /* AppDelegate.cpp in Sources */,
-				5971C59613CC6D6800C5A891 /* AccelerometerFilter.m in Sources */,
 				5971C59713CC6D6800C5A891 /* ArScene.cpp in Sources */,
 				5971C59813CC6D6800C5A891 /* ArViewController.mm in Sources */,
 				5971C59913CC6D6800C5A891 /* ARView.mm in Sources */,
