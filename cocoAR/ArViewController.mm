@@ -60,9 +60,6 @@
   
   [self.view insertSubview:cameraView.view belowSubview:arView];
   
-//  UIView *plView = [[[[[[self.view subviews] lastObject] subviews] lastObject] subviews] lastObject];
-//	[[[plView subviews] objectAtIndex:3] removeFromSuperview];
-  
   cocos2d::CCApplication::sharedApplication().run();
 }
 

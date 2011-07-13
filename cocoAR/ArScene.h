@@ -12,6 +12,11 @@
 #ifndef ARcocos_ArScene_h
 #define ARcocos_ArScene_h
 
+void test1Init();
+void test1();
+void test2Init();
+void test2();
+
 class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate
 {
 public:
@@ -19,13 +24,11 @@ public:
 	virtual bool init();
   
   cocos2d::CCLocation* userLocation;
+  cocos2d::CCHeading* userHeading;
   
 	// there's no 'id' in cpp, so we recommand to return the exactly class pointer
 	static cocos2d::CCScene* scene();
 	
-	// a selector callback
-	virtual void menuCloseCallback(CCObject* pSender);
-  
   void visit();
   
   void arUpdate(cocos2d::ccTime dt);

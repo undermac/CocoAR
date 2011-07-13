@@ -11,10 +11,9 @@
 #include "cocos2d.h"
 
 // [TODO] ARREGLAR
-#define WIDTH 480
-#define HEIGHT 320
-
 #define DEBUG 1
+#define RELEASE 0
+
 
 USING_NS_CC;
 
