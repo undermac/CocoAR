@@ -31,6 +31,33 @@ namespace cocos2d {
     return s_spCLLocationManager;
   }
   
+  double CCLocationManager::distanceFromLocation (double latitude1, double longitude1, double latitude2, double lontitude2)
+  {
+    CLLocation *object1Location = [[CLLocation alloc] initWithLatitude:latitude1 longitude:longitude1];
+    CLLocation *object2Location = [[CLLocation alloc] initWithLatitude:latitude2 longitude:lontitude2];
+    
+    double distance = [object1Location distanceFromLocation:object2Location];
+                    
+    return distance;
+  }
+  
+  double bearingBetweenStartLocation(double latitude1, double longitude1, double latitude2, double lontitude2)
+  {
+    CLLocation *northPoint = [[[CLLocation alloc] initWithLatitude:latitude1+.01 longitude:lontitude2] autorelease];
+    
+    CLLocation *object1Location = [[CLLocation alloc] initWithLatitude:latitude1 longitude:longitude1];
+    CLLocation *object2Location = [[CLLocation alloc] initWithLatitude:latitude2 longitude:lontitude2];
+    
+    float magA = [northPoint distanceFromLocation:object1Location];
+    float magB = [object2Location distanceFromLocation:object1Location];
+    
+    
+    CLLocation *startLat = [[[CLLocation alloc] initWithLatitude:latitude1 longitude:0] autorelease];
+    CLLocation *endLat = [[[CLLocation alloc] initWithLatitude:latitude2 longitude:0] autorelease];
+    float aDotB = magA*[endLat distanceFromLocation:startLat];
+    return acosf(aDotB/(magA*magB))*(180/M_PI);
+  }
+  
   void CCLocationManager::removeDelegate(CCLocationManagerDelegate* pDelegate)
   {
     [[LocationDispatcher sharedLocationDispatcher] removeDelegate:pDelegate];
@@ -40,5 +67,6 @@ namespace cocos2d {
   {
     [[LocationDispatcher sharedLocationDispatcher] addDelegate:pDelegate];
   }
+  
 }
  

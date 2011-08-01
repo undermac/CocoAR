@@ -9,10 +9,10 @@
 #include "ArScene.h"
 #include "CCLocationManager.h"
 #include "bMath.h"
-#include "mesh.h"
+#include <math.h>
+
 #include "MDLModel.h"
 #include <vector>
-#include "ArObject.h"
 
 #define RELEASE 0
 #define DEBUG_GAME 1
@@ -35,18 +35,19 @@
 TMDLModel	MdlModel[10];					// MDL Model
 Mesh myMesh[10];
 
-vector<Ar3DObjects> myAr3dObjects;
+vector<Ar3DObject> myAr3dObjects;
 
 GLfloat XCam=0.0f,YCam=1.5f,ZCam=0.0f;
 GLfloat XEye=0.0f,YEye=1.5f,ZEye=0.5f;
 GLfloat xrot3=0.0f,yrot3=0.0f,zrot3=0.0f;
 GLfloat xUp=0.0f, yUp =0.0f, zUp=0.1f;
+GLfloat eulerAngles[3];
 
 USING_NS_CC;
 
 CCScene* ArScene::scene()
 {
-	// 'scene' is an autorelease object
+  // 'scene' is an autorelease object
 	CCScene *scene = CCScene::node();
 	
 	// 'layer' is an autorelease object
@@ -73,7 +74,16 @@ bool ArScene::init()
 	this->setIsAccelerometerEnabled(true);
   CCLocationManager::sharedCCLocationManager()->addDelegate(this);
   
+  CCSprite *pig = CCSprite::spriteWithFile("pigrate.png");
+  this->addChild(pig,1);
+  pig->setScale(0.25f);
+  pig->setPosition(ccp(160, 210));
+  
   test1Init();
+
+  testInit();
+
+//  test2Init();
   
   this->schedule( schedule_selector(ArScene::arUpdate) );
   
@@ -94,8 +104,6 @@ void ArScene::arUpdate(ccTime dt)
 
 void ArScene::visit() 
 {	
-	CCLayer::visit();
-  
 	glColor4f(1.0f,1.0f,1.0f,1.0f);		
   
 	CCDirector::sharedDirector()->setDepthTest(true);
@@ -125,9 +133,10 @@ void ArScene::visit()
   glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();		
 	
-  //  gluLookAt(0.0f, 0.0f, 0.0f,	0.0f, 0.0f, 500.0f, 1, 0, 0); // WORKING
+  //  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, zUp);
   
-  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, 0.0f);
+  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, zUp);
+  
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
 	glDisable(GL_CULL_FACE);	
@@ -136,7 +145,9 @@ void ArScene::visit()
   
   test1();
   
-  //  test2();
+//  test();
+  
+//    test2();
   //-------------------------------------------------------------------------------------------------
   
 	glDisable(GL_CULL_FACE);	
@@ -146,6 +157,10 @@ void ArScene::visit()
 	CCDirector::sharedDirector()->setDepthTest(true);
 	glEnableClientState(GL_COLOR_ARRAY);
   
+  CC_ENABLE_DEFAULT_GL_STATES();
+	glClear(GL_DEPTH_BUFFER_BIT);
+  
+  CCLayer::visit();
 }
 
 #define KFilteringFactor 0.20f
@@ -168,45 +183,57 @@ void ArScene::didAccelerate(cocos2d::CCAcceleration* acceleration){
   yUp = - accelY;
   zUp = - accelZ;
   
-  //[TODO ARREGLAR]
-  if (accelZ > 1.0f)
-    accelZ = 1.0f;
-  else if (accelZ < -1.0f)
-    accelZ = -1.0f;
+//  eulerAngles[0] = atan2(accelZ, -accelY)*(180/_pi);  
+//  eulerAngles[2] = atan2(accelX, -accelY)*(180/_pi);
+
+  eulerAngles[0] = atan2(accelZ, -accelY)*(180/_pi);  
+  eulerAngles[2] = atan2(accelX, -accelY)*(180/_pi);
+  
+//  YEye = (sin(eulerAngles[2]*(_pi/180)))*50;
+
+  XEye = -sin(eulerAngles[1]*(_pi/180))*50;
+  YEye = accelZ*50;
+  ZEye = cos(eulerAngles[1]*(_pi/180))*50;
+  
+//  printf("\nRoll: %f, pitch: %f, Yaw: %f, tilt: %f", atan2(accelY, accelX)*(180/_pi), atan2(accelY, accelZ)*(180/_pi), eulerAngles[1], tilt);
+//  printf("\nAccelX: %f, AccelY: %f, AccelZ: %f ",accelX,accelY,accelZ);
 }
 
 void ArScene::updateLocation(CCLocation* newLocation){
-  printf("HELLO WORLD !!");
+  this->userLocation = *newLocation;
 }
 
 void ArScene::updateHeading(CCHeading* newHeading){
+  
+  this->userHeading = *newHeading;
   
   float adjustedHeading;
 	float adjustment = tilt;			//This needs to be calibrated properly.
 	
 	//Adjust the heading due to our tilt and way we hold the phone.
-	float compassBearing = newHeading->magneticHeading;
+  float compassBearing = newHeading->trueHeading;
   
+  if (compassBearing == -1.0f) {
+    compassBearing = newHeading->magneticHeading;
+  }
   switch (CCDirector::sharedDirector()->getDeviceOrientation()){
     case CCDeviceOrientationPortrait:
-      adjustedHeading = (compassBearing + 90.0f) - adjustment;  
+      adjustedHeading = (compassBearing - 90.0f) - adjustment;  
       break; 
     case CCDeviceOrientationPortraitUpsideDown:  
-      adjustedHeading = (compassBearing +  270.0f) - adjustment;
+      adjustedHeading = (compassBearing +  90.0f) - adjustment;
       break; 
     case CCDeviceOrientationLandscapeLeft:  
-      adjustedHeading = (compassBearing + 180.0f) - adjustment;
+      adjustedHeading = (compassBearing) - adjustment;
       break; 
     case CCDeviceOrientationLandscapeRight:  
-      adjustedHeading = compassBearing - adjustment;
+      adjustedHeading = (compassBearing - 180.0f) - adjustment;
       break; 
     default:  
       break; 
   }  
-	
-  if (zUp > -0.693298) {
-    adjustedHeading -= 180.0f;
-  }
+
+  adjustedHeading = (compassBearing - 90.0f) - adjustment; 
   
 	//Better to have things running from 0 to 360 degrees.
 	if(adjustedHeading < 0)
@@ -214,19 +241,26 @@ void ArScene::updateHeading(CCHeading* newHeading){
 		adjustedHeading = adjustedHeading + 360;
 	}
   
-  XEye = (-sin(adjustedHeading*(_pi/180))*cos(zUp))*50;
-  ZEye = (cos(adjustedHeading*(_pi/180))*cos(zUp))*50;
+  eulerAngles[1] = adjustedHeading;
   
-    printf("\nZup: %f, trueheading : %f", zUp, adjustedHeading);
+  printf("\nUserHeading: %f",adjustedHeading);
+  
+//  XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
+//  ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
+  
+  XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
+  ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
+  
+//  YEye = (sin(eulerAngles[0]*(_pi/180)))*50;
 }
 void ArScene::LocationManagerDestroy(void){
   
 }
 void ArScene::LocationManagerKeep(void){
-  
 }
 
 void test1Init(){
+  
   MdlModel[0].Init((char *)&MDLFILE01);
 	MdlModel[0].SetSequence(0);
 	MdlModel[1].Init((char *)&MDLFILE02);
@@ -294,9 +328,12 @@ void test1(){
   glRotatef(-90.0f, 1, 0, 0);
   MdlModel[2].DrawModel();
 	glPopMatrix();
+  
 }
 
+
 void test2Init(){
+  
   MdlModel[0].Init((char *)&MDLFILE01);
 	MdlModel[0].SetSequence(0);
 	MdlModel[1].Init((char *)&MDLFILE02);
@@ -344,3 +381,57 @@ void test2(){
   myMesh[3].Draw();	
 	glPopMatrix();
 }
+
+void ArScene::testInit()
+{
+  Ar3DObject *an3dObject = new Ar3DObject();
+  an3dObject->LoadModel((char *)&MYMESH07);
+  
+  an3dObject->latitude = 43.49019867977202f;
+  an3dObject->longitude = -8.246827125549316f;
+  
+//  43.49019867977202º, -8.246827125549316º
+  
+
+  an3dObject->altitude = 0.0f;
+  an3dObject->modelType = 0;
+  
+  an3dObject->scale = 2.5f;
+  
+  an3dObject->xTranslate = 0.0f;
+  an3dObject->yTranslate = 0.0f;
+  an3dObject->zTranslate = 100.0f;
+  
+  an3dObject->xRotate = 0.0f;
+  an3dObject->yRotate = 0.0f;
+  an3dObject->zRotate = 0.0f;
+  
+  myAr3dObjects.push_back(*an3dObject);
+}
+
+void ArScene::test()
+{
+  for(unsigned int i=0; i< myAr3dObjects.size(); i++){
+    
+    double value = CCLocationManager::sharedCCLocationManager()->distanceFromLocation( userLocation.latitude,userLocation.longitude , myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
+    
+    printf("\nUserlocation: %f, %f",this->userLocation.latitude, this->userLocation.longitude);
+    printf("\nObjectlocation: %f, %f",myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
+    printf("\ndistance: %f",value);
+    printf("\nUserHeading: %f",eulerAngles[1]);
+    
+    glPushMatrix();
+    glTranslatef(myAr3dObjects[i].xTranslate, myAr3dObjects[i].yTranslate, myAr3dObjects[i].zTranslate);
+    glScalef( myAr3dObjects[i].scale, myAr3dObjects[i].scale, myAr3dObjects[i].scale );
+    glRotatef(myAr3dObjects[i].xRotate, 1, 0, 0);
+    glRotatef(myAr3dObjects[i].yRotate, 0, 1, 0);
+    glRotatef(myAr3dObjects[i].zRotate, 0, 0, 1);
+    myAr3dObjects[i].Draw();	
+    glPopMatrix();
+  }
+}
+
+
+
+
+

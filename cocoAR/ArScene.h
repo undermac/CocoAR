@@ -8,6 +8,7 @@
 #include "cocos2d.h"
 #include "CCLocationManagerDelegate.h"
 #include "CCLocationManager.h"
+#include "mesh.h"
 
 #ifndef ARcocos_ArScene_h
 #define ARcocos_ArScene_h
@@ -23,8 +24,8 @@ public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
 	virtual bool init();
   
-  cocos2d::CCLocation* userLocation;
-  cocos2d::CCHeading* userHeading;
+  cocos2d::CCLocation userLocation;
+  cocos2d::CCHeading userHeading;
   
 	// there's no 'id' in cpp, so we recommand to return the exactly class pointer
 	static cocos2d::CCScene* scene();
@@ -40,8 +41,39 @@ public:
   void LocationManagerDestroy(void);
   void LocationManagerKeep(void);
   
+  void testInit();
+  void test();
+  
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(ArScene);
+};
+
+class ArObject
+{
+public:
+  std::string name;
+  std::string description;
+  
+  double longitude;
+  double latitude;
+  double altitude;
+};
+
+class Ar3DObject: public ArObject, public Mesh
+{
+public:
+  
+  std::string model;
+  unsigned int modelType;
+  
+  double scale;
+  double xRotate;
+  double yRotate;
+  double zRotate;
+  
+  double xTranslate;
+  double yTranslate;
+  double zTranslate;
 };
 
 #endif

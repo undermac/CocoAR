@@ -133,7 +133,6 @@ static LocationDispatcher* s_pLocationDispatcher;
   self.delegate_->updateHeading(newHeading);
 }
 
-
 -  (void) dealloc
 {
 //  self.delegate_->AccelerometerDestroy();
