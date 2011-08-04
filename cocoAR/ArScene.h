@@ -17,6 +17,8 @@ void test1Init();
 void test1();
 void test2Init();
 void test2();
+void ccDraw3DLine(GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
+void drawFloor();
 
 class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate
 {

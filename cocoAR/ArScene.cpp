@@ -6,6 +6,23 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
+
+
+//[TODO] Geolocalización de objetos -> 2 días
+//[TODO] Solucionar BUG -Mirando al Sur- Que lo arrelé el Mac del futuro.
+//[TODO] Click en objetos -> 3 días
+//[TODO] Desplegar texto -> 2 días
+//[TODO] Crear cámera delegate -> 2 días
+//[TODO] Prueba fiesta -> 3 días
+//[TODO] Sacar API -> 7 días
+//[TODO] Enlazar API con Orama -> 7 días
+//[TODO] Realizar pruebas rápidas -> 1 día
+//[TODO] Documentar init -> 3 días
+//[TODO] Documentar Análisis -> 9 días
+//[TODO] Documentar Diseño -> 9 días
+//[TODO] Documentar Implementación 9 días
+//[TODO] Realizar documentación -> 15 días
+
 #include "ArScene.h"
 #include "CCLocationManager.h"
 #include "bMath.h"
@@ -32,12 +49,20 @@
 #define	MYMESH07 "flecha.obj"
 #define	MYMESH08 "poste.obj"
 
+#define DEG_TO_RAD(X) (X*M_PI/180.0)
+
+#define RAD_TO_DEG(X) (180.0/X*M_PI)
+
 TMDLModel	MdlModel[10];					// MDL Model
 Mesh myMesh[10];
 
+cocos2d::CCLabelTTF* testInfo1;
+cocos2d::CCLabelTTF* testInfo2;
+cocos2d::CCLabelTTF* testInfo3;
+
 vector<Ar3DObject> myAr3dObjects;
 
-GLfloat XCam=0.0f,YCam=1.5f,ZCam=0.0f;
+GLfloat XCam=0.0f,YCam=1.0f,ZCam=0.0f;
 GLfloat XEye=0.0f,YEye=1.5f,ZEye=0.5f;
 GLfloat xrot3=0.0f,yrot3=0.0f,zrot3=0.0f;
 GLfloat xUp=0.0f, yUp =0.0f, zUp=0.1f;
@@ -74,16 +99,23 @@ bool ArScene::init()
 	this->setIsAccelerometerEnabled(true);
   CCLocationManager::sharedCCLocationManager()->addDelegate(this);
   
-  CCSprite *pig = CCSprite::spriteWithFile("pigrate.png");
-  this->addChild(pig,1);
-  pig->setScale(0.25f);
-  pig->setPosition(ccp(160, 210));
+//  CCSprite *pig = CCSprite::spriteWithFile("pigrate.png");
+//  this->addChild(pig,1);
+//  pig->setScale(0.25f);
+//  pig->setPosition(ccp(160, 210));
+  
+  testInfo1 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
+  testInfo1->setPosition(ccp(0,180));
+  testInfo2 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
+  testInfo2->setPosition(ccp(180,180));
+  testInfo3 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
+  testInfo3->setPosition(ccp(-180,180));
   
   test1Init();
 
   testInit();
 
-//  test2Init();
+  test2Init();
   
   this->schedule( schedule_selector(ArScene::arUpdate) );
   
@@ -124,18 +156,49 @@ void ArScene::visit()
   glEnable(GL_LIGHT0);
   
   CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);	
-  CCDirector::sharedDirector()->applyOrientation();
+//  CCDirector::sharedDirector()->applyOrientation();
   
-  //    [TODO] ALPHA ...
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   glEnable(GL_BLEND);
   
   glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();		
-	
-  //  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, zUp);
   
-  gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*50, ZEye, xUp, yUp, zUp);
+  if (eulerAngles[1] > 90.0f && eulerAngles[1] < 270.0f) {
+    gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, -xUp*100, yUp*100, 0.0f);
+    printf("\n%f", eulerAngles[1]);
+  }else{
+    gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
+  }
+  
+  glColor4f(1.0f,1.0f,1.0f,1.0f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, XEye, -zUp*80, ZEye);
+  
+  glColor4f(0.0f,0.0f,0.0f,1.0f);
+  ccDraw3DLine(XEye, -zUp*80, ZEye, xUp*30, yUp*30, 0.0);
+  
+  //Y
+  glColor4f(1.0f,0.0f,0.0f,0.8f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, 1000.0f, 0.0f, 0.0f);
+  
+  //Este & X
+  glColor4f(0.0f,1.0f,0.0f,0.8f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 1000.0f, 0.0f);
+  
+  //Norte & Z
+  glColor4f(0.0f,0.0f,1.0f,0.8f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1000.0f);
+
+  //Sur
+  glColor4f(0.0f,1.0f,1.0f,0.8f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1000.0f);
+
+  //Oeste
+  glColor4f(1.0f,0.0f,1.0f,0.8f);
+  ccDraw3DLine(0.0f, 0.0f, 0.0f, -1000.0f, 0.0f, 0.0f);
+
+  
+  glColor4f(1.0f,1.0f,1.0f,0.95f);
   
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
@@ -143,16 +206,19 @@ void ArScene::visit()
   
 	//-----------------------------------------------
   
+
+  
   test1();
-  
-//  test();
-  
-//    test2();
+  test();  
+//  test2();
   //-------------------------------------------------------------------------------------------------
+  
+  glColor4f(0.5f,0.5f,0.5f,0.5f);
+  drawFloor();
   
 	glDisable(GL_CULL_FACE);	
 	glClearColor(0.0f,0.0f,0.0f,0.0f) ;		
-	glPopMatrix();	
+	glPopMatrix();
   
 	CCDirector::sharedDirector()->setDepthTest(true);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -189,8 +255,6 @@ void ArScene::didAccelerate(cocos2d::CCAcceleration* acceleration){
   eulerAngles[0] = atan2(accelZ, -accelY)*(180/_pi);  
   eulerAngles[2] = atan2(accelX, -accelY)*(180/_pi);
   
-//  YEye = (sin(eulerAngles[2]*(_pi/180)))*50;
-
   XEye = -sin(eulerAngles[1]*(_pi/180))*50;
   YEye = accelZ*50;
   ZEye = cos(eulerAngles[1]*(_pi/180))*50;
@@ -211,8 +275,8 @@ void ArScene::updateHeading(CCHeading* newHeading){
 	float adjustment = tilt;			//This needs to be calibrated properly.
 	
 	//Adjust the heading due to our tilt and way we hold the phone.
-  float compassBearing = newHeading->trueHeading;
-  
+//  float compassBearing = newHeading->trueHeading;
+    float compassBearing = newHeading->magneticHeading;
   if (compassBearing == -1.0f) {
     compassBearing = newHeading->magneticHeading;
   }
@@ -243,13 +307,16 @@ void ArScene::updateHeading(CCHeading* newHeading){
   
   eulerAngles[1] = adjustedHeading;
   
-  printf("\nUserHeading: %f",adjustedHeading);
+//  printf("\nUserHeading: %f",adjustedHeading);
   
 //  XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
 //  ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
   
   XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
   ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
+
+//  XEye = -sin(eulerAngles[1]*(_pi/180));
+//  ZEye = cos(eulerAngles[1]*(_pi/180));
   
 //  YEye = (sin(eulerAngles[0]*(_pi/180)))*50;
 }
@@ -295,7 +362,7 @@ void test1(){
   glPushMatrix();
   glTranslatef(0.0f, 0.0f, 45.0f);
 	glScalef( 0.5f, 0.5f, 0.5f );
-  //  glRotatef(yrot3, 0, 1, 0);
+  glRotatef(yrot3, 0, 1, 0);
   myMesh[6].Draw();
 	glPopMatrix();
   
@@ -314,7 +381,7 @@ void test1(){
 	glPopMatrix();
   
   glPushMatrix();
-  glTranslatef(200.0f, 0.0f, 1000.0f);
+  glTranslatef(200.0f, 0.0f, -1000.0f);
 	glScalef( 0.5f, 0.5f, 0.5f );
   glRotatef(yrot3, 0, 1, 0);
   myMesh[1].Draw();
@@ -328,7 +395,6 @@ void test1(){
   glRotatef(-90.0f, 1, 0, 0);
   MdlModel[2].DrawModel();
 	glPopMatrix();
-  
 }
 
 
@@ -386,21 +452,36 @@ void ArScene::testInit()
 {
   Ar3DObject *an3dObject = new Ar3DObject();
   an3dObject->LoadModel((char *)&MYMESH07);
-  
-  an3dObject->latitude = 43.49019867977202f;
-  an3dObject->longitude = -8.246827125549316f;
-  
-//  43.49019867977202º, -8.246827125549316º
-  
 
+//  an3dObject->latitude = 43.49019867977202f; // FERROL RIA
+//  an3dObject->longitude = -8.246827125549316f;
+  
+//  an3dObject->latitude = 42.34511443500709f; // Universidad 
+//  an3dObject->longitude = -7.856292128562927f;
+  
+//  an3dObject->latitude = 42.34516201314594; // Universidad Norte 
+//  an3dObject->longitude = -7.855787873268127f;
+  
+  an3dObject->latitude = 42.344466179278236; // JJ 
+  an3dObject->longitude = -7.855653762817383f;
+  
+//  an3dObject->latitude = 42.3037216984154f; // Orense oeste 
+//  an3dObject->longitude = -8.2342529296875f;
+
+//  an3dObject->latitude = 42.30169032824452f; // Orense este 
+//  an3dObject->longitude = -7.36083984375f;
+  
+//  an3dObject->latitude = 42.348395259793f; // Orense rio 
+//  an3dObject->longitude = -7.862091064453125f;
+  
   an3dObject->altitude = 0.0f;
   an3dObject->modelType = 0;
   
-  an3dObject->scale = 2.5f;
+  an3dObject->scale = 0.1f;
   
   an3dObject->xTranslate = 0.0f;
   an3dObject->yTranslate = 0.0f;
-  an3dObject->zTranslate = 100.0f;
+  an3dObject->zTranslate = 400.0f;
   
   an3dObject->xRotate = 0.0f;
   an3dObject->yRotate = 0.0f;
@@ -413,16 +494,29 @@ void ArScene::test()
 {
   for(unsigned int i=0; i< myAr3dObjects.size(); i++){
     
-    double value = CCLocationManager::sharedCCLocationManager()->distanceFromLocation( userLocation.latitude,userLocation.longitude , myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
+    double distanceValue = CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userLocation.latitude,(double)userLocation.longitude , (double)myAr3dObjects[i].latitude, (double)myAr3dObjects[i].longitude);
     
-    printf("\nUserlocation: %f, %f",this->userLocation.latitude, this->userLocation.longitude);
-    printf("\nObjectlocation: %f, %f",myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
-    printf("\ndistance: %f",value);
+    double bearing = CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( userLocation.latitude,userLocation.longitude , myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
+    
+    double angleC = 90.0f - bearing;
+    
+    double b = sin(angleC*(_pi/180))*distanceValue;
+    double c = cos(angleC*(_pi/180))*distanceValue;
+    
+//    printf("\n\ndistance: %f",distanceValue);
+//    printf("\nBearing to object: %f",bearing*(180/_pi));
+//    printf("\n b = %f , c = %f", b,c);
+    
+//    printf("\nUserlocation: %f, %f",this->userLocation.latitude, this->userLocation.longitude);
+//    printf("\nObjectlocation: %f, %f",myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
+    printf("\ndistance: %f",distanceValue);
+    printf("\nBearing to object: %f",bearing*(180/_pi));
     printf("\nUserHeading: %f",eulerAngles[1]);
     
     glPushMatrix();
-    glTranslatef(myAr3dObjects[i].xTranslate, myAr3dObjects[i].yTranslate, myAr3dObjects[i].zTranslate);
-    glScalef( myAr3dObjects[i].scale, myAr3dObjects[i].scale, myAr3dObjects[i].scale );
+//    glTranslatef(myAr3dObjects[i].xTranslate, myAr3dObjects[i].yTranslate, myAr3dObjects[i].zTranslate);
+    glTranslatef(-c, myAr3dObjects[i].yTranslate, -b);
+    glScalef(myAr3dObjects[i].scale, myAr3dObjects[i].scale, myAr3dObjects[i].scale );
     glRotatef(myAr3dObjects[i].xRotate, 1, 0, 0);
     glRotatef(myAr3dObjects[i].yRotate, 0, 1, 0);
     glRotatef(myAr3dObjects[i].zRotate, 0, 0, 1);
@@ -431,6 +525,47 @@ void ArScene::test()
   }
 }
 
+void ccDraw3DLine(GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
+{
+	ccVertex3F vertices[2] = 
+  {
+    {xOrigin * CC_CONTENT_SCALE_FACTOR(), yOrigin * CC_CONTENT_SCALE_FACTOR(), zOrigin * CC_CONTENT_SCALE_FACTOR()},
+    {xDestination * CC_CONTENT_SCALE_FACTOR(), yDestination * CC_CONTENT_SCALE_FACTOR(), zDestination * CC_CONTENT_SCALE_FACTOR() },
+  };
+	
+	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
+	// Needed states: GL_VERTEX_ARRAY, 
+	// Unneeded states: GL_TEXTURE_2D, GL_TEXTURE_COORD_ARRAY, GL_COLOR_ARRAY
+  
+	glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	
+	glVertexPointer(3, GL_FLOAT, 0, vertices);
+  glLineWidth (10.0f);
+	glDrawArrays(GL_LINES, 0, 2);
+	
+	// restore default state
+	glEnableClientState(GL_COLOR_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glEnable(GL_TEXTURE_2D);	
+}
+
+void drawFloor(){
+  ccVertex3F vertices[4] = 
+  {
+    { 1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(),  1500.0f* CC_CONTENT_SCALE_FACTOR()},
+    {-1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(),  1500.0f* CC_CONTENT_SCALE_FACTOR()},
+    { 1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(), -1500.0f* CC_CONTENT_SCALE_FACTOR()},
+    {-1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(), -1500.0f* CC_CONTENT_SCALE_FACTOR()},
+  };
+  
+  glDisable(GL_TEXTURE_2D);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+  glVertexPointer(3, GL_FLOAT, 0, vertices);
+  glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
 
 
 

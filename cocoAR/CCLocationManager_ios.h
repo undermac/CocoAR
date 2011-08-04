@@ -22,6 +22,7 @@ namespace   cocos2d {
     static CCLocationManager* sharedCCLocationManager();
     
     double distanceFromLocation (double latitude1, double longitude1, double latitude2, double lontitude2);
+    double bearingBetweenStartLocation(double latitude1, double longitude1, double latitude2, double lontitude2);
     
     void removeDelegate(CCLocationManagerDelegate* pDelegate);
     void addDelegate(CCLocationManagerDelegate* pDelegate);
