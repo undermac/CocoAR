@@ -50,8 +50,7 @@
 #define	MYMESH08 "poste.obj"
 
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
-
-#define RAD_TO_DEG(X) (180.0/X*M_PI)
+#define RAD_TO_DEG(X) (X*180.0/M_PI)
 
 TMDLModel	MdlModel[10];					// MDL Model
 Mesh myMesh[10];
@@ -104,12 +103,15 @@ bool ArScene::init()
 //  pig->setScale(0.25f);
 //  pig->setPosition(ccp(160, 210));
   
-  testInfo1 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-  testInfo1->setPosition(ccp(0,180));
-  testInfo2 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-  testInfo2->setPosition(ccp(180,180));
-  testInfo3 = CCLabelTTF::labelWithString("00.0", "Arial", 24);
-  testInfo3->setPosition(ccp(-180,180));
+  testInfo1 = CCLabelTTF::labelWithString("00.0", "Arial", 12);
+  testInfo1->setPosition(ccp(160,470));
+  this->addChild(testInfo1,1);
+  testInfo2 = CCLabelTTF::labelWithString("00.0", "Arial", 12);
+  testInfo2->setPosition(ccp(160,460));
+  this->addChild(testInfo2,1);
+  testInfo3 = CCLabelTTF::labelWithString("00.0", "Arial", 12);
+  testInfo3->setPosition(ccp(160,450));
+  this->addChild(testInfo3,1);
   
   test1Init();
 
@@ -164,9 +166,11 @@ void ArScene::visit()
   glMatrixMode(GL_MODELVIEW);	
 	glLoadIdentity();		
   
+//  glColor4f(0.0f,0.0f,0.0f,1.0f);
+//  ccDraw3DLine(XEye, -zUp*80, ZEye, xUp*30, yUp*30, 0.0);
+  
   if (eulerAngles[1] > 90.0f && eulerAngles[1] < 270.0f) {
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, -xUp*100, yUp*100, 0.0f);
-    printf("\n%f", eulerAngles[1]);
   }else{
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
@@ -174,8 +178,8 @@ void ArScene::visit()
   glColor4f(1.0f,1.0f,1.0f,1.0f);
   ccDraw3DLine(0.0f, 0.0f, 0.0f, XEye, -zUp*80, ZEye);
   
-  glColor4f(0.0f,0.0f,0.0f,1.0f);
-  ccDraw3DLine(XEye, -zUp*80, ZEye, xUp*30, yUp*30, 0.0);
+//  glColor4f(0.0f,0.0f,0.0f,1.0f);
+//  ccDraw3DLine(XEye, -zUp*80, ZEye, xUp*30, yUp*30, 0.0);
   
   //Y
   glColor4f(1.0f,0.0f,0.0f,0.8f);
@@ -477,7 +481,7 @@ void ArScene::testInit()
   an3dObject->altitude = 0.0f;
   an3dObject->modelType = 0;
   
-  an3dObject->scale = 0.1f;
+  an3dObject->scale = 0.5f;
   
   an3dObject->xTranslate = 0.0f;
   an3dObject->yTranslate = 0.0f;
@@ -498,24 +502,43 @@ void ArScene::test()
     
     double bearing = CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( userLocation.latitude,userLocation.longitude , myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
     
-    double angleC = 90.0f - bearing;
+    double angleC,x,z;
+    if (bearing*(180/_pi) > 0.0f && bearing*(180/_pi) < 90.f) {//1
+      angleC = 90.0f - bearing*(180/_pi);
+      // DONE CREO !
+      x = - cos(angleC*(_pi/180))*distanceValue;
+      z = sin(angleC*(_pi/180))*distanceValue;
+    }else if (bearing*(180/_pi) > 90.0f && bearing*(180/_pi) < 180.0f){ //2
+      // DONE
+      angleC = 180.0f - bearing*(180/_pi);
+      x = -sin(angleC*(_pi/180))*distanceValue;
+      z = -cos(angleC*(_pi/180))*distanceValue;
+    }else if (bearing*(180/_pi) > 180.0f && bearing*(180/_pi) < 270.0f){ //3
+      angleC = 270.0f - bearing*(180/_pi);
+      // DONE
+      x = cos(angleC*(_pi/180))*distanceValue;
+      z = - sin(angleC*(_pi/180))*distanceValue;
+    }else{ //4
+      angleC = 360.0f - bearing*(180/_pi);
+      x = sin(angleC*(_pi/180))*distanceValue;
+      z = cos(angleC*(_pi/180))*distanceValue;
+    }
+
+    char buffer[256];
+    sprintf(buffer,"Dis: %10.2f",distanceValue);
+    testInfo1->setString(buffer);
+    sprintf(buffer, "x: %10.2f z: %10.2f",x , z);
+    testInfo2->setString(buffer);
+    sprintf(buffer, "UserHeading: %10.2f Bearing: %10.2f",eulerAngles[1],bearing*(180/_pi));
+    testInfo3->setString(buffer);
     
-    double b = sin(angleC*(_pi/180))*distanceValue;
-    double c = cos(angleC*(_pi/180))*distanceValue;
-    
-//    printf("\n\ndistance: %f",distanceValue);
+//    printf("\ndistance: %f",distanceValue);
 //    printf("\nBearing to object: %f",bearing*(180/_pi));
-//    printf("\n b = %f , c = %f", b,c);
-    
-//    printf("\nUserlocation: %f, %f",this->userLocation.latitude, this->userLocation.longitude);
-//    printf("\nObjectlocation: %f, %f",myAr3dObjects[i].latitude, myAr3dObjects[i].longitude);
-    printf("\ndistance: %f",distanceValue);
-    printf("\nBearing to object: %f",bearing*(180/_pi));
-    printf("\nUserHeading: %f",eulerAngles[1]);
+//    printf("\nUserHeading: %f",eulerAngles[1]);
     
     glPushMatrix();
 //    glTranslatef(myAr3dObjects[i].xTranslate, myAr3dObjects[i].yTranslate, myAr3dObjects[i].zTranslate);
-    glTranslatef(-c, myAr3dObjects[i].yTranslate, -b);
+    glTranslatef(x, myAr3dObjects[i].yTranslate, z);
     glScalef(myAr3dObjects[i].scale, myAr3dObjects[i].scale, myAr3dObjects[i].scale );
     glRotatef(myAr3dObjects[i].xRotate, 1, 0, 0);
     glRotatef(myAr3dObjects[i].yRotate, 0, 1, 0);
