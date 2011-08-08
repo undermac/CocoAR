@@ -8,6 +8,8 @@
 #include "cocos2d.h"
 #include "CCLocationManagerDelegate.h"
 #include "CCLocationManager.h"
+#include "CCMobileCameraBack.h"
+#include "CCMobileCameraBackDelegate.h"
 #include "mesh.h"
 
 #ifndef ARcocos_ArScene_h
@@ -20,7 +22,7 @@ void test2();
 void ccDraw3DLine(GLfloat lineWidth, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
 void drawFloor();
 
-class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate
+class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate, public cocos2d::CCMobileCameraBackDelegate
 {
 public:
 	// Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone

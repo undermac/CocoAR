@@ -1,18 +1,19 @@
 //
-//  ARcocosAppController.mm
-//  ARcocos
+//  CocoArTestAppController.mm
+//  CocoArTest
 //
-//  Created by mac on 14/06/11.
-//  Copyright __MyCompanyName__ 2011. All rights reserved.
+//  Created by Javier de la Peña Ojea on 08/08/11.
+//  Copyright Artifact 2011. All rights reserved.
 //
 #import <UIKit/UIKit.h>
-#import "ARcocosAppController.h"
+#import "AppController.h"
 #import "cocos2d.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
-#import "ArViewController.h"
 
-@implementation ARcocosAppController
+#import "RootViewController.h"
+
+@implementation AppController
 
 #pragma mark -
 #pragma mark Application lifecycle
@@ -22,19 +23,37 @@ static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
     
-  // Override point for customization after application launch.
+    // Override point for customization after application launch.
 
-  // Add the view controller's view to the window and display.
+    // Add the view controller's view to the window and display.
+    window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+    EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
+                                     pixelFormat: kEAGLColorFormatRGBA8
+                                     depthFormat: GL_DEPTH_COMPONENT16_OES
+                              preserveBackbuffer: NO
+                                      sharegroup: nil
+                                   multiSampling: NO
+                                 numberOfSamples: 0 ];
+    
+    // Use RootViewController manage EAGLView 
+    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
+    viewController.wantsFullScreenLayout = YES;
+    viewController.view = __glView;
+  
+    __glView.opaque = NO;
+    __glView.alpha = 1.0;
+    __glView.backgroundColor = [UIColor clearColor];
 
-  window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-  
-  ArViewController *mvc = [[ArViewController alloc] init];
-  
-  [window addSubview:mvc.view];
-  [window makeKeyAndVisible];
-  
-  return YES;
+    // Set RootViewController to window
+    window.rootViewController = viewController;
+    [window makeKeyAndVisible];
+
+    [[UIApplication sharedApplication] setStatusBarHidden: YES];
+    
+    cocos2d::CCApplication::sharedApplication().run();
+    return YES;
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
@@ -90,3 +109,4 @@ static AppDelegate s_sharedApplication;
 
 
 @end
+

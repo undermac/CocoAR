@@ -97,6 +97,7 @@ bool ArScene::init()
 	this->setIsAccelerometerEnabled(true);
   
   CCLocationManager::sharedCCLocationManager()->addDelegate(this);
+  CCMobileCameraBackManager::sharedCCMobileCameraBackManager()->addDelegate(this);
 
 
 	/////////////////////////////
@@ -142,7 +143,6 @@ bool ArScene::init()
   CCDirector::sharedDirector()->resume();
   CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 	CCDirector::sharedDirector()->setDepthTest(true);
-  this->m_bIsRunning = true;
   this->setIsTouchEnabled(true);
   
 	return true;

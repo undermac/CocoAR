@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		59059E6A13F04C6D0038EB6C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59059E6713F04C690038EB6C /* AppController.mm */; };
+		59059E6B13F04C6D0038EB6C /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59059E6913F04C6C0038EB6C /* RootViewController.mm */; };
+		59059E7513F051CB0038EB6C /* CCMobileCameraBack_ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59059E7413F051CA0038EB6C /* CCMobileCameraBack_ios.mm */; };
+		59059E7913F052E40038EB6C /* CCMobileCameraBackWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59059E7813F052E30038EB6C /* CCMobileCameraBackWrapper.mm */; };
 		5971C3D813CC6D1200C5A891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3D713CC6D1200C5A891 /* QuartzCore.framework */; };
 		5971C3DA13CC6D1200C5A891 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3D913CC6D1200C5A891 /* OpenGLES.framework */; };
 		5971C3DC13CC6D1200C5A891 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3DB13CC6D1200C5A891 /* OpenAL.framework */; };
@@ -133,9 +137,6 @@
 		5971C57513CC6D1500C5A891 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5971C57413CC6D1500C5A891 /* main.m */; };
 		5971C57F13CC6D1500C5A891 /* AppDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */; };
 		5971C59713CC6D6800C5A891 /* ArScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C58F13CC6D6800C5A891 /* ArScene.cpp */; };
-		5971C59813CC6D6800C5A891 /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5971C59113CC6D6800C5A891 /* ArViewController.mm */; };
-		5971C59913CC6D6800C5A891 /* ARView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5971C59313CC6D6800C5A891 /* ARView.mm */; };
-		5971C59A13CC6D6800C5A891 /* ARcocosAppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5971C59513CC6D6800C5A891 /* ARcocosAppController.mm */; };
 		5971C5AD13CC6D8B00C5A891 /* poste.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5971C59B13CC6D8B00C5A891 /* poste.obj */; };
 		5971C5AE13CC6D8B00C5A891 /* poste.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 5971C59C13CC6D8B00C5A891 /* poste.mtl */; };
 		5971C5AF13CC6D8B00C5A891 /* imagen_poste.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C59D13CC6D8B00C5A891 /* imagen_poste.png */; };
@@ -270,6 +271,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		59059E6613F04C680038EB6C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
+		59059E6713F04C690038EB6C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
+		59059E6813F04C6B0038EB6C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		59059E6913F04C6C0038EB6C /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RootViewController.mm; sourceTree = "<group>"; };
+		59059E7113F050DC0038EB6C /* CCMobileCameraBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMobileCameraBack.h; sourceTree = "<group>"; };
+		59059E7213F0516B0038EB6C /* CCMobileCameraBack_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMobileCameraBack_platform.h; sourceTree = "<group>"; };
+		59059E7313F051A90038EB6C /* CCMobileCameraBack_ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMobileCameraBack_ios.h; sourceTree = "<group>"; };
+		59059E7413F051CA0038EB6C /* CCMobileCameraBack_ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCMobileCameraBack_ios.mm; sourceTree = "<group>"; };
+		59059E7713F052DA0038EB6C /* CCMobileCameraBackWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMobileCameraBackWrapper.h; sourceTree = "<group>"; };
+		59059E7813F052E30038EB6C /* CCMobileCameraBackWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCMobileCameraBackWrapper.mm; sourceTree = "<group>"; };
+		59059E7A13F05A2F0038EB6C /* CCMobileCameraBackDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMobileCameraBackDelegate.h; sourceTree = "<group>"; };
 		5971C3D313CC6D1200C5A891 /* cocoAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5971C3D713CC6D1200C5A891 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5971C3D913CC6D1200C5A891 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -534,12 +546,6 @@
 		5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = Classes/AppDelegate.cpp; sourceTree = "<group>"; };
 		5971C58E13CC6D6800C5A891 /* ArScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArScene.h; sourceTree = "<group>"; };
 		5971C58F13CC6D6800C5A891 /* ArScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArScene.cpp; sourceTree = "<group>"; };
-		5971C59013CC6D6800C5A891 /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
-		5971C59113CC6D6800C5A891 /* ArViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArViewController.mm; sourceTree = "<group>"; };
-		5971C59213CC6D6800C5A891 /* ARView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARView.h; sourceTree = "<group>"; };
-		5971C59313CC6D6800C5A891 /* ARView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARView.mm; sourceTree = "<group>"; };
-		5971C59413CC6D6800C5A891 /* ARcocosAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARcocosAppController.h; sourceTree = "<group>"; };
-		5971C59513CC6D6800C5A891 /* ARcocosAppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ARcocosAppController.mm; sourceTree = "<group>"; };
 		5971C59B13CC6D8B00C5A891 /* poste.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = poste.obj; sourceTree = "<group>"; };
 		5971C59C13CC6D8B00C5A891 /* poste.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = poste.mtl; sourceTree = "<group>"; };
 		5971C59D13CC6D8B00C5A891 /* imagen_poste.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imagen_poste.png; sourceTree = "<group>"; };
@@ -710,6 +716,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59059E7613F051E40038EB6C /* CameraBack */ = {
+			isa = PBXGroup;
+			children = (
+				59059E7113F050DC0038EB6C /* CCMobileCameraBack.h */,
+				59059E7213F0516B0038EB6C /* CCMobileCameraBack_platform.h */,
+				59059E7A13F05A2F0038EB6C /* CCMobileCameraBackDelegate.h */,
+				59059E7313F051A90038EB6C /* CCMobileCameraBack_ios.h */,
+				59059E7413F051CA0038EB6C /* CCMobileCameraBack_ios.mm */,
+				59059E7713F052DA0038EB6C /* CCMobileCameraBackWrapper.h */,
+				59059E7813F052E30038EB6C /* CCMobileCameraBackWrapper.mm */,
+			);
+			name = CameraBack;
+			sourceTree = "<group>";
+		};
 		5971C3C813CC6D1100C5A891 = {
 			isa = PBXGroup;
 			children = (
@@ -1246,12 +1266,10 @@
 		5971C57313CC6D1500C5A891 /* ios */ = {
 			isa = PBXGroup;
 			children = (
-				5971C59013CC6D6800C5A891 /* ArViewController.h */,
-				5971C59113CC6D6800C5A891 /* ArViewController.mm */,
-				5971C59213CC6D6800C5A891 /* ARView.h */,
-				5971C59313CC6D6800C5A891 /* ARView.mm */,
-				5971C59413CC6D6800C5A891 /* ARcocosAppController.h */,
-				5971C59513CC6D6800C5A891 /* ARcocosAppController.mm */,
+				59059E6613F04C680038EB6C /* AppController.h */,
+				59059E6713F04C690038EB6C /* AppController.mm */,
+				59059E6813F04C6B0038EB6C /* RootViewController.h */,
+				59059E6913F04C6C0038EB6C /* RootViewController.mm */,
 				5971C57413CC6D1500C5A891 /* main.m */,
 			);
 			name = ios;
@@ -1266,6 +1284,7 @@
 				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
 				5971C5E013CC6DDA00C5A891 /* tinyXML */,
 				5971C5C913CC6DAD00C5A891 /* Engine3d */,
+				59059E7613F051E40038EB6C /* CameraBack */,
 				5971C5BF13CC6D9700C5A891 /* Location */,
 				5971C57313CC6D1500C5A891 /* ios */,
 			);
@@ -1765,9 +1784,6 @@
 				5971C57513CC6D1500C5A891 /* main.m in Sources */,
 				5971C57F13CC6D1500C5A891 /* AppDelegate.cpp in Sources */,
 				5971C59713CC6D6800C5A891 /* ArScene.cpp in Sources */,
-				5971C59813CC6D6800C5A891 /* ArViewController.mm in Sources */,
-				5971C59913CC6D6800C5A891 /* ARView.mm in Sources */,
-				5971C59A13CC6D6800C5A891 /* ARcocosAppController.mm in Sources */,
 				5971C5C713CC6DA800C5A891 /* CCLocationManager_ios.mm in Sources */,
 				5971C5C813CC6DA800C5A891 /* LocationDelegateWrapper.mm in Sources */,
 				5971C5D913CC6DC200C5A891 /* MathLib.cpp in Sources */,
@@ -1780,6 +1796,10 @@
 				5971C5E813CC6DFF00C5A891 /* tinyxmlerror.cpp in Sources */,
 				5971C5E913CC6DFF00C5A891 /* tinyxmlparser.cpp in Sources */,
 				5971C5EA13CC6DFF00C5A891 /* tinystr.cpp in Sources */,
+				59059E6A13F04C6D0038EB6C /* AppController.mm in Sources */,
+				59059E6B13F04C6D0038EB6C /* RootViewController.mm in Sources */,
+				59059E7513F051CB0038EB6C /* CCMobileCameraBack_ios.mm in Sources */,
+				59059E7913F052E40038EB6C /* CCMobileCameraBackWrapper.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
