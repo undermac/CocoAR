@@ -36,14 +36,9 @@
     __glView.alpha = 1.0;
     __glView.backgroundColor = [UIColor clearColor];
     
-    [self addSubview:__glView];
+    [__glView setMultipleTouchEnabled:YES];
     
-    //with no functionality at the moment
-//    UIButton *button = [UIButton
-//                        buttonWithType:UIButtonTypeRoundedRect];
-//    [button setTitle:@"Scan Now" forState:UIControlStateNormal];
-//    button.frame = CGRectMake(0, 430, 320, 40);
-//    [self addSubview:button];
+    [self addSubview:__glView];
   }
   return self;
 }

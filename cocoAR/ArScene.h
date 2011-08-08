@@ -17,7 +17,7 @@ void test1Init();
 void test1();
 void test2Init();
 void test2();
-void ccDraw3DLine(GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
+void ccDraw3DLine(GLfloat lineWidth, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
 void drawFloor();
 
 class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate
@@ -37,6 +37,14 @@ public:
   void arUpdate(cocos2d::ccTime dt);
   
   void didAccelerate(cocos2d::CCAcceleration* acceleration);
+  
+	void ccTouchesBegan(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent);
+	void ccTouchesMoved(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent);
+	void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
+  
+  
+  
+  void menuCloseCallback(CCObject* pSender);
   
   void updateLocation(cocos2d::CCLocation* loc);
   void updateHeading(cocos2d::CCHeading* newHeading);

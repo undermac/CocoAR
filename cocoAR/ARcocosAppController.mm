@@ -32,8 +32,6 @@ static AppDelegate s_sharedApplication;
   
   [window addSubview:mvc.view];
   [window makeKeyAndVisible];
-
-  
   
   return YES;
 }

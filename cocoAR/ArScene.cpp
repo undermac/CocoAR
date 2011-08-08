@@ -6,9 +6,7 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
-
-
-//[TODO] Geolocalización de objetos -> 2 días
+//[DONE] Geolocalización de objetos -> 2 días
 //[TODO] Solucionar BUG -Mirando al Sur- Que lo arrelé el Mac del futuro.
 //[TODO] Click en objetos -> 3 días
 //[TODO] Desplegar texto -> 2 días
@@ -48,6 +46,7 @@
 #define	MYMESH06 "war3_buildingsmall.obj"
 #define	MYMESH07 "flecha.obj"
 #define	MYMESH08 "poste.obj"
+#define TAG_CLOSE_BUTTON 95
 
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
@@ -94,9 +93,28 @@ bool ArScene::init()
 		return false;
 	}
   
-	this->setIsTouchEnabled(true);
+
 	this->setIsAccelerometerEnabled(true);
+  
   CCLocationManager::sharedCCLocationManager()->addDelegate(this);
+
+
+	/////////////////////////////
+	// 2. add a menu item with "X" image, which is clicked to quit the program
+	//    you may modify it.
+  
+	// add a "close" icon to exit the progress. it's an autorelease object
+	CCMenuItemImage *pCloseItem = CCMenuItemImage::itemFromNormalImage(
+                                                                     "CloseNormal.png",
+                                                                     "CloseSelected.png",
+                                                                     this,
+                                                                     menu_selector(ArScene::menuCloseCallback) );
+	pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
+  
+	// create menu, it's an autorelease object
+	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
+	pMenu->setPosition( CCPointZero );
+	this->addChild(pMenu, 1);
   
 //  CCSprite *pig = CCSprite::spriteWithFile("pigrate.png");
 //  this->addChild(pig,1);
@@ -113,10 +131,10 @@ bool ArScene::init()
   testInfo3->setPosition(ccp(160,450));
   this->addChild(testInfo3,1);
   
-  test1Init();
+
 
   testInit();
-
+  test1Init();
   test2Init();
   
   this->schedule( schedule_selector(ArScene::arUpdate) );
@@ -124,12 +142,15 @@ bool ArScene::init()
   CCDirector::sharedDirector()->resume();
   CCDirector::sharedDirector()->setProjection(kCCDirectorProjection3D);
 	CCDirector::sharedDirector()->setDepthTest(true);
-	
+  this->m_bIsRunning = true;
+  this->setIsTouchEnabled(true);
+  
 	return true;
 }
 
 void ArScene::arUpdate(ccTime dt)
 {
+  
   MdlModel[0].AdvanceFrame(dt*2);
 	MdlModel[1].AdvanceFrame(dt*2);
 	MdlModel[2].AdvanceFrame(dt*2);
@@ -175,31 +196,31 @@ void ArScene::visit()
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
   
-  glColor4f(1.0f,1.0f,1.0f,1.0f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, XEye, -zUp*80, ZEye);
+//  glColor4f(1.0f,1.0f,1.0f,1.0f);
+//  ccDraw3DLine(5.0f, 0.0f, 0.0f, 0.0f, XEye, -zUp*80, ZEye);
   
 //  glColor4f(0.0f,0.0f,0.0f,1.0f);
 //  ccDraw3DLine(XEye, -zUp*80, ZEye, xUp*30, yUp*30, 0.0);
   
   //Y
   glColor4f(1.0f,0.0f,0.0f,0.8f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, 1000.0f, 0.0f, 0.0f);
+  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
   
   //Este & X
   glColor4f(0.0f,1.0f,0.0f,0.8f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 1000.0f, 0.0f);
+  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 0.0f, 1500.0f, 0.0f);
   
   //Norte & Z
   glColor4f(0.0f,0.0f,1.0f,0.8f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1000.0f);
+  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1500.0f);
 
   //Sur
   glColor4f(0.0f,1.0f,1.0f,0.8f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1000.0f);
+  ccDraw3DLine(5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1500.0f);
 
   //Oeste
   glColor4f(1.0f,0.0f,1.0f,0.8f);
-  ccDraw3DLine(0.0f, 0.0f, 0.0f, -1000.0f, 0.0f, 0.0f);
+  ccDraw3DLine(5.0f, 0.0f, 0.0f, 0.0f, -1500.0f, 0.0f, 0.0f);
 
   
   glColor4f(1.0f,1.0f,1.0f,0.95f);
@@ -253,9 +274,6 @@ void ArScene::didAccelerate(cocos2d::CCAcceleration* acceleration){
   yUp = - accelY;
   zUp = - accelZ;
   
-//  eulerAngles[0] = atan2(accelZ, -accelY)*(180/_pi);  
-//  eulerAngles[2] = atan2(accelX, -accelY)*(180/_pi);
-
   eulerAngles[0] = atan2(accelZ, -accelY)*(180/_pi);  
   eulerAngles[2] = atan2(accelX, -accelY)*(180/_pi);
   
@@ -263,12 +281,11 @@ void ArScene::didAccelerate(cocos2d::CCAcceleration* acceleration){
   YEye = accelZ*50;
   ZEye = cos(eulerAngles[1]*(_pi/180))*50;
   
-//  printf("\nRoll: %f, pitch: %f, Yaw: %f, tilt: %f", atan2(accelY, accelX)*(180/_pi), atan2(accelY, accelZ)*(180/_pi), eulerAngles[1], tilt);
-//  printf("\nAccelX: %f, AccelY: %f, AccelZ: %f ",accelX,accelY,accelZ);
 }
 
 void ArScene::updateLocation(CCLocation* newLocation){
   this->userLocation = *newLocation;
+
 }
 
 void ArScene::updateHeading(CCHeading* newHeading){
@@ -279,7 +296,6 @@ void ArScene::updateHeading(CCHeading* newHeading){
 	float adjustment = tilt;			//This needs to be calibrated properly.
 	
 	//Adjust the heading due to our tilt and way we hold the phone.
-//  float compassBearing = newHeading->trueHeading;
     float compassBearing = newHeading->magneticHeading;
   if (compassBearing == -1.0f) {
     compassBearing = newHeading->magneticHeading;
@@ -311,24 +327,33 @@ void ArScene::updateHeading(CCHeading* newHeading){
   
   eulerAngles[1] = adjustedHeading;
   
-//  printf("\nUserHeading: %f",adjustedHeading);
-  
-//  XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
-//  ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(eulerAngles[2]*(_pi/180)))*50;
-  
   XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
   ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
-
-//  XEye = -sin(eulerAngles[1]*(_pi/180));
-//  ZEye = cos(eulerAngles[1]*(_pi/180));
-  
-//  YEye = (sin(eulerAngles[0]*(_pi/180)))*50;
 }
+
 void ArScene::LocationManagerDestroy(void){
   
 }
 void ArScene::LocationManagerKeep(void){
 }
+
+void ArScene::ccTouchesBegan(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent){
+    printf("\nccTouchesBegan");
+}
+void ArScene::ccTouchesMoved(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent){
+  printf("\nccTouchesMoved");
+}
+
+void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
+  printf("\nTouch Ended");
+
+}
+
+void ArScene::menuCloseCallback(CCObject* pSender)
+{
+  printf("\nmenuCloseCallback");
+}
+
 
 void test1Init(){
   
@@ -463,11 +488,14 @@ void ArScene::testInit()
 //  an3dObject->latitude = 42.34511443500709f; // Universidad 
 //  an3dObject->longitude = -7.856292128562927f;
   
-//  an3dObject->latitude = 42.34516201314594; // Universidad Norte 
+//  an3dObject->latitude = 42.34516201314594f; // Universidad Norte 
 //  an3dObject->longitude = -7.855787873268127f;
   
-  an3dObject->latitude = 42.344466179278236; // JJ 
+  an3dObject->latitude = 42.344466179278236f; // JJ 
   an3dObject->longitude = -7.855653762817383f;
+  
+//  an3dObject->latitude = 42.34146865303537f; // Fuente san lazaro 
+//  an3dObject->longitude = -7.863861322402954f;
   
 //  an3dObject->latitude = 42.3037216984154f; // Orense oeste 
 //  an3dObject->longitude = -8.2342529296875f;
@@ -505,17 +533,14 @@ void ArScene::test()
     double angleC,x,z;
     if (bearing*(180/_pi) > 0.0f && bearing*(180/_pi) < 90.f) {//1
       angleC = 90.0f - bearing*(180/_pi);
-      // DONE CREO !
       x = - cos(angleC*(_pi/180))*distanceValue;
       z = sin(angleC*(_pi/180))*distanceValue;
     }else if (bearing*(180/_pi) > 90.0f && bearing*(180/_pi) < 180.0f){ //2
-      // DONE
       angleC = 180.0f - bearing*(180/_pi);
       x = -sin(angleC*(_pi/180))*distanceValue;
       z = -cos(angleC*(_pi/180))*distanceValue;
     }else if (bearing*(180/_pi) > 180.0f && bearing*(180/_pi) < 270.0f){ //3
       angleC = 270.0f - bearing*(180/_pi);
-      // DONE
       x = cos(angleC*(_pi/180))*distanceValue;
       z = - sin(angleC*(_pi/180))*distanceValue;
     }else{ //4
@@ -537,7 +562,6 @@ void ArScene::test()
 //    printf("\nUserHeading: %f",eulerAngles[1]);
     
     glPushMatrix();
-//    glTranslatef(myAr3dObjects[i].xTranslate, myAr3dObjects[i].yTranslate, myAr3dObjects[i].zTranslate);
     glTranslatef(x, myAr3dObjects[i].yTranslate, z);
     glScalef(myAr3dObjects[i].scale, myAr3dObjects[i].scale, myAr3dObjects[i].scale );
     glRotatef(myAr3dObjects[i].xRotate, 1, 0, 0);
@@ -548,7 +572,7 @@ void ArScene::test()
   }
 }
 
-void ccDraw3DLine(GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
+void ccDraw3DLine(GLfloat lineWidth,GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
 {
 	ccVertex3F vertices[2] = 
   {
@@ -565,7 +589,7 @@ void ccDraw3DLine(GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDe
 	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
-  glLineWidth (10.0f);
+  glLineWidth (lineWidth);
 	glDrawArrays(GL_LINES, 0, 2);
 	
 	// restore default state
