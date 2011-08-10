@@ -37,6 +37,8 @@ namespace cocos2d {
     double rawX;
     double rawY;
     double rawZ;
+    
+    double timestamp;
   } CCHeading;
 
   class CCLocationManagerDelegate

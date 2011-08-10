@@ -82,6 +82,9 @@ static LocationDispatcher* s_pLocationDispatcher;
   newLocationPoint.longitude = newLocation.coordinate.longitude;
   newLocationPoint.latitude = newLocation.coordinate.latitude;
   
+  newLocationPoint.horizontalAccuracy = newLocation.horizontalAccuracy;
+  newLocationPoint.verticalAccuracy = newLocation.verticalAccuracy;
+  
   for (LocationDelegateWrapper *wrapper in delegateWrappers) {
     [wrapper didUpdateLocation:&newLocationPoint];
   }

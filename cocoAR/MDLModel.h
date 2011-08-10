@@ -2,6 +2,7 @@
 #define _MDLMODEL_H_
 
 #include "MdlFormat.h"
+#include "Geo3DObject.h"
 #include <map>
 #include <vector>
 
@@ -125,7 +126,7 @@ public:
 };
 
 
-class TMDLModel
+class TMDLModel: public CCARGeneric3DModel
 {
 	std::vector<myMeshVBO> m_vecMeshVBO;
 
@@ -145,7 +146,10 @@ protected:
 	tagMDLSeqHeader	*AnimationHeader[32];	// Animation header
 
 public:
+  TMDLModel();
+  TMDLModel(std::string modelName);
 	void Init(char *Filename);
+  void Draw();
 	void DrawModel();
 	void AdvanceFrame(float Time);
 	void ExtractBoundBox(float *Minimums, float *Maximums);

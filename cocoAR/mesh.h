@@ -4,6 +4,7 @@
 //#include "base.h"
 
 #include "MDLModel.h"
+#include "Geo3DObject.h"
 
 struct Obj_Material
 {	
@@ -70,10 +71,11 @@ public:
 	void RenderVBO();
 };
 
-class Mesh
+class Mesh : public CCARGeneric3DModel
 {
 public:
 	Mesh();
+  Mesh(std::string modelName);
 	~Mesh();
 
 	bool m_bVBOInit;
@@ -93,7 +95,8 @@ public:
 	void LoadModel(char* filename);	
 	void SetMaterial(float r, float g, float b, float a);
 	void SetAutoIlum(int set);
-	virtual void Draw();
+  void Draw();
+  void AdvanceFrame(float Time);
 	virtual void DrawTriangles();
 	void MorphWith(Mesh* other, Mesh* dest, float p);
 	void DisplaceUV(float U, float V);

@@ -33,7 +33,7 @@ static MobileCameraBackDispacher* s_pMobileCameraBackDispacher;
   camera.showsCameraControls = NO;
 
   
-  // [OMG CODE HARDCORE BUG ]
+// [OMG CODE HARDCORE BUG ]
 //  UIView *overView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
 //  camera.cameraOverlayView = overView;
 //  overView.userInteractionEnabled = YES;

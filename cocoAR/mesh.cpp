@@ -159,6 +159,11 @@ Mesh::Mesh()
 	m_pCurrentMaterial=NULL;
 }
 
+Mesh::Mesh(std::string modelName){
+  modelName = modelName;
+  Mesh();
+}
+
 Mesh::~Mesh()
 {
 }
@@ -664,3 +669,4 @@ void Mesh::LoadModel(char* filename)
 
 	fclose(file);
 }
+void Mesh::AdvanceFrame(float Time){}

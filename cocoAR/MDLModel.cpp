@@ -191,6 +191,11 @@ void TMDLModel::Init(char *Filename)
 	CCLOG(" END LOAD ");
 }
 
+void TMDLModel::Draw()
+{
+  DrawModel();
+}
+
 void TMDLModel::DrawModel()
 {
 	TransformVertPtr	= &TransformVertices[0];
@@ -566,6 +571,12 @@ tagMDLSeqHeader *TMDLModel::LoadDemandSequences(char *Filename)
 
 	return	(tagMDLSeqHeader *)Buffer;
 }
+
+TMDLModel::TMDLModel(std::string modelName){
+  modelName = modelName;
+  TMDLModel();
+}
+TMDLModel::TMDLModel(){}
 
 void TMDLModel::CalcBoneQuaternion(long Frame, float Value, tagMDLBone *Bone, tagAnimation *Anim, 
 								   float *Q)
