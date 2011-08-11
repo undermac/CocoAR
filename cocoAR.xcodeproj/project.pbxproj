@@ -23,7 +23,6 @@
 		5971C3E613CC6D1200C5A891 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3E513CC6D1200C5A891 /* CoreGraphics.framework */; };
 		5971C3EA13CC6D1200C5A891 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3E913CC6D1200C5A891 /* CloseNormal.png */; };
 		5971C3EC13CC6D1200C5A891 /* CloseSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3EB13CC6D1200C5A891 /* CloseSelected.png */; };
-		5971C3EE13CC6D1200C5A891 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3ED13CC6D1200C5A891 /* Default.png */; };
 		5971C3F013CC6D1200C5A891 /* HelloWorld.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3EF13CC6D1200C5A891 /* HelloWorld.png */; };
 		5971C3F213CC6D1200C5A891 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3F113CC6D1200C5A891 /* Icon-72.png */; };
 		5971C3F413CC6D1200C5A891 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 5971C3F313CC6D1200C5A891 /* Icon-Small-50.png */; };
@@ -270,6 +269,9 @@
 		5971C6B413CC6E6300C5A891 /* zombiet.mdl in Resources */ = {isa = PBXBuildFile; fileRef = 5971C65113CC6E6300C5A891 /* zombiet.mdl */; };
 		5971C6B613CC6EF400C5A891 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C6B513CC6EF400C5A891 /* MapKit.framework */; };
 		5971C6B813CC6EFA00C5A891 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C6B713CC6EFA00C5A891 /* CoreLocation.framework */; };
+		5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F013F3262D0019F9A1 /* coco 5757.png */; };
+		5996E9F413F326960019F9A1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F313F326960019F9A1 /* Default.png */; };
+		5996E9F613F32C610019F9A1 /* icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F513F32C610019F9A1 /* icono.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -698,6 +700,9 @@
 		5971C65113CC6E6300C5A891 /* zombiet.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = zombiet.mdl; sourceTree = "<group>"; };
 		5971C6B513CC6EF400C5A891 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5971C6B713CC6EFA00C5A891 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5996E9F013F3262D0019F9A1 /* coco 5757.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coco 5757.png"; sourceTree = "<group>"; };
+		5996E9F313F326960019F9A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		5996E9F513F32C610019F9A1 /* icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -738,6 +743,9 @@
 		5971C3C813CC6D1100C5A891 = {
 			isa = PBXGroup;
 			children = (
+				5996E9F513F32C610019F9A1 /* icono.png */,
+				5996E9F313F326960019F9A1 /* Default.png */,
+				5996E9F013F3262D0019F9A1 /* coco 5757.png */,
 				5971C3E713CC6D1200C5A891 /* cocoAR */,
 				5971C3D613CC6D1200C5A891 /* Frameworks */,
 				5971C3D413CC6D1200C5A891 /* Products */,
@@ -1549,7 +1557,6 @@
 			files = (
 				5971C3EA13CC6D1200C5A891 /* CloseNormal.png in Resources */,
 				5971C3EC13CC6D1200C5A891 /* CloseSelected.png in Resources */,
-				5971C3EE13CC6D1200C5A891 /* Default.png in Resources */,
 				5971C3F013CC6D1200C5A891 /* HelloWorld.png in Resources */,
 				5971C3F213CC6D1200C5A891 /* Icon-72.png in Resources */,
 				5971C3F413CC6D1200C5A891 /* Icon-Small-50.png in Resources */,
@@ -1676,6 +1683,9 @@
 				5971C6B313CC6E6300C5A891 /* zombiegibs1.mdl in Resources */,
 				5971C6B413CC6E6300C5A891 /* zombiet.mdl in Resources */,
 				591B1DE613F16E07009F59B3 /* explosion17.png in Resources */,
+				5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */,
+				5996E9F413F326960019F9A1 /* Default.png in Resources */,
+				5996E9F613F32C610019F9A1 /* icono.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

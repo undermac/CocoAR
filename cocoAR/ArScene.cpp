@@ -119,13 +119,13 @@ bool ArScene::init()
 	pMenu->setPosition( CCPointZero );
 	this->addChild(pMenu, 1);
   
-  testInfo1 = CCLabelTTF::labelWithString("00.0", LABEL_FONT_TYPE, 12);
+  testInfo1 = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
   testInfo1->setPosition(ccp(160,450));
   this->addChild(testInfo1,1);
-  testInfo2 = CCLabelTTF::labelWithString("00.0", LABEL_FONT_TYPE, 12);
+  testInfo2 = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
   testInfo2->setPosition(ccp(160,440));
   this->addChild(testInfo2,1);
-  testInfo3 = CCLabelTTF::labelWithString("00.0", LABEL_FONT_TYPE, 12);
+  testInfo3 = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
   testInfo3->setPosition(ccp(160,430));
   this->addChild(testInfo3,1);
   
@@ -134,13 +134,13 @@ bool ArScene::init()
   pLabelSize.height = 20;
   pLabelSize.width = pLabelSize.width - 10;
   
-  pLabelLocation = CCLabelTTF::labelWithString("00.0", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
+  pLabelLocation = CCLabelTTF::labelWithString("", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
   pLabelLocation->setPosition(ccp(160,25));
   
-  pLabelGPS = CCLabelTTF::labelWithString("00.0", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
+  pLabelGPS = CCLabelTTF::labelWithString("", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
   pLabelGPS->setPosition(ccp(160,10));
   
-  pLabelHeading = CCLabelTTF::labelWithString("00.0" ,LABEL_FONT_TYPE, 18);
+  pLabelHeading = CCLabelTTF::labelWithString("" ,LABEL_FONT_TYPE, 18);
   pLabelHeading->setPosition(ccp(160,470));
   
   this->addChild(pLabelLocation,1);
@@ -214,7 +214,9 @@ void ArScene::visit()
   }else{
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
-  
+//  #define GL_PROJECTION_MATRIX              0x0BA7
+//  
+//  glGetFloatv(GL_MODELVIEW_MATRIX, model_view.m);
   
   //Y
   glColor4f(1.0f,0.0f,0.0f,0.8f);
@@ -366,10 +368,6 @@ void ArScene::ccTouchesMoved(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent){
 
 void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
   printf("\nTouch Ended");
-  if (testEnable)
-    testEnable = 0;
-  else testEnable = 1;
-  printf("%i", testEnable);
 }
 
 void ArScene::menuCloseCallback(CCObject* pSender)
@@ -389,78 +387,21 @@ void ArScene::loadTest()
   objects3D[4]->xRotate = 270.0f;
   objects3D.push_back(new CCARGeo3DObject(MYMESH04, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
   objects3D.push_back(new CCARGeo3DObject(MYMESH05, CCARType_Mesh, 0.1f ,-7.862091064453125f ,  42.348395259793f));// Orense rio
+  objects3D.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f));
+  objects3D.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, -30.0f,0.0f,45.0f));
+  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-300.0f));
+  objects3D.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 700.0f,0.0f,100.0f));
+  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-1200.0f));
+//  objects3D.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.1f, -130.0f,300.0f,-1300.0f));
+//  objects3D[12]->yTranslate = 200;
+//  objects3D[12]->xRotate = 270.0f;
+//  objects3D[12]->isRotating = false;
+  objects3D.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,0.5f, -500.0f,0.0f,-800.0f));
 }
 
 
 void ArScene::execTest()
 {
-  
-//  if (yrot3 > 360) {
-//    yrot3 = 0;
-//  }
-//  yrot3 += 1.0f;	
-//  
-//  glPushMatrix();
-//  glTranslatef(300.0f, 300.0f, 200.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  glRotatef(30, 0, 1, 0);
-//  glRotatef(-90.0f, 1, 0, 0);
-//  models3D[0]->Draw();
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(-300.0f, 300.0f, 200.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  glRotatef(30, 0, 1, 0);
-//  glRotatef(-90.0f, 1, 0, 0);
-//  models3D[0]->Draw();
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(-300.0f, 300.0f, -200.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  glRotatef(30, 0, 1, 0);
-//  glRotatef(-90.0f, 1, 0, 0);
-//  models3D[0]->Draw();
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(-100.0f, 0.0f, 1000.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  models3D[0]->Draw();
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(0.0f, 0.0f, 45.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  models3D[6]->Draw();
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(-200.0f, 0.0f, 500.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  models3D[1]->Draw();	
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(0.0f, 25.0f, 100.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3*3, 0, 1, 0);
-//  models3D[5]->Draw();	
-//	glPopMatrix();
-//  
-//  glPushMatrix();
-//  glTranslatef(200.0f, 0.0f, -1000.0f);
-//	glScalef( 0.5f, 0.5f, 0.5f );
-//  glRotatef(yrot3, 0, 1, 0);
-//  models3D[3]->Draw();
-//	glPopMatrix();
 
 }
 

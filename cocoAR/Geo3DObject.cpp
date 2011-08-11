@@ -25,18 +25,18 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
   zRotate = 0.0f;
   model3D = ArScene::loadModel(model, modelType);
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double scale){
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca){
   new (this) CCARObject3D::CCARObject3D(model,modelType);
-  scale = scale;
+  scale = sca;
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double scale, double x, double y, double z){
-  new (this) CCARObject3D::CCARObject3D(model,modelType,scale);
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca, double x, double y, double z){
+  new (this) CCARObject3D::CCARObject3D(model,modelType,sca);
   xTranslate = x;
   yTranslate = y;
   zTranslate = z;
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double scale, double x, double y, double z, double xRotate, double yRotate, double zRotate){
-  new (this) CCARObject3D(model,modelType,scale,x,y,z);
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca, double x, double y, double z, double xRotate, double yRotate, double zRotate){
+  new (this) CCARObject3D(model,modelType,sca,x,y,z);
   xRotate = xRotate;
   yRotate = yRotate;
   zRotate = zRotate;
