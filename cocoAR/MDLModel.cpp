@@ -537,8 +537,15 @@ tagMDLHeader *TMDLModel::LoadModel(char *Filename)
 				Texture[Loop].Width * Texture[Loop].Height + Texture[Loop].Index);
 		}
 	}
+  m_vtxMin.x = MDLHeader->BoundingBoxMinimum[0];		// Bounding box	
+	m_vtxMin.y = MDLHeader->BoundingBoxMinimum[1];	
+  m_vtxMin.z = MDLHeader->BoundingBoxMinimum[2];
 
-	return	(tagMDLHeader *)Buffer;
+	m_vtxMax.x = MDLHeader->BoundingBoxMaximum[0];		// Bounding box	
+	m_vtxMax.y = MDLHeader->BoundingBoxMaximum[1];	
+  m_vtxMax.z = MDLHeader->BoundingBoxMaximum[2];
+	
+  return	(tagMDLHeader *)Buffer;
 }
 
 tagMDLSeqHeader *TMDLModel::LoadDemandSequences(char *Filename)
@@ -1550,7 +1557,6 @@ void TMDLModel::DrawPoints(int bodyPart)
 
 					if (!pMeshVBO->m_bFirstPass)
 						pMeshVBO->AddVertex(p,numVertex); // Vertex to calculate on the strip if we have to rotate
-
 					numVertex++;
 				}						
 

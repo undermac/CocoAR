@@ -20,7 +20,7 @@ void test1Init();
 void test1();
 void test2Init();
 void test2();
-void ccDraw3DLine(GLfloat lineWidth, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
+void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
 void drawFloor();
 
 

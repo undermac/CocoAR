@@ -214,32 +214,31 @@ void ArScene::visit()
   }else{
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
-//  #define GL_PROJECTION_MATRIX              0x0BA7
-//  
+//  #define GL_PROJECTION_MATRIX              0x0BA7 
 //  glGetFloatv(GL_MODELVIEW_MATRIX, model_view.m);
   
+  ccColor4F r = ccc4FFromccc4B(ccc4(255.0f,0.0f,0.0f,230.0f));
+  ccColor4F g = ccc4FFromccc4B(ccc4(0.0f,255.0f,0.0f,230.0f));
+  ccColor4F b = ccc4FFromccc4B(ccc4(0.0f,255.0f,255.0f,230.0f));
+  ccColor4F a = ccc4FFromccc4B(ccc4(150.0f,255.0f,150.0f,230.0f));
+
+  
   //Y
-  glColor4f(1.0f,0.0f,0.0f,0.8f);
-  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
+//  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
   
   //Este & X
-  glColor4f(0.0f,1.0f,0.0f,0.8f);
-  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 0.0f, 1500.0f, 0.0f);
-  
-  //Norte & Z
-  glColor4f(0.0f,0.0f,1.0f,0.8f);
-  ccDraw3DLine(5.0f,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1500.0f);
-  
-  //Sur
-  glColor4f(0.0f,1.0f,1.0f,0.8f);
-  ccDraw3DLine(5.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1500.0f);
+  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
   
   //Oeste
-  glColor4f(1.0f,0.0f,1.0f,0.8f);
-  ccDraw3DLine(5.0f, 0.0f, 0.0f, 0.0f, -1500.0f, 0.0f, 0.0f);
+  ccDraw3DLine(5.0f,g ,0.0f, 0.0f, 0.0f, -1500.0f, 0.0f, 0.0f);
   
+  //Norte & Z
+  ccDraw3DLine(5.0f,b,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1500.0f);
   
-  glColor4f(1.0f,1.0f,1.0f,0.95f);
+  //Sur
+  ccDraw3DLine(5.0f,a,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1500.0f);
+  
+  glColor4f(1.0f,1.0f,1.0f,1.0f);
   
 	glFrontFace(GL_CCW);
 	glCullFace(GL_FRONT);
@@ -249,8 +248,6 @@ void ArScene::visit()
   for(unsigned int i=0; i< objects3D.size(); i++){
     objects3D[i]->draw();
   }
-  
-  glColor4f(0.5f,0.5f,0.5f,0.5f);
   drawFloor();
   
 	glDisable(GL_CULL_FACE);	
@@ -378,25 +375,24 @@ void ArScene::menuCloseCallback(CCObject* pSender)
 
 void ArScene::loadTest()
 {
-  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh, 1.5f, 0.0f, 0.0f, 500.0f));
-  objects3D.push_back(new CCARGeo3DObject(MYMESH08, CCARType_Mesh, 0.1f ,-7.855653762817383f ,  42.344466179278236f));//JJ
-  objects3D.push_back(new CCARGeo3DObject(MYMESH02, CCARType_Mesh, 0.1f ,-7.856292128562927f ,  42.34511443500709f));//Universidad
-  objects3D.push_back(new CCARGeo3DObject(MYMESH03, CCARType_Mesh, 0.1f ,-7.855787873268127 ,  42.34516201314594f));// Universidad Norte 
-  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.25f ,-7.863861322402954f ,  42.34146865303537f));// Fuente san lazaro
-  objects3D[4]->yTranslate = 200;
-  objects3D[4]->xRotate = 270.0f;
-  objects3D.push_back(new CCARGeo3DObject(MYMESH04, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
-  objects3D.push_back(new CCARGeo3DObject(MYMESH05, CCARType_Mesh, 0.1f ,-7.862091064453125f ,  42.348395259793f));// Orense rio
-  objects3D.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f));
-  objects3D.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, -30.0f,0.0f,45.0f));
-  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-300.0f));
-  objects3D.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 700.0f,0.0f,100.0f));
-  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-1200.0f));
-//  objects3D.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.1f, -130.0f,300.0f,-1300.0f));
-//  objects3D[12]->yTranslate = 200;
-//  objects3D[12]->xRotate = 270.0f;
-//  objects3D[12]->isRotating = false;
-  objects3D.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,0.5f, -500.0f,0.0f,-800.0f));
+//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh, 1.5f, 0.0f, 0.0f, 500.0f));
+//  objects3D.push_back(new CCARGeo3DObject(MYMESH08, CCARType_Mesh, 0.1f ,-7.855653762817383f ,  42.344466179278236f));//JJ
+//  objects3D.push_back(new CCARGeo3DObject(MYMESH02, CCARType_Mesh, 0.1f ,-7.856292128562927f ,  42.34511443500709f));//Universidad
+//  objects3D.push_back(new CCARGeo3DObject(MYMESH03, CCARType_Mesh, 0.1f ,-7.855787873268127 ,  42.34516201314594f));// Universidad Norte 
+//  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.25f ,-7.863861322402954f ,  42.34146865303537f));// Fuente san lazaro
+//  objects3D[4]->yTranslate = 200;
+//  objects3D[4]->xRotate = 270.0f;
+//  objects3D.push_back(new CCARGeo3DObject(MYMESH04, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
+//  objects3D.push_back(new CCARGeo3DObject(MYMESH05, CCARType_Mesh, 0.1f ,-7.862091064453125f ,  42.348395259793f));// Orense rio
+//  objects3D.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f));
+//  objects3D.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, -30.0f,0.0f,45.0f));
+//  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-300.0f));
+//  objects3D.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 700.0f,0.0f,100.0f));
+//  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-1200.0f));
+//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,100.0f));
+//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 100.0f,0.0,0.0f));
+//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, -100.0f,0.0f,0.0f));
+  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,-100.0f));
 }
 
 
@@ -405,7 +401,7 @@ void ArScene::execTest()
 
 }
 
-void ccDraw3DLine(GLfloat lineWidth,GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
+void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
 {
 	ccVertex3F vertices[2] = 
   {
@@ -419,12 +415,14 @@ void ccDraw3DLine(GLfloat lineWidth,GLfloat xOrigin, GLfloat yOrigin, GLfloat zO
 	
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
   glLineWidth (lineWidth);
+  glColor4f(color.r, color.g, color.b, color.a);
 	glDrawArrays(GL_LINES, 0, 2);
 	
 	// restore default state
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnable(GL_TEXTURE_2D);	
+	glEnable(GL_TEXTURE_2D);
+  glColor4f(1.0f,1.0f,1.0f,1.0f);
 }
 
 void drawFloor(){
@@ -435,12 +433,14 @@ void drawFloor(){
     { 1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(), -1500.0f* CC_CONTENT_SCALE_FACTOR()},
     {-1500.0f* CC_CONTENT_SCALE_FACTOR(), 0.0f* CC_CONTENT_SCALE_FACTOR(), -1500.0f* CC_CONTENT_SCALE_FACTOR()},
   };
+  glColor4f(0.5f,0.5f,0.5f,0.5f);
   
   glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
   glVertexPointer(3, GL_FLOAT, 0, vertices);
   glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+  glColor4f(1.0f,1.0f,1.0f,1.0f);
 }
 
 

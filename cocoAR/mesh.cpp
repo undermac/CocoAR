@@ -596,7 +596,21 @@ void Mesh::LoadModel(char* filename)
 			{
 			case VERTEX:
 				{
-					fscanf(file, "%f %f %f \n", &p1, &p2, &p3);				
+					fscanf(file, "%f %f %f \n", &p1, &p2, &p3);
+          if (p1 > m_vtxMax.x) 
+            m_vtxMax.x = p1;
+          if (p2 > m_vtxMax.y)
+            m_vtxMax.y = p2;
+          if (p3 > m_vtxMax.z)
+            m_vtxMax.z = p3;
+          
+          if (p1 < m_vtxMin.x) 
+            m_vtxMin.x = p1;
+          if (p2 < m_vtxMin.y)
+            m_vtxMin.y = p2;
+          if (p3 < m_vtxMin.z)
+            m_vtxMin.z = p3;
+          
 					m_vecTempVertex.push_back(cocos2d::vertex3(p1,p2,p3));
 					break;
 				}

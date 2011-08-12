@@ -5,9 +5,12 @@
 //  Created by Javier de la Peña Ojea on 09/08/11.
 //  Copyright 2011 Artifact. All rights reserved.
 //
+#include "cocos2d.h"
 
 #ifndef cocoAR_Geo3DObject_h
 #define cocoAR_Geo3DObject_h
+
+
 
 typedef enum 
 {
@@ -18,12 +21,16 @@ typedef enum
 class CCARGeneric3DModel
 {
   public:
+  cocos2d::ccVertex3F m_vtxMax;
+  cocos2d::ccVertex3F m_vtxMin;
   void Init(char *Filename);
 	virtual void AdvanceFrame(float Time)=0;
   void LoadModel(char* filename);
   virtual void Draw()=0;
   void DrawModel();
   std::string modelName;
+  cocos2d::CCPoint covert3Dto2d();
+  void drawBox(GLfloat lineWidth, cocos2d::ccVertex3F maxVertex,cocos2d::ccVertex3F minVertex, cocos2d::ccColor4F color);
 };
 
 class CCARGeneric3DObject{
