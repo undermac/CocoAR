@@ -48,10 +48,9 @@
 #define	MYMESH01 "barracones.obj"
 #define	MYMESH02 "war3farm.obj"
 #define	MYMESH03 "war3mill.obj"
-#define	MYMESH04 "war3blacksmith.obj"
+#define	MYMESH04 "war3blacksmith.obj" //ERROR
 #define	MYMESH05 "war3barracks.obj"
 #define	MYMESH06 "war3_buildingsmall.obj"
-
 #define	MYMESH08 "poste.obj"
 
 //Funtions
@@ -71,6 +70,7 @@ static cocos2d::CCHeading userHeading;
 
 static vector<CCARGeneric3DModel*> models3D;
 static vector<CCARGeneric3DObject*> objects3D;
+static vector<CCARGeneric3DObject*> prueba3DObjects;
 
 USING_NS_CC;
 
@@ -261,6 +261,11 @@ void ArScene::visit()
 	glClear(GL_DEPTH_BUFFER_BIT);
   
   CCLayer::visit();
+  
+  ccDrawLine(objects3D[0]->m_vScreenBox[0], objects3D[0]->m_vScreenBox[1]);
+  ccDrawLine(objects3D[0]->m_vScreenBox[0], objects3D[0]->m_vScreenBox[2]);
+  ccDrawLine(objects3D[0]->m_vScreenBox[3], objects3D[0]->m_vScreenBox[1]);
+  ccDrawLine(objects3D[0]->m_vScreenBox[3], objects3D[0]->m_vScreenBox[2]);
 }
 
 #define KFilteringFactor 0.20f
@@ -363,8 +368,16 @@ void ArScene::ccTouchesMoved(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent){
   printf("\nccTouchesMoved");
 }
 
+int ite = 0;
+
 void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
   printf("\nTouch Ended");
+  objects3D.pop_back();
+  objects3D.push_back(prueba3DObjects[ite]);
+  
+  if (ite == prueba3DObjects.size()-1) ite = 0;
+  else
+    ite ++;
 }
 
 void ArScene::menuCloseCallback(CCObject* pSender)
@@ -392,7 +405,28 @@ void ArScene::loadTest()
 //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,100.0f));
 //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 100.0f,0.0,0.0f));
 //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, -100.0f,0.0f,0.0f));
-  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,-100.0f));
+
+//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,-100.0f));
+//  objects3D[1]->isRotating = false;
+
+//  objects3D.push_back(new CCARGeo3DObject(MESH_FLECHA, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
+//  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.3f ,-8.245668411254883f ,  43.494541820367246f));//Ferrol ria
+//  objects3D[0]->yTranslate = 200;
+//  objects3D[0]->xRotate = 270.0f;
+//  prueba3DObjects.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f)); // ERROR
+  
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects[0]->isRotating = false;
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,1.0f, 600.0f,0.0f,0.0f));
+//  prueba3DObjects.push_back(new CCARObject3D("CELSPDER.OBJ", CCARType_Mesh,50.0f, 50.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH03, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH05, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f,600.0f,0.0f,0.0f));
+//  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
+//  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
+  objects3D.push_back(prueba3DObjects[0]);
 }
 
 
@@ -408,7 +442,6 @@ void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, 
     {xOrigin * CC_CONTENT_SCALE_FACTOR(), yOrigin * CC_CONTENT_SCALE_FACTOR(), zOrigin * CC_CONTENT_SCALE_FACTOR()},
     {xDestination * CC_CONTENT_SCALE_FACTOR(), yDestination * CC_CONTENT_SCALE_FACTOR(), zDestination * CC_CONTENT_SCALE_FACTOR() },
   };
-  
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
@@ -422,7 +455,7 @@ void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, 
 	glEnableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);
-  glColor4f(1.0f,1.0f,1.0f,1.0f);
+  glColor4f(0.0f,0.0f,0.0f,1.0f);
 }
 
 void drawFloor(){

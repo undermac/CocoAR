@@ -282,7 +282,7 @@ void my_MaterialVBO::RenderVBO()
     glNormalPointer(GL_FLOAT, STRIDE,  (GLvoid*) offsetof( Obj_Vertex, normal));
 
 	glEnableClientState(GL_VERTEX_ARRAY);
-    glEnableClientState(GL_NORMAL_ARRAY);
+  glEnableClientState(GL_NORMAL_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);
@@ -597,6 +597,7 @@ void Mesh::LoadModel(char* filename)
 			case VERTEX:
 				{
 					fscanf(file, "%f %f %f \n", &p1, &p2, &p3);
+     
           if (p1 > m_vtxMax.x) 
             m_vtxMax.x = p1;
           if (p2 > m_vtxMax.y)

@@ -30,7 +30,7 @@ class CCARGeneric3DModel
   void DrawModel();
   std::string modelName;
   cocos2d::CCPoint covert3Dto2d();
-  void drawBox(GLfloat lineWidth, cocos2d::ccVertex3F maxVertex,cocos2d::ccVertex3F minVertex, cocos2d::ccColor4F color);
+  
 };
 
 class CCARGeneric3DObject{
@@ -47,7 +47,15 @@ class CCARGeneric3DObject{
   double zTranslate;
   virtual void draw()=0;
   bool isRotating;
-  int rotationValue;
+  bool showScreenBox;
+  bool m_bModelBox;
+  int rotationValue; // Cambiar a private
+  cocos2d::CCPoint m_vScreenBox[8];
+  void calculateScreenBox();
+  void drawBox(GLfloat lineWidth, cocos2d::ccColor4F color);
+  
+  private:
+    cocos2d::CCPoint covert3Dto2d(cocos2d::ccVertex3F);
 };
 
 class CCARObject3D: public CCARGeneric3DObject

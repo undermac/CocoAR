@@ -15,8 +15,11 @@
 #include "Matrix.h"
 #include "Vector.h"
 
+USING_NS_CC;
+
 CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
   isRotating = true;
+  m_bModelBox = true;
   scale = 1.0f;
   xTranslate = 0.0f;
   yTranslate = 0.0f;
@@ -58,16 +61,18 @@ void CCARObject3D::draw(){
   }else
     glRotatef(yRotate, 0, 1, 0);
   glRotatef(xRotate, 1, 0, 0);
-  glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
+  glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
   model3D->Draw();
   cocos2d::ccColor4F red = ccc4FFromccc4B(cocos2d::ccc4(255.0f,0.0f,0.0f,230.0f));
-  model3D->covert3Dto2d();
-  model3D->drawBox(3.0f,model3D->m_vtxMax,model3D->m_vtxMin, red);
+  if(m_bModelBox)
+    drawBox(3.0f, red);
+  calculateScreenBox();
   glPopMatrix();
 }
 
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, double lon, double lat){
   isRotating = true;
+  m_bModelBox = true;
   scale = 1.0f;
   xTranslate = 0.0f;
   yTranslate = 0.0f;
@@ -126,18 +131,57 @@ void CCARGeo3DObject::draw(){
     glRotatef(yRotate, 0, 1, 0);
   glRotatef(xRotate, 1, 0, 0);
   glRotatef(zRotate, 0, 0, 1);
-  glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+  glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
   model3D->Draw();
   cocos2d::ccColor4F g = ccc4FFromccc4B(cocos2d::ccc4(0.0f,255.0f,0.0f,230.0f));
-  model3D->covert3Dto2d();
-  model3D->drawBox(3.0f,model3D->m_vtxMax,model3D->m_vtxMin, g);
+  if(m_bModelBox)
+    drawBox(3.0f, g);
+  calculateScreenBox();
   glPopMatrix();
 }
 
-void CCARGeneric3DModel::drawBox(GLfloat lineWidth, cocos2d::ccVertex3F maxVertex,cocos2d::ccVertex3F minVertex, cocos2d::ccColor4F color)
+void CCARGeneric3DObject::calculateScreenBox(){
+
+
+  cocos2d::ccVertex3F boxVertex[8] = 
+  {
+    { model3D->m_vtxMin.x, model3D->m_vtxMin.y,  model3D->m_vtxMin.z},//000
+    { model3D->m_vtxMin.x, model3D->m_vtxMin.y,  model3D->m_vtxMax.z},//001
+    { model3D->m_vtxMin.x, model3D->m_vtxMax.y,  model3D->m_vtxMin.z},//010
+    { model3D->m_vtxMin.x, model3D->m_vtxMax.y,  model3D->m_vtxMax.z},//011
+    { model3D->m_vtxMax.x, model3D->m_vtxMin.y,  model3D->m_vtxMin.z},//100
+    { model3D->m_vtxMax.x, model3D->m_vtxMin.y,  model3D->m_vtxMax.z},//101
+    { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMin.z},//110
+    { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMax.z},//111
+  };
+
+  cocos2d::CCPoint maxPoint = covert3Dto2d(boxVertex[0]);; 
+  cocos2d::CCPoint minPoint = maxPoint;
+  
+  for (unsigned int i=1; i < 8;i++ ) {
+    cocos2d::CCPoint aux = covert3Dto2d(boxVertex[i]);
+    //Max
+    if (aux.x > maxPoint.x)
+      maxPoint.x = aux.x;
+    if (aux.y > maxPoint.y)
+      maxPoint.y = aux.y;
+    //min
+    if (aux.x < minPoint.x)
+      maxPoint.x = aux.x;
+    if (aux.y < minPoint.y)
+      maxPoint.y = aux.y;
+  }
+  
+  m_vScreenBox[0] = CCPoint(minPoint.x,minPoint.y);
+  m_vScreenBox[1] = CCPoint(minPoint.x,maxPoint.y);
+  m_vScreenBox[2] = CCPoint(maxPoint.x,minPoint.y);
+  m_vScreenBox[3] = CCPoint(maxPoint.x,maxPoint.y);
+}
+
+void CCARGeneric3DObject::drawBox(GLfloat lineWidth, cocos2d::ccColor4F color)
 { 
-  cocos2d::ccVertex3F boxVectorMax = maxVertex;
-  cocos2d::ccVertex3F boxVectorMin = minVertex;
+  cocos2d::ccVertex3F boxVectorMax = model3D->m_vtxMax;
+  cocos2d::ccVertex3F boxVectorMin = model3D->m_vtxMin;
   
 //  cocos2d::ccColor4F r = ccc4FFromccc4B(cocos2d::ccc4(1.0f,0.0f,0.0f,1.0f));
 //  cocos2d::ccColor4F g = ccc4FFromccc4B(cocos2d::ccc4(0.0f,1.0f,0.0f,1.0f));
@@ -162,15 +206,15 @@ void CCARGeneric3DModel::drawBox(GLfloat lineWidth, cocos2d::ccVertex3F maxVerte
 }
 
 
-cocos2d::CCPoint CCARGeneric3DModel::covert3Dto2d(){
+cocos2d::CCPoint CCARGeneric3DObject::covert3Dto2d(cocos2d::ccVertex3F vertex){
+  ////http://www.opengl.org/wiki/GluProject_and_gluUnProject_code
+  ////http://www.opengl.org/sdk/docs/man/xhtml/gluProject.xml
   Matrix matProjection, matModelView;
   
   glGetFloatv(GL_PROJECTION_MATRIX, matProjection.m);
   glGetFloatv(GL_MODELVIEW_MATRIX, matModelView.m);
   
-  //printMatrix(&matModelView.m[0]);
-  //printMatrix(&matProjection.m[0]);
-  Vector Position2D=Matrix_multiplyVector(matModelView, Vector_withValues(0,0,0));
+  Vector Position2D=Matrix_multiplyVector(matModelView, Vector_withValues(vertex.x,vertex.y,vertex.z));
   Vector vectorp=Matrix_multiplyVector(matProjection, Position2D);
   
   // Esto es la conversion del vector transformado a Coordenadas homogeneas.
@@ -184,56 +228,10 @@ cocos2d::CCPoint CCARGeneric3DModel::covert3Dto2d(){
   glGetIntegerv(GL_VIEWPORT,viewport);
   float xPos=viewport[0]+viewport[2]*float(vectorp.x+1)/2;
   float yPos=viewport[1]+viewport[3]*float(vectorp.y+1)/2;
-  
-  printf("\n xPos:%2.0f %2.0f", xPos,yPos);
 
   return ccp(xPos, yPos);
 }
-//
-//
-////http://www.opengl.org/wiki/GluProject_and_gluUnProject_code
-////http://www.opengl.org/sdk/docs/man/xhtml/gluProject.xml
-//
-//int glhProjectf(float objx, float objy, float objz, float *modelview, float *projection, int *viewport, float *windowCoordinate)
-//{
-//  //Transformation vectors
-//  float fTempo[8];
-//  //Modelview transform
-//  fTempo[0]=modelview[0]*objx+modelview[4]*objy+modelview[8]*objz+modelview[12];  //w is always 1
-//  fTempo[1]=modelview[1]*objx+modelview[5]*objy+modelview[9]*objz+modelview[13];
-//  fTempo[2]=modelview[2]*objx+modelview[6]*objy+modelview[10]*objz+modelview[14];
-//  fTempo[3]=modelview[3]*objx+modelview[7]*objy+modelview[11]*objz+modelview[15];
-//  
-//  LOGV(" After Modelview %2.2f %2.2f %2.2f %2.2f ",fTempo[0],fTempo[1],fTempo[2],fTempo[3]);
-//  //Projection transform, the final row of projection matrix is always [0 0 -1 0]
-//  //so we optimize for that.
-//  fTempo[4]=projection[0]*fTempo[0]+projection[4]*fTempo[1]+projection[8]*fTempo[2]+projection[12]*fTempo[3];
-//  fTempo[5]=projection[1]*fTempo[0]+projection[5]*fTempo[1]+projection[9]*fTempo[2]+projection[13]*fTempo[3];
-//  fTempo[6]=projection[2]*fTempo[0]+projection[6]*fTempo[1]+projection[10]*fTempo[2]+projection[14]*fTempo[3];
-//  
-//  fTempo[7]=-fTempo[2];
-//  
-//  LOGV(" Projection by vector %2.2f %2.2f %2.2f %2.2f ",fTempo[4],fTempo[5],fTempo[6],fTempo[7]);
-//  
-//  //The result normalizes between -1 and 1
-//  if(fTempo[7]==0.0)      //The w value
-//    return 0;
-//  fTempo[7]=1.0/fTempo[7];
-//  //Perspective division
-//  fTempo[4]*=fTempo[7];
-//  fTempo[5]*=fTempo[7];
-//  fTempo[6]*=fTempo[7];
-//  //Window coordinates
-//  //Map x, y to range 0-1
-//  
-//  LOGV(" After Projection %2.2f %2.2f %2.2f %2.2f ",fTempo[4],fTempo[5],fTempo[6],fTempo[7]);
-//  
-//  windowCoordinate[0]=(fTempo[4]*0.5+0.5)*viewport[2]+viewport[0];
-//  windowCoordinate[1]=(fTempo[5]*0.5+0.5)*viewport[3]+viewport[1];
-//  //This is only correct when glDepthRange(0.0, 1.0)
-//  windowCoordinate[2]=(1.0+fTempo[6])*0.5;        //Between 0 and 1
-//  return 1;
-//}
+
 
 
 

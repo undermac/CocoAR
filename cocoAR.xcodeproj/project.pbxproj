@@ -269,6 +269,10 @@
 		5971C6B413CC6E6300C5A891 /* zombiet.mdl in Resources */ = {isa = PBXBuildFile; fileRef = 5971C65113CC6E6300C5A891 /* zombiet.mdl */; };
 		5971C6B613CC6EF400C5A891 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C6B513CC6EF400C5A891 /* MapKit.framework */; };
 		5971C6B813CC6EFA00C5A891 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C6B713CC6EFA00C5A891 /* CoreLocation.framework */; };
+		5975146413F8034900BE0A11 /* CELSPDER.MTL in Resources */ = {isa = PBXBuildFile; fileRef = 5975146113F8034900BE0A11 /* CELSPDER.MTL */; };
+		5975146513F8034900BE0A11 /* CELSPDER.OBJ in Resources */ = {isa = PBXBuildFile; fileRef = 5975146213F8034900BE0A11 /* CELSPDER.OBJ */; };
+		5975146613F8034900BE0A11 /* CELSPDER.TIF in Resources */ = {isa = PBXBuildFile; fileRef = 5975146313F8034900BE0A11 /* CELSPDER.TIF */; };
+		5975146813F8038200BE0A11 /* CELSPDER.png in Resources */ = {isa = PBXBuildFile; fileRef = 5975146713F8038200BE0A11 /* CELSPDER.png */; };
 		5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F013F3262D0019F9A1 /* coco 5757.png */; };
 		5996E9F413F326960019F9A1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F313F326960019F9A1 /* Default.png */; };
 		5996E9F613F32C610019F9A1 /* icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F513F32C610019F9A1 /* icono.png */; };
@@ -700,6 +704,10 @@
 		5971C65113CC6E6300C5A891 /* zombiet.mdl */ = {isa = PBXFileReference; lastKnownFileType = file; path = zombiet.mdl; sourceTree = "<group>"; };
 		5971C6B513CC6EF400C5A891 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		5971C6B713CC6EFA00C5A891 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5975146113F8034900BE0A11 /* CELSPDER.MTL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CELSPDER.MTL; sourceTree = "<group>"; };
+		5975146213F8034900BE0A11 /* CELSPDER.OBJ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CELSPDER.OBJ; sourceTree = "<group>"; };
+		5975146313F8034900BE0A11 /* CELSPDER.TIF */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CELSPDER.TIF; sourceTree = "<group>"; };
+		5975146713F8038200BE0A11 /* CELSPDER.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CELSPDER.png; sourceTree = "<group>"; };
 		5996E9F013F3262D0019F9A1 /* coco 5757.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coco 5757.png"; sourceTree = "<group>"; };
 		5996E9F313F326960019F9A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5996E9F513F32C610019F9A1 /* icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono.png; sourceTree = "<group>"; };
@@ -792,6 +800,7 @@
 			isa = PBXGroup;
 			children = (
 				591B1DE513F16E07009F59B3 /* explosion17.png */,
+				5975145F13F8033700BE0A11 /* Araña */,
 				5971C5EB13CC6E1C00C5A891 /* 3d_set */,
 				5971C3E913CC6D1200C5A891 /* CloseNormal.png */,
 				5971C3EB13CC6D1200C5A891 /* CloseSelected.png */,
@@ -1504,6 +1513,17 @@
 			path = test;
 			sourceTree = "<group>";
 		};
+		5975145F13F8033700BE0A11 /* Araña */ = {
+			isa = PBXGroup;
+			children = (
+				5975146113F8034900BE0A11 /* CELSPDER.MTL */,
+				5975146713F8038200BE0A11 /* CELSPDER.png */,
+				5975146213F8034900BE0A11 /* CELSPDER.OBJ */,
+				5975146313F8034900BE0A11 /* CELSPDER.TIF */,
+			);
+			name = "Araña";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1686,6 +1706,10 @@
 				5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */,
 				5996E9F413F326960019F9A1 /* Default.png in Resources */,
 				5996E9F613F32C610019F9A1 /* icono.png in Resources */,
+				5975146413F8034900BE0A11 /* CELSPDER.MTL in Resources */,
+				5975146513F8034900BE0A11 /* CELSPDER.OBJ in Resources */,
+				5975146613F8034900BE0A11 /* CELSPDER.TIF in Resources */,
+				5975146813F8038200BE0A11 /* CELSPDER.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
