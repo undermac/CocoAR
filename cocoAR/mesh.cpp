@@ -517,6 +517,10 @@ void Mesh::InitVBO()
 
 }
 
+void Mesh::draw3D(){
+  Draw();
+}
+
 void Mesh::Draw()
 {
 	if (!m_bVBOInit)
@@ -541,6 +545,7 @@ void Mesh::LoadModel(char* filename)
 {
 	m_bVBOInit=false;
 	m_pVBOMaterialMap.clear();
+  bool firstVertex = true;
 
 	enum rowType {VERTEX, NORMAL, TEX_MAP, FACE, NONE};
 	int rType = NONE;
@@ -597,7 +602,18 @@ void Mesh::LoadModel(char* filename)
 			case VERTEX:
 				{
 					fscanf(file, "%f %f %f \n", &p1, &p2, &p3);
-     
+          if (firstVertex == true) {
+            m_vtxMax.x = p1;
+            m_vtxMax.y = p2;
+            m_vtxMax.z = p3;
+            
+            m_vtxMin.x = p1;
+            m_vtxMin.x = p2;
+            m_vtxMin.x = p3;
+            
+            firstVertex = false;
+          }
+          
           if (p1 > m_vtxMax.x) 
             m_vtxMax.x = p1;
           if (p2 > m_vtxMax.y)

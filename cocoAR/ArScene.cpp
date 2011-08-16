@@ -130,14 +130,10 @@ bool ArScene::init()
   this->addChild(testInfo3,1);
   
   
-  CCSize pLabelSize = CCDirector::sharedDirector()->getWinSize();
-  pLabelSize.height = 20;
-  pLabelSize.width = pLabelSize.width - 10;
-  
-  pLabelLocation = CCLabelTTF::labelWithString("", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
+  pLabelLocation = CCLabelTTF::labelWithString("", CCSize( CCDirector::sharedDirector()->getWinSize().width - 10, 20), CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
   pLabelLocation->setPosition(ccp(160,25));
   
-  pLabelGPS = CCLabelTTF::labelWithString("", pLabelSize, CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
+  pLabelGPS = CCLabelTTF::labelWithString("", CCSize(CCDirector::sharedDirector()->getWinSize().width - 10,20 ), CCTextAlignmentCenter ,LABEL_FONT_TYPE, 14);
   pLabelGPS->setPosition(ccp(160,10));
   
   pLabelHeading = CCLabelTTF::labelWithString("" ,LABEL_FONT_TYPE, 18);
@@ -214,17 +210,17 @@ void ArScene::visit()
   }else{
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
-//  #define GL_PROJECTION_MATRIX              0x0BA7 
-//  glGetFloatv(GL_MODELVIEW_MATRIX, model_view.m);
+  //  #define GL_PROJECTION_MATRIX              0x0BA7 
+  //  glGetFloatv(GL_MODELVIEW_MATRIX, model_view.m);
   
   ccColor4F r = ccc4FFromccc4B(ccc4(255.0f,0.0f,0.0f,230.0f));
   ccColor4F g = ccc4FFromccc4B(ccc4(0.0f,255.0f,0.0f,230.0f));
   ccColor4F b = ccc4FFromccc4B(ccc4(0.0f,255.0f,255.0f,230.0f));
   ccColor4F a = ccc4FFromccc4B(ccc4(150.0f,255.0f,150.0f,230.0f));
-
+  
   
   //Y
-//  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
+  //  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
   
   //Este & X
   ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
@@ -246,7 +242,7 @@ void ArScene::visit()
   
   
   for(unsigned int i=0; i< objects3D.size(); i++){
-    objects3D[i]->draw();
+    objects3D[i]->draw3D();
   }
   drawFloor();
   
@@ -262,10 +258,16 @@ void ArScene::visit()
   
   CCLayer::visit();
   
-  ccDrawLine(objects3D[0]->m_vScreenBox[0], objects3D[0]->m_vScreenBox[1]);
-  ccDrawLine(objects3D[0]->m_vScreenBox[0], objects3D[0]->m_vScreenBox[2]);
-  ccDrawLine(objects3D[0]->m_vScreenBox[3], objects3D[0]->m_vScreenBox[1]);
-  ccDrawLine(objects3D[0]->m_vScreenBox[3], objects3D[0]->m_vScreenBox[2]);
+  
+  //  for(unsigned int i=0; i< objects3D.size(); i++){
+  //    if (objects3D[i]->m_bScreenBox == true) {
+  //      ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[1]);
+  //      ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[2]);
+  //      ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[1]);
+  //      ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[2]);
+  //    }
+  //  }
+  loadObjectsButtons();
 }
 
 #define KFilteringFactor 0.20f
@@ -388,51 +390,51 @@ void ArScene::menuCloseCallback(CCObject* pSender)
 
 void ArScene::loadTest()
 {
-//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh, 1.5f, 0.0f, 0.0f, 500.0f));
-//  objects3D.push_back(new CCARGeo3DObject(MYMESH08, CCARType_Mesh, 0.1f ,-7.855653762817383f ,  42.344466179278236f));//JJ
-//  objects3D.push_back(new CCARGeo3DObject(MYMESH02, CCARType_Mesh, 0.1f ,-7.856292128562927f ,  42.34511443500709f));//Universidad
-//  objects3D.push_back(new CCARGeo3DObject(MYMESH03, CCARType_Mesh, 0.1f ,-7.855787873268127 ,  42.34516201314594f));// Universidad Norte 
-//  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.25f ,-7.863861322402954f ,  42.34146865303537f));// Fuente san lazaro
-//  objects3D[4]->yTranslate = 200;
-//  objects3D[4]->xRotate = 270.0f;
-//  objects3D.push_back(new CCARGeo3DObject(MYMESH04, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
-//  objects3D.push_back(new CCARGeo3DObject(MYMESH05, CCARType_Mesh, 0.1f ,-7.862091064453125f ,  42.348395259793f));// Orense rio
-//  objects3D.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f));
-//  objects3D.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, -30.0f,0.0f,45.0f));
-//  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-300.0f));
-//  objects3D.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 700.0f,0.0f,100.0f));
-//  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-1200.0f));
-//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,100.0f));
-//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 100.0f,0.0,0.0f));
-//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, -100.0f,0.0f,0.0f));
-
-//  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,-100.0f));
-//  objects3D[1]->isRotating = false;
-
-//  objects3D.push_back(new CCARGeo3DObject(MESH_FLECHA, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
-//  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.3f ,-8.245668411254883f ,  43.494541820367246f));//Ferrol ria
-//  objects3D[0]->yTranslate = 200;
-//  objects3D[0]->xRotate = 270.0f;
-//  prueba3DObjects.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f)); // ERROR
+  //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh, 1.5f, 0.0f, 0.0f, 500.0f));
+  //  objects3D.push_back(new CCARGeo3DObject(MYMESH08, CCARType_Mesh, 0.1f ,-7.855653762817383f ,  42.344466179278236f));//JJ
+  //  objects3D.push_back(new CCARGeo3DObject(MYMESH02, CCARType_Mesh, 0.1f ,-7.856292128562927f ,  42.34511443500709f));//Universidad
+  //  objects3D.push_back(new CCARGeo3DObject(MYMESH03, CCARType_Mesh, 0.1f ,-7.855787873268127 ,  42.34516201314594f));// Universidad Norte 
+  //  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.25f ,-7.863861322402954f ,  42.34146865303537f));// Fuente san lazaro
+  //  objects3D[4]->yTranslate = 200;
+  //  objects3D[4]->xRotate = 270.0f;
+  //  objects3D.push_back(new CCARGeo3DObject(MYMESH04, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
+  //  objects3D.push_back(new CCARGeo3DObject(MYMESH05, CCARType_Mesh, 0.1f ,-7.862091064453125f ,  42.348395259793f));// Orense rio
+  //  objects3D.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f));
+  //  objects3D.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, -30.0f,0.0f,45.0f));
+  //  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-300.0f));
+  //  objects3D.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 700.0f,0.0f,100.0f));
+  //  objects3D.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, -230.0f,0.0f,-1200.0f));
+  //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,100.0f));
+  //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 100.0f,0.0,0.0f));
+  //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, -100.0f,0.0f,0.0f));
+  //  objects3D.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f, 0.0f,0.0f,-100.0f));
+  //  objects3D[1]->isRotating = false;
+  //  objects3D.push_back(new CCARGeo3DObject(MESH_FLECHA, CCARType_Mesh, 0.1f ,-7.36083984375f ,  42.3037216984154f));// Orense oeste
+  //  objects3D.push_back(new CCARGeo3DObject(TMDL_HELICOPTER, CCARType_TMDLModel, 0.3f ,-8.245668411254883f ,  43.494541820367246f));//Ferrol ria
+  //  objects3D[0]->yTranslate = 200;
+  //  objects3D[0]->xRotate = 270.0f;
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f)); // ERROR
   
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
   prueba3DObjects[0]->isRotating = false;
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,1.0f, 600.0f,0.0f,0.0f));
-//  prueba3DObjects.push_back(new CCARObject3D("CELSPDER.OBJ", CCARType_Mesh,50.0f, 50.0f,0.0f,0.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH03, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH05, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, 600.0f,0.0f,0.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f,600.0f,0.0f,0.0f));
-//  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
-//  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,1.0f, 300.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D("CELSPDER.OBJ", CCARType_Mesh,20.0f, 50.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH03, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH05, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  prueba3DObjects.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f,600.0f,0.0f,-100.0f));
+  
+  //  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
+  addChild(prueba3DObjects[0],0);
   objects3D.push_back(prueba3DObjects[0]);
 }
 
 
 void ArScene::execTest()
 {
-
+  
 }
 
 void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
@@ -477,8 +479,10 @@ void drawFloor(){
 }
 
 
-void ArScene::loadAr3DObjects(){
-  
+void ArScene::loadObjectsButtons(){
+  for(unsigned int i=0; i< objects3D.size(); i++){
+    objects3D[i]->setPosition(objects3D[i]->m_vCenter);
+  }
 }
 
 

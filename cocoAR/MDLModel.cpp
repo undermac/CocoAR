@@ -190,6 +190,9 @@ void TMDLModel::Init(char *Filename)
 
 	CCLOG(" END LOAD ");
 }
+void TMDLModel::draw3D(){
+  Draw();
+}
 
 void TMDLModel::Draw()
 {

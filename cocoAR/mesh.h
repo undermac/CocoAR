@@ -96,6 +96,7 @@ public:
 	void SetMaterial(float r, float g, float b, float a);
 	void SetAutoIlum(int set);
   void Draw();
+  void draw3D();
   void AdvanceFrame(float Time);
 	virtual void DrawTriangles();
 	void MorphWith(Mesh* other, Mesh* dest, float p);

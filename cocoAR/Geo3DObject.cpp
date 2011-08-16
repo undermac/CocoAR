@@ -7,6 +7,7 @@
 //
 
 #include <iostream>
+#include "cocos2d.h"
 #include "Geo3DObject.h"
 #include "ArScene.h"
 #include "bMath.h"
@@ -18,8 +19,10 @@
 USING_NS_CC;
 
 CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
+//  new (this) CCMenuItemImage();
   isRotating = true;
-  m_bModelBox = true;
+  m_bModelBox = false;
+  m_bScreenBox = true;
   scale = 1.0f;
   xTranslate = 0.0f;
   yTranslate = 0.0f;
@@ -27,6 +30,7 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
   xRotate = 0.0f;
   yRotate = 0.0f;
   zRotate = 0.0f;
+  m_size = CCSize(20.0f,20.0f);
 
   model3D = ArScene::loadModel(model, modelType);
 }
@@ -47,7 +51,7 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sc
   zRotate = zRotate;
 }
 
-void CCARObject3D::draw(){
+void CCARObject3D::draw3D(){
   glPushMatrix();
   glTranslatef(xTranslate, yTranslate, zTranslate);
   glScalef(scale, scale, scale );
@@ -62,7 +66,7 @@ void CCARObject3D::draw(){
     glRotatef(yRotate, 0, 1, 0);
   glRotatef(xRotate, 1, 0, 0);
   glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
-  model3D->Draw();
+  model3D->draw3D();
   cocos2d::ccColor4F red = ccc4FFromccc4B(cocos2d::ccc4(255.0f,0.0f,0.0f,230.0f));
   if(m_bModelBox)
     drawBox(3.0f, red);
@@ -73,6 +77,8 @@ void CCARObject3D::draw(){
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, double lon, double lat){
   isRotating = true;
   m_bModelBox = true;
+  m_bScreenBox = true;
+  m_size = CCSize(20.0f,20.0f);
   scale = 1.0f;
   xTranslate = 0.0f;
   yTranslate = 0.0f;
@@ -84,7 +90,15 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, dou
   latitude = lat;
   altitude = 0.0f;
   model3D = ArScene::loadModel(model, modelType);
+  
+  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
+  m_pSelectedImage = NULL;
+  m_pDisabledImage = NULL;
+  
+  m_pListener = NULL;
+  m_pfnSelector = NULL;
 }
+
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,double sca , double lon, double lat){
   new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType, lon, lat);
   scale = sca;
@@ -94,7 +108,7 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,doub
   altitude = alt;
 }
 
-void CCARGeo3DObject::draw(){
+void CCARGeo3DObject::draw3D(){
   cocos2d::CCLocation userlocation = ArScene::getUserlocation();
   double distanceValue = cocos2d::CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userlocation.latitude,(double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
   double bearing = cocos2d::CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( (double)userlocation.latitude, (double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
@@ -132,7 +146,7 @@ void CCARGeo3DObject::draw(){
   glRotatef(xRotate, 1, 0, 0);
   glRotatef(zRotate, 0, 0, 1);
   glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
-  model3D->Draw();
+  model3D->draw3D();
   cocos2d::ccColor4F g = ccc4FFromccc4B(cocos2d::ccc4(0.0f,255.0f,0.0f,230.0f));
   if(m_bModelBox)
     drawBox(3.0f, g);
@@ -142,7 +156,7 @@ void CCARGeo3DObject::draw(){
 
 void CCARGeneric3DObject::calculateScreenBox(){
 
-
+  
   cocos2d::ccVertex3F boxVertex[8] = 
   {
     { model3D->m_vtxMin.x, model3D->m_vtxMin.y,  model3D->m_vtxMin.z},//000
@@ -154,8 +168,11 @@ void CCARGeneric3DObject::calculateScreenBox(){
     { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMin.z},//110
     { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMax.z},//111
   };
+  
+  cocos2d::ccVertex3F center = {0.0f,0.0f,0.0f};
+  m_vCenter = covert3Dto2d(center);
 
-  cocos2d::CCPoint maxPoint = covert3Dto2d(boxVertex[0]);; 
+  cocos2d::CCPoint maxPoint = covert3Dto2d(boxVertex[0]);
   cocos2d::CCPoint minPoint = maxPoint;
   
   for (unsigned int i=1; i < 8;i++ ) {
@@ -167,10 +184,11 @@ void CCARGeneric3DObject::calculateScreenBox(){
       maxPoint.y = aux.y;
     //min
     if (aux.x < minPoint.x)
-      maxPoint.x = aux.x;
+      minPoint.x = aux.x;
     if (aux.y < minPoint.y)
-      maxPoint.y = aux.y;
+      minPoint.y = aux.y;
   }
+  CCSize(maxPoint.x - minPoint.x, maxPoint.y - minPoint.y);
   
   m_vScreenBox[0] = CCPoint(minPoint.x,minPoint.y);
   m_vScreenBox[1] = CCPoint(minPoint.x,maxPoint.y);
@@ -232,6 +250,20 @@ cocos2d::CCPoint CCARGeneric3DObject::covert3Dto2d(cocos2d::ccVertex3F vertex){
   return ccp(xPos, yPos);
 }
 
+//void CCARGeo3DObject::activate(){
+//
+//}
+///** The item was selected (not activated), similar to "mouse-over" */
+//void CCARGeo3DObject::selected(){}
+///** The item was unselected */
+//void CCARGeo3DObject::unselected(){}
+//
+//void CCARObject3D::activate(){
+//  
+//}
+///** The item was selected (not activated), similar to "mouse-over" */
+//void CCARObject3D::selected(){}
+///** The item was unselected */
+//void CCARObject3D::unselected(){}
 
-
-
+//);

@@ -150,6 +150,7 @@ public:
   TMDLModel(std::string modelName);
 	void Init(char *Filename);
   void Draw();
+  void draw3D();
 	void DrawModel();
 	void AdvanceFrame(float Time);
 	void ExtractBoundBox(float *Minimums, float *Maximums);

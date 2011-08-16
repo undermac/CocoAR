@@ -61,11 +61,12 @@ public:
   void execTest();
   
   //Location
-  void loadAr3DObjects();
+  void loadObjectsButtons();
   void drawAr3DObjects();
   
   cocos2d::CCLabelTTF* testInfo1,*testInfo2,*testInfo3;
   cocos2d::CCLabelTTF* pLabelLocation, *pLabelHeading, *pLabelGPS;
+  cocos2d::CCMenu* m_menu;
   
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(ArScene);

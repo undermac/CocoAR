@@ -10,7 +10,7 @@
 #ifndef cocoAR_Geo3DObject_h
 #define cocoAR_Geo3DObject_h
 
-
+class CCARGeneric3DObject;
 
 typedef enum 
 {
@@ -26,14 +26,15 @@ class CCARGeneric3DModel
   void Init(char *Filename);
 	virtual void AdvanceFrame(float Time)=0;
   void LoadModel(char* filename);
-  virtual void Draw()=0;
+  virtual void draw3D()=0;
   void DrawModel();
   std::string modelName;
   cocos2d::CCPoint covert3Dto2d();
   
 };
 
-class CCARGeneric3DObject{
+
+class CCARGeneric3DObject: public cocos2d::CCMenuItemImage{
   public:
   CCARGeneric3DModel* model3D;
   
@@ -45,17 +46,24 @@ class CCARGeneric3DObject{
   double xTranslate;
   double yTranslate;
   double zTranslate;
-  virtual void draw()=0;
+  
+  cocos2d::CCPoint m_vCenter;
+  cocos2d::CCSize m_size;
+  
+  virtual void draw3D()=0;
   bool isRotating;
   bool showScreenBox;
   bool m_bModelBox;
-  int rotationValue; // Cambiar a private
+  bool m_bScreenBox;
   cocos2d::CCPoint m_vScreenBox[8];
-  void calculateScreenBox();
-  void drawBox(GLfloat lineWidth, cocos2d::ccColor4F color);
   
   private:
     cocos2d::CCPoint covert3Dto2d(cocos2d::ccVertex3F);
+  protected:
+  void calculateScreenBox();
+  void drawBox(GLfloat lineWidth, cocos2d::ccColor4F color);
+  int rotationValue; // Cambiar a private
+
 };
 
 class CCARObject3D: public CCARGeneric3DObject
@@ -66,7 +74,7 @@ public:
   CCARObject3D(std::string filename, CCARModelType modelType, double scale);
   CCARObject3D(std::string filename, CCARModelType modelType, double scale, double x, double y, double z);
   CCARObject3D(std::string filename, CCARModelType modelType, double scale, double x, double y, double z, double xRotate, double yRotate, double zRotate);
-  void draw();
+  void draw3D();
 };
 
 class CCARGeo3DObject: public CCARGeneric3DObject
@@ -83,7 +91,7 @@ public:
   double latitude;
   double altitude;
   
-  void draw();
+  void draw3D();
 };
 
 #endif
