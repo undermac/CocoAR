@@ -19,7 +19,18 @@
 USING_NS_CC;
 
 CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
-//  new (this) CCMenuItemImage();
+//  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
+//  m_pSelectedImage = NULL;
+//  m_pDisabledImage = NULL;
+//  
+//  m_tAnchorPoint = ccp(0.5f, 0.5f);
+//  m_pListener = this;
+//  m_pfnSelector = menu_selector(ArScene::menuCloseCallback);
+//  m_bIsEnabled = true;
+//  m_bIsSelected = false;
+  
+  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuCloseCallback));
+  
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
@@ -31,7 +42,7 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
   yRotate = 0.0f;
   zRotate = 0.0f;
   m_size = CCSize(20.0f,20.0f);
-
+  
   model3D = ArScene::loadModel(model, modelType);
 }
 CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca){
@@ -75,6 +86,19 @@ void CCARObject3D::draw3D(){
 }
 
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, double lon, double lat){
+
+//  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
+//  m_pSelectedImage = NULL;
+//  m_pDisabledImage = NULL;
+//  
+//  m_tAnchorPoint = ccp(0.5f, 0.5f);
+//  m_pListener = this;
+//  m_pfnSelector = menu_selector(ArScene::menuCloseCallback);
+//  m_bIsEnabled = true;
+//  m_bIsSelected = false;
+  
+  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuCloseCallback));
+  
   isRotating = true;
   m_bModelBox = true;
   m_bScreenBox = true;
@@ -90,13 +114,6 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, dou
   latitude = lat;
   altitude = 0.0f;
   model3D = ArScene::loadModel(model, modelType);
-  
-  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
-  m_pSelectedImage = NULL;
-  m_pDisabledImage = NULL;
-  
-  m_pListener = NULL;
-  m_pfnSelector = NULL;
 }
 
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,double sca , double lon, double lat){
@@ -188,8 +205,14 @@ void CCARGeneric3DObject::calculateScreenBox(){
     if (aux.y < minPoint.y)
       minPoint.y = aux.y;
   }
-  CCSize(maxPoint.x - minPoint.x, maxPoint.y - minPoint.y);
   
+//  setScaleX((float)(maxPoint.x - minPoint.x)/m_size.width);
+//  setScaleY((float)(maxPoint.y - minPoint.y)/m_size.height);
+
+  m_size = CCSize(maxPoint.x - minPoint.x, maxPoint.y - minPoint.y);
+
+  setPosition(m_vCenter);
+  setContentSize(m_size);
   m_vScreenBox[0] = CCPoint(minPoint.x,minPoint.y);
   m_vScreenBox[1] = CCPoint(minPoint.x,maxPoint.y);
   m_vScreenBox[2] = CCPoint(maxPoint.x,minPoint.y);
@@ -249,21 +272,3 @@ cocos2d::CCPoint CCARGeneric3DObject::covert3Dto2d(cocos2d::ccVertex3F vertex){
 
   return ccp(xPos, yPos);
 }
-
-//void CCARGeo3DObject::activate(){
-//
-//}
-///** The item was selected (not activated), similar to "mouse-over" */
-//void CCARGeo3DObject::selected(){}
-///** The item was unselected */
-//void CCARGeo3DObject::unselected(){}
-//
-//void CCARObject3D::activate(){
-//  
-//}
-///** The item was selected (not activated), similar to "mouse-over" */
-//void CCARObject3D::selected(){}
-///** The item was unselected */
-//void CCARObject3D::unselected(){}
-
-//);

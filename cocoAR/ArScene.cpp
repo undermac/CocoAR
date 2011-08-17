@@ -256,18 +256,9 @@ void ArScene::visit()
   CC_ENABLE_DEFAULT_GL_STATES();
 	glClear(GL_DEPTH_BUFFER_BIT);
   
-  CCLayer::visit();
-  
-  
-  //  for(unsigned int i=0; i< objects3D.size(); i++){
-  //    if (objects3D[i]->m_bScreenBox == true) {
-  //      ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[1]);
-  //      ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[2]);
-  //      ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[1]);
-  //      ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[2]);
-  //    }
-  //  }
   loadObjectsButtons();
+  
+  CCLayer::visit();
 }
 
 #define KFilteringFactor 0.20f
@@ -427,7 +418,9 @@ void ArScene::loadTest()
   
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
-  addChild(prueba3DObjects[0],0);
+  CCMenu* pMenu = CCMenu::menuWithItems(prueba3DObjects[0], NULL);
+	pMenu->setPosition( CCPointZero );
+	this->addChild(pMenu, 5);
   objects3D.push_back(prueba3DObjects[0]);
 }
 
@@ -480,9 +473,9 @@ void drawFloor(){
 
 
 void ArScene::loadObjectsButtons(){
-  for(unsigned int i=0; i< objects3D.size(); i++){
-    objects3D[i]->setPosition(objects3D[i]->m_vCenter);
-  }
+//  for(unsigned int i=0; i< objects3D.size(); i++){
+//    objects3D[i]->setPosition(objects3D[i]->m_vCenter);
+//  }
 }
 
 
