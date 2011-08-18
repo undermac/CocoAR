@@ -278,7 +278,7 @@
 		5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F013F3262D0019F9A1 /* coco 5757.png */; };
 		5996E9F413F326960019F9A1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F313F326960019F9A1 /* Default.png */; };
 		5996E9F613F32C610019F9A1 /* icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F513F32C610019F9A1 /* icono.png */; };
-		59B008A813FD5B9A00858457 /* Menu3DObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 59B008A713FD5B9A00858457 /* Menu3DObject.cpp */; };
+		59F094CE13FD966900F3E137 /* fondoObjeto.png in Resources */ = {isa = PBXBuildFile; fileRef = 59F094CD13FD966900F3E137 /* fondoObjeto.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -716,8 +716,7 @@
 		5996E9F013F3262D0019F9A1 /* coco 5757.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coco 5757.png"; sourceTree = "<group>"; };
 		5996E9F313F326960019F9A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5996E9F513F32C610019F9A1 /* icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono.png; sourceTree = "<group>"; };
-		59B008A513FD5B8900858457 /* Menu3DObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu3DObject.h; sourceTree = "<group>"; };
-		59B008A713FD5B9A00858457 /* Menu3DObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Menu3DObject.cpp; sourceTree = "<group>"; };
+		59F094CD13FD966900F3E137 /* fondoObjeto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fondoObjeto.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1316,8 +1315,7 @@
 				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
 				591B1DE713F1B946009F59B3 /* Geo3DObject.h */,
 				591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */,
-				59B008A513FD5B8900858457 /* Menu3DObject.h */,
-				59B008A713FD5B9A00858457 /* Menu3DObject.cpp */,
+				59F094CD13FD966900F3E137 /* fondoObjeto.png */,
 				5971C5E013CC6DDA00C5A891 /* tinyXML */,
 				5971C5C913CC6DAD00C5A891 /* Engine3d */,
 				59059E7613F051E40038EB6C /* CameraBack */,
@@ -1723,6 +1721,7 @@
 				5975146813F8038200BE0A11 /* CELSPDER.png in Resources */,
 				5948D1CB13FA8A3C00865E31 /* White_Crystal.png in Resources */,
 				595301F113FB1D450047F249 /* transparent.png in Resources */,
+				59F094CE13FD966900F3E137 /* fondoObjeto.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1857,7 +1856,6 @@
 				59059E7513F051CB0038EB6C /* CCMobileCameraBack_ios.mm in Sources */,
 				59059E7913F052E40038EB6C /* CCMobileCameraBackWrapper.mm in Sources */,
 				591B1DE913F1B94E009F59B3 /* Geo3DObject.cpp in Sources */,
-				59B008A813FD5B9A00858457 /* Menu3DObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

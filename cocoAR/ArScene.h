@@ -13,6 +13,7 @@
 #include "CCMobileCameraBackDelegate.h"
 #include "Geo3DObject.h"
 #include "mesh.h"
+#include "Geo3DObject.h"
 
 #ifndef ARcocos_ArScene_h
 #define ARcocos_ArScene_h

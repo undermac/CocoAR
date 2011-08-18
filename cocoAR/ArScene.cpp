@@ -275,10 +275,10 @@ void ArScene::visit()
     //     
     //     ccDrawPoint(objects3D[i]->m_vCenter);
     if (objects3D[i]->m_bModelBox) {
-//      if (objects3D[i]->m_layerDescription == NULL) {
-//        objects3D[i]->m_layerDescription = new ARObjectMenu::ARObjectMenu(this);
-//        this->addChild(objects3D[i]->m_layerDescription,0);
-//      }
+      if (objects3D[i]->m_layerDescription == NULL) {
+        objects3D[i]->m_layerDescription = new ARObjectMenu::ARObjectMenu(this);
+        this->addChild(objects3D[i]->m_layerDescription,0);
+      }
     }
   }
 }
@@ -391,7 +391,14 @@ void ArScene::ccTouchesMoved(cocos2d::CCSet *pTouch, cocos2d::CCEvent *pEvent){
 int ite = 0;
 
 void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
-  printf("\nTouch Ended");
+  for(unsigned int i=0; i< objects3D.size(); i++){
+    if (objects3D[i]->m_bModelBox == true) {
+      objects3D[i]->m_bModelBox = false;
+      if (objects3D[i]->m_layerDescription !=NULL) {
+        objects3D[i]->m_layerDescription->removeLayerdescription();
+      }
+    }
+  }
 }
 
 void ArScene::menuCloseCallback(CCObject* pSender)
@@ -413,10 +420,12 @@ void ArScene::menuObjectPress(CCObject* pSender)
   
   //  m_layerDescription = ARObjectMenu::ARObjectMenu(myObject);
   
-  
   for(unsigned int i=0; i< objects3D.size(); i++){
     if (objects3D[i]->m_bModelBox == true && objects3D[i] != myObject) {
       objects3D[i]->m_bModelBox = false;
+        if (objects3D[i]->m_layerDescription !=NULL) {
+          objects3D[i]->m_layerDescription->removeLayerdescription();
+        }
     }
   }
   

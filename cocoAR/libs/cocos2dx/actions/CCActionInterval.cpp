@@ -1398,7 +1398,7 @@ void CCFadeIn::update(cocos2d::ccTime time)
 	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
 	if (pRGBAProtocol)
 	{
-        pRGBAProtocol->setOpacity((GLubyte)(255 * time));
+        pRGBAProtocol->setOpacity((GLubyte)(200 * time)); // LO HE CAMBIADO !!
 	}
 	/*m_pTarget->setOpacity((GLubyte)(255 * time));*/
 }
@@ -1448,7 +1448,7 @@ void CCFadeOut::update(cocos2d::ccTime time)
 	CCRGBAProtocol *pRGBAProtocol = m_pTarget->convertToRGBAProtocol();
 	if (pRGBAProtocol)
 	{
-		pRGBAProtocol->setOpacity(GLubyte(255 * (1 - time)));
+		pRGBAProtocol->setOpacity(GLubyte(200 * (1 - time)));
 	}
 	/*m_pTarget->setOpacity(GLubyte(255 * (1 - time)));*/	
 }

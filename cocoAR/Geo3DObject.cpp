@@ -16,6 +16,7 @@
 #include "Matrix.h"
 #include "Vector.h"
 
+#define LABEL_FONT_TYPE "Thonburi"
 
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
@@ -31,7 +32,7 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::strin
   m_sDescription = objectDescription;
   m_labelDistance = NULL;
   m_labelName = NULL;
-//  m_layerDescription = NULL;
+  m_layerDescription = NULL;
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
@@ -100,7 +101,7 @@ CCARGeo3DObject::CCARGeo3DObject(std::string filename, CCARModelType modelType,s
   m_sDescription = objectDescription;
   m_labelDistance = NULL;
   m_labelName = NULL;
-//  m_layerDescription = NULL;
+  m_layerDescription = NULL;
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
@@ -239,6 +240,7 @@ void CCARGeneric3DObject::calculateScreenBox(){
   if (diference > 90.0f){ 
     setIsEnabled(false);
     m_labelDistance->setString("");
+    m_labelName->setString("");
   }else{
     setIsEnabled(true);
     this->setPosition(m_vCenter);
@@ -247,14 +249,14 @@ void CCARGeneric3DObject::calculateScreenBox(){
     char buffer[256];
     if (m_dDistance > 1000.0f) sprintf(buffer,"%4.1fKm",m_dDistance);
     else sprintf(buffer,"%4.0fm",m_dDistance);
-//    if (m_layerDescription) {
-//      m_layerDescription->setPosition(m_vCenter);
-//      m_labelDistance->setString("");
-//      m_labelName->setString("");
-//    }else{
+    if (m_layerDescription) {
+      m_layerDescription->setPosition(m_vCenter);
+      m_labelDistance->setString("");
+      m_labelName->setString("");
+    }else{
           m_labelDistance->setString(buffer);
           m_labelName->setString(m_sObjectName.c_str());
-//    }
+    }
     m_labelDistance->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 18));
     m_labelName->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 8));
   }
@@ -312,4 +314,94 @@ cocos2d::CCPoint CCARGeneric3DObject::covert3Dto2d(cocos2d::ccVertex3F vertex){
   float yPos=viewport[1]+viewport[3]*float(vectorp.y+1)/2;
 
   return ccp(xPos, yPos);
+}
+
+ARObjectMenu::ARObjectMenu(CCNode *pObject){
+  m_labelName = NULL;
+  m_labelDescription = NULL;
+  setIsTouchEnabled(true);
+	setIsVisible(true);
+  
+  //300x156 fondoObjeto.png
+  
+  CCSprite* my_background = CCSprite::spriteWithFile("fondoObjeto.png");
+  my_background->setPosition(ccp(0, 0));
+  addChild(my_background,0);
+
+  
+  m_labelName = CCLabelTTF::labelWithString("Nombre", CCSize(270,15) , CCTextAlignmentCenter ,LABEL_FONT_TYPE, 16);
+  m_labelName->setPosition(ccp(0,65));
+  
+  m_labelDescription = CCLabelTTF::labelWithString("DESCRIPCION", CCSize(270,85) , CCTextAlignmentLeft, LABEL_FONT_TYPE, 14);
+  m_labelDescription->setPosition(ccp(0,50));
+  
+  addChild(m_labelName,1);
+  addChild(m_labelDescription,1);
+
+  setOpacity(200);
+  
+  runAction(CCSequence::actions(CCFadeIn::actionWithDuration(3.0f),NULL));
+  
+  //  CGSize maxSize = { CCDirector::sharedDirector()->getWinSize().width - 50, CCDirector::sharedDirector()->getWinSize().height - 50 };
+  //  CGSize actualSize = [pObject->m_sDescription sizeWithFont:[UIFont fontWithName:@"Thonburi" size:14]
+  //                        constrainedToSize:maxSize
+  //                            lineBreakMode:UILineBreakModeWordWrap];
+}
+ARObjectMenu::~ARObjectMenu(){
+  
+}
+
+void ARObjectMenu::setOpacity(GLubyte var)
+{
+	m_cOpacity = var;
+  
+	if (m_pChildren && m_pChildren->count() > 0)
+	{
+		CCObject* pObject = NULL;
+		CCARRAY_FOREACH(m_pChildren, pObject)
+		{
+			CCNode* pChild = (CCNode*) pObject;
+			if (pChild)
+			{
+				CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+					pRGBAProtocol->setOpacity(m_cOpacity);
+				}
+			}
+		}
+	}
+}
+
+GLubyte ARObjectMenu::getOpacity(void){
+  return m_cOpacity;
+}
+cocos2d::ccColor3B ARObjectMenu::getColor(void)
+{
+  return m_tColor;
+}
+void ARObjectMenu::setColor(cocos2d::ccColor3B color)
+{
+  m_tColor = color;
+	
+	if (m_pChildren && m_pChildren->count() > 0)
+	{
+		CCObject* pObject = NULL;
+		CCARRAY_FOREACH(m_pChildren, pObject)
+		{
+			CCNode* pChild = (CCNode*) pObject;
+			if (pChild)
+			{
+				CCRGBAProtocol *pRGBAProtocol = pChild->convertToRGBAProtocol();
+				if (pRGBAProtocol)
+				{
+					pRGBAProtocol->setColor(m_tColor);
+				}
+			}
+		}
+	}
+}
+void ARObjectMenu::removeLayerdescription(){
+	setIsTouchEnabled(false);
+	runAction(CCSequence::actions(CCFadeOut::actionWithDuration(2.0f),NULL));
 }
