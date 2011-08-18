@@ -57,6 +57,8 @@
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
 
+cocos2d::CCLabelTTF* testInfo1,*testInfo2,*testInfo3;
+
 
 GLfloat XCam=0.0f,YCam=1.0f,ZCam=0.0f;
 GLfloat XEye=0.0f,YEye=1.5f,ZEye=0.5f;
@@ -67,6 +69,7 @@ GLfloat eulerAngles[3];
 
 static cocos2d::CCLocation userLocation;
 static cocos2d::CCHeading userHeading;
+static double adjustedUserHeading;
 
 static vector<CCARGeneric3DModel*> models3D;
 static vector<CCARGeneric3DObject*> objects3D;
@@ -98,9 +101,9 @@ bool ArScene::init()
 	{
 		return false;
 	}
-  
-  CCDirector::sharedDirector()->setDisplayFPS(false);
-  this->testEnable = true;
+
+  CCDirector::sharedDirector()->setDisplayFPS(true);
+  this->testEnable = true;  
   
 	this->setIsAccelerometerEnabled(true);
   this->setIsTouchEnabled(true);
@@ -118,6 +121,10 @@ bool ArScene::init()
 	CCMenu* pMenu = CCMenu::menuWithItems(pCloseItem, NULL);
 	pMenu->setPosition( CCPointZero );
 	this->addChild(pMenu, 1);
+  
+  m_pMenu = CCMenu::menuWithItems(NULL);
+	m_pMenu->setPosition( CCPointZero );
+	this->addChild(m_pMenu, 1);
   
   testInfo1 = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
   testInfo1->setPosition(ccp(160,450));
@@ -210,29 +217,27 @@ void ArScene::visit()
   }else{
     gluLookAt(XCam, YCam, ZCam,	XEye, -zUp*100, ZEye, xUp*100, yUp*100, 0.0f);
   }
-  //  #define GL_PROJECTION_MATRIX              0x0BA7 
-  //  glGetFloatv(GL_MODELVIEW_MATRIX, model_view.m);
   
-  ccColor4F r = ccc4FFromccc4B(ccc4(255.0f,0.0f,0.0f,230.0f));
-  ccColor4F g = ccc4FFromccc4B(ccc4(0.0f,255.0f,0.0f,230.0f));
-  ccColor4F b = ccc4FFromccc4B(ccc4(0.0f,255.0f,255.0f,230.0f));
-  ccColor4F a = ccc4FFromccc4B(ccc4(150.0f,255.0f,150.0f,230.0f));
-  
-  
-  //Y
+  //  ccColor4F r = ccc4FFromccc4B(ccc4(255.0f,0.0f,0.0f,230.0f));
+  //  ccColor4F g = ccc4FFromccc4B(ccc4(0.0f,255.0f,0.0f,230.0f));
+  //  ccColor4F b = ccc4FFromccc4B(ccc4(0.0f,255.0f,255.0f,230.0f));
+  //  ccColor4F a = ccc4FFromccc4B(ccc4(150.0f,255.0f,150.0f,230.0f));
+  //  
+  //  
+  //  //Y
+  //  //  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
+  //  
+  //  //Este & X
   //  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
-  
-  //Este & X
-  ccDraw3DLine(5.0f,r,0.0f, 0.0f, 0.0f, 1500.0f, 0.0f, 0.0f);
-  
-  //Oeste
-  ccDraw3DLine(5.0f,g ,0.0f, 0.0f, 0.0f, -1500.0f, 0.0f, 0.0f);
-  
-  //Norte & Z
-  ccDraw3DLine(5.0f,b,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1500.0f);
-  
-  //Sur
-  ccDraw3DLine(5.0f,a,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1500.0f);
+  //  
+  //  //Oeste
+  //  ccDraw3DLine(5.0f,g ,0.0f, 0.0f, 0.0f, -1500.0f, 0.0f, 0.0f);
+  //  
+  //  //Norte & Z
+  //  ccDraw3DLine(5.0f,b,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1500.0f);
+  //  
+  //  //Sur
+  //  ccDraw3DLine(5.0f,a,0.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1500.0f);
   
   glColor4f(1.0f,1.0f,1.0f,1.0f);
   
@@ -243,8 +248,10 @@ void ArScene::visit()
   
   for(unsigned int i=0; i< objects3D.size(); i++){
     objects3D[i]->draw3D();
+    //Se reordenan los objetos en el cocos2d
+    reorderChild(objects3D[i], objects3D[i]->m_dDistance);
   }
-  drawFloor();
+  //  drawFloor();
   
 	glDisable(GL_CULL_FACE);	
 	glClearColor(0.0f,0.0f,0.0f,0.0f) ;		
@@ -259,7 +266,26 @@ void ArScene::visit()
   loadObjectsButtons();
   
   CCLayer::visit();
+  
+  for(unsigned int i=0; i< objects3D.size(); i++){
+    //     ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[1]);
+    //     ccDrawLine(objects3D[i]->m_vScreenBox[0], objects3D[i]->m_vScreenBox[2]);
+    //     ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[1]);
+    //     ccDrawLine(objects3D[i]->m_vScreenBox[3], objects3D[i]->m_vScreenBox[2]);
+    //     
+    //     ccDrawPoint(objects3D[i]->m_vCenter);
+    if (objects3D[i]->m_bModelBox) {
+//      if (objects3D[i]->m_layerDescription == NULL) {
+//        objects3D[i]->m_layerDescription = new ARObjectMenu::ARObjectMenu(this);
+//        this->addChild(objects3D[i]->m_layerDescription,0);
+//      }
+    }
+  }
 }
+
+
+
+
 
 #define KFilteringFactor 0.20f
 float tilt;
@@ -343,6 +369,7 @@ void ArScene::updateHeading(CCHeading* newHeading){
   this->pLabelHeading->setString(buffer);
   
   eulerAngles[1] = adjustedHeading;
+  adjustedUserHeading = adjustedHeading;
   
   XEye = (-sin(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
   ZEye = (cos(eulerAngles[1]*(_pi/180))*cos(zUp))*50;
@@ -365,17 +392,39 @@ int ite = 0;
 
 void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
   printf("\nTouch Ended");
-  objects3D.pop_back();
-  objects3D.push_back(prueba3DObjects[ite]);
-  
-  if (ite == prueba3DObjects.size()-1) ite = 0;
-  else
-    ite ++;
 }
 
 void ArScene::menuCloseCallback(CCObject* pSender)
 {
   printf("\nmenuCloseCallback");
+}
+
+void ArScene::menuObjectPress(CCObject* pSender)
+{
+  CCARGeneric3DObject *myObject = (CCARGeneric3DObject *)pSender;
+  
+  //  printf("\nObject Name: %s", myObject->m_sObjectName.c_str());
+  //  
+  //  char buffer[256];
+  //  sprintf(buffer,"Nombre %s",myObject->m_sObjectName.c_str());
+  //  testInfo1->setString(buffer);
+  //  sprintf(buffer,"Descripción %s",myObject->m_sDescription.c_str());
+  //  testInfo2->setString(buffer);
+  
+  //  m_layerDescription = ARObjectMenu::ARObjectMenu(myObject);
+  
+  
+  for(unsigned int i=0; i< objects3D.size(); i++){
+    if (objects3D[i]->m_bModelBox == true && objects3D[i] != myObject) {
+      objects3D[i]->m_bModelBox = false;
+    }
+  }
+  
+  if (myObject->m_bModelBox == false)
+    myObject->m_bModelBox = true;
+  else
+    myObject->m_bModelBox = false;
+  
 }
 
 
@@ -406,22 +455,26 @@ void ArScene::loadTest()
   //  objects3D[0]->xRotate = 270.0f;
   //  prueba3DObjects.push_back(new CCARObject3D(MYMESH04, CCARType_Mesh,0.5f, -100.0f,0.0f, 1000.0f)); // ERROR
   
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
-  prueba3DObjects[0]->isRotating = false;
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,1.0f, 300.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D("CELSPDER.OBJ", CCARType_Mesh,20.0f, 50.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH03, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH05, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
-  prueba3DObjects.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f,600.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH02, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  //  prueba3DObjects[0]->isRotating = false;
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH01, CCARType_Mesh,1.0f, 300.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D("CELSPDER.OBJ", CCARType_Mesh,20.0f, 50.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH03, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH05, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH06, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MYMESH08, CCARType_Mesh,0.5f, 600.0f,0.0f,-100.0f));
+  //  prueba3DObjects.push_back(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,0.5f,600.0f,0.0f,-100.0f));
   
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
-  CCMenu* pMenu = CCMenu::menuWithItems(prueba3DObjects[0], NULL);
-	pMenu->setPosition( CCPointZero );
-	this->addChild(pMenu, 5);
-  objects3D.push_back(prueba3DObjects[0]);
+  
+  CCARGeneric3DObject* object = NULL; 
+  
+  object = addARObject(new CCARObject3D(MYMESH08, CCARType_Mesh,"Objeto MYMESH08","Descripción MYMESH08", 0.5f, 300.0f,  0.0f, 300.0f));  
+  object = addARObject(new CCARObject3D(MYMESH03, CCARType_Mesh,"Objeto MYMESH03","Descripción MYMESH03", 0.1f, -300.0f,  0.0f,  300.0f));
+  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA1","Descripción MESH_FLECHA1",  0.5f,  300.0f,  0.0f, -300.0f));
+  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA2","Descripción MESH_FLECHA2", 0.5f, -300.0f,  0.0f, -300.0f));
+  object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Objeto MYMESH02", "Descripción MYMESH02", 0.3,-7.856292128562927f , 42.34511443500709f));//Universidad
 }
 
 
@@ -430,20 +483,23 @@ void ArScene::execTest()
   
 }
 
-void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4F color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
+void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4B color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
 {
 	ccVertex3F vertices[2] = 
   {
     {xOrigin * CC_CONTENT_SCALE_FACTOR(), yOrigin * CC_CONTENT_SCALE_FACTOR(), zOrigin * CC_CONTENT_SCALE_FACTOR()},
     {xDestination * CC_CONTENT_SCALE_FACTOR(), yDestination * CC_CONTENT_SCALE_FACTOR(), zDestination * CC_CONTENT_SCALE_FACTOR() },
   };
+  
+  cocos2d::ccColor4F color4f = ccc4FFromccc4B(color);
+  
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 	glDisableClientState(GL_COLOR_ARRAY);
 	
 	glVertexPointer(3, GL_FLOAT, 0, vertices);
   glLineWidth (lineWidth);
-  glColor4f(color.r, color.g, color.b, color.a);
+  glColor4f(color4f.r, color4f.g, color4f.b, color4f.a);
 	glDrawArrays(GL_LINES, 0, 2);
 	
 	// restore default state
@@ -473,11 +529,32 @@ void drawFloor(){
 
 
 void ArScene::loadObjectsButtons(){
-//  for(unsigned int i=0; i< objects3D.size(); i++){
-//    objects3D[i]->setPosition(objects3D[i]->m_vCenter);
-//  }
+  
 }
 
+CCARGeneric3DObject* ArScene::addARObject(CCARGeneric3DObject* object){
+  objects3D.push_back(object);
+  object->m_labelDistance = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
+  object->m_labelName = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
+  object->m_labelDistance->setPosition(ccp(2000,2000));
+  object->m_labelName->setPosition(ccp(2000,2000));
+  addChild(object->m_labelDistance, 0);
+  addChild(object->m_labelName, 0);
+  m_pMenu->addChild(object, 5);
+  return object;
+}
+
+void ArScene::deleteARObject(CCARGeneric3DObject* object){
+  
+  for(unsigned int i=0; i< models3D.size(); i++){
+    if (objects3D[i] == object) {
+      m_pMenu->removeChild(object, true);
+      removeChild(object->m_labelName, true);
+      removeChild(object->m_labelDistance, true);
+      delete object;
+    }
+  }
+}
 
 CCARGeneric3DModel* ArScene::loadModel(string filename, CCARModelType modelType)
 {
@@ -488,6 +565,7 @@ CCARGeneric3DModel* ArScene::loadModel(string filename, CCARModelType modelType)
       case CCARType_Mesh: {
         Mesh *myMesh = new Mesh();
         myMesh->LoadModel(const_cast<char*> ( filename.c_str() ));
+        myMesh->modelName = filename;
         models3D.push_back(myMesh);
         return myMesh;
         break; 
@@ -497,6 +575,7 @@ CCARGeneric3DModel* ArScene::loadModel(string filename, CCARModelType modelType)
         TMDLModel *myTMDL = new TMDLModel();
         myTMDL->Init(const_cast<char*> ( filename.c_str()));
         myTMDL->SetSequence(0);
+        myTMDL->modelName = filename;
         models3D.push_back(myTMDL);
         return myTMDL;
       }
@@ -510,7 +589,6 @@ CCARGeneric3DModel* ArScene::loadModel(string filename, CCARModelType modelType)
 
 CCARGeneric3DModel* ArScene::findModel(string filename){
   CCARGeneric3DModel* toret=NULL;
-  
   for(unsigned int i=0; i< models3D.size(); i++){
     if (models3D[i]->modelName == filename) {
       return models3D[i];
@@ -522,6 +600,6 @@ CCARGeneric3DModel* ArScene::findModel(string filename){
 CCLocation ArScene::getUserlocation(void){
   return userLocation;
 }
-CCHeading ArScene::getUserHeading(void){
-  return userHeading;
+double ArScene::getUserHeading(void){
+  return adjustedUserHeading;
 }

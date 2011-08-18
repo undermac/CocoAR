@@ -5,10 +5,15 @@
 //  Created by Javier de la Peña Ojea on 09/08/11.
 //  Copyright 2011 Artifact. All rights reserved.
 //
+
 #include "cocos2d.h"
 
 #ifndef cocoAR_Geo3DObject_h
 #define cocoAR_Geo3DObject_h
+
+
+//#include "Menu3DObject.h"
+
 
 class CCARGeneric3DObject;
 
@@ -20,7 +25,7 @@ typedef enum
 
 class CCARGeneric3DModel
 {
-  public:
+public:
   cocos2d::ccVertex3F m_vtxMax;
   cocos2d::ccVertex3F m_vtxMin;
   void Init(char *Filename);
@@ -35,8 +40,10 @@ class CCARGeneric3DModel
 
 
 class CCARGeneric3DObject: public cocos2d::CCMenuItemImage{
-  public:
+public:
   CCARGeneric3DModel* model3D;
+  
+  std::string m_sObjectName, m_sDescription;
   
   double scale;
   double xRotate;
@@ -47,6 +54,11 @@ class CCARGeneric3DObject: public cocos2d::CCMenuItemImage{
   double yTranslate;
   double zTranslate;
   
+  double m_dDistance;
+  double m_dBearing;
+  
+  //ARObjectMenu* m_layerDescription;
+  
   cocos2d::CCPoint m_vCenter;
   cocos2d::CCSize m_size;
   
@@ -56,36 +68,35 @@ class CCARGeneric3DObject: public cocos2d::CCMenuItemImage{
   bool m_bModelBox;
   bool m_bScreenBox;
   cocos2d::CCPoint m_vScreenBox[8];
+  cocos2d::CCLabelTTF* m_labelDistance, *m_labelName;
   
-  private:
-    cocos2d::CCPoint covert3Dto2d(cocos2d::ccVertex3F);
-  protected:
+private:
+  cocos2d::CCPoint covert3Dto2d(cocos2d::ccVertex3F);
+protected:
   void calculateScreenBox();
-  void drawBox(GLfloat lineWidth, cocos2d::ccColor4F color);
+  void drawBox(GLfloat lineWidth, cocos2d::ccColor4B color);
   int rotationValue; // Cambiar a private
-
+  
 };
 
 class CCARObject3D: public CCARGeneric3DObject
 {
 public:
   
-  CCARObject3D(std::string filename, CCARModelType modelType);
-  CCARObject3D(std::string filename, CCARModelType modelType, double scale);
-  CCARObject3D(std::string filename, CCARModelType modelType, double scale, double x, double y, double z);
-  CCARObject3D(std::string filename, CCARModelType modelType, double scale, double x, double y, double z, double xRotate, double yRotate, double zRotate);
+  CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription);
+  CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale);
+  CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double x, double y, double z);
+  CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double x, double y, double z, double xRotate, double yRotate, double zRotate);
   void draw3D();
 };
 
 class CCARGeo3DObject: public CCARGeneric3DObject
 {
 public:
-  CCARGeo3DObject(std::string filename, CCARModelType modelType, double longitude, double latitude);
-  CCARGeo3DObject(std::string filename, CCARModelType modelType, double scale, double longitude, double latitude);
-  CCARGeo3DObject(std::string filename, CCARModelType modelType, double scale, double longitude, double latitude, double altitude);
-  ~CCARGeo3DObject();
-  std::string name;
-  std::string description;
+  CCARGeo3DObject();
+  CCARGeo3DObject(std::string filename, CCARModelType modelType,std::string objectName,std::string objectDescription, double lon, double lat);
+  CCARGeo3DObject(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double longitude, double latitude);
+  CCARGeo3DObject(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double longitude, double latitude, double altitude);
   
   double longitude;
   double latitude;

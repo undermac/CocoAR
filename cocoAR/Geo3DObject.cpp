@@ -16,21 +16,22 @@
 #include "Matrix.h"
 #include "Vector.h"
 
+
+#define DEG_TO_RAD(X) (X*M_PI/180.0)
+#define RAD_TO_DEG(X) (X*180.0/M_PI)
+
+extern cocos2d::CCLabelTTF* testInfo1,*testInfo2,*testInfo3;
+
 USING_NS_CC;
 
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
-//  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
-//  m_pSelectedImage = NULL;
-//  m_pDisabledImage = NULL;
-//  
-//  m_tAnchorPoint = ccp(0.5f, 0.5f);
-//  m_pListener = this;
-//  m_pfnSelector = menu_selector(ArScene::menuCloseCallback);
-//  m_bIsEnabled = true;
-//  m_bIsSelected = false;
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription){  
+  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuObjectPress));
   
-  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuCloseCallback));
-  
+  m_sObjectName = objectName;
+  m_sDescription = objectDescription;
+  m_labelDistance = NULL;
+  m_labelName = NULL;
+//  m_layerDescription = NULL;
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
@@ -45,24 +46,30 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType){
   
   model3D = ArScene::loadModel(model, modelType);
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca){
-  new (this) CCARObject3D::CCARObject3D(model,modelType);
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription, double sca){
+  new (this) CCARObject3D::CCARObject3D(model,modelType,objectName,objectDescription);
   scale = sca;
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca, double x, double y, double z){
-  new (this) CCARObject3D::CCARObject3D(model,modelType,sca);
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription, double sca, double x, double y, double z){
+  new (this) CCARObject3D::CCARObject3D(model,modelType,objectName, objectDescription ,sca);
   xTranslate = x;
   yTranslate = y;
   zTranslate = z;
 }
-CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType, double sca, double x, double y, double z, double xRotate, double yRotate, double zRotate){
-  new (this) CCARObject3D(model,modelType,sca,x,y,z);
+CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription, double sca, double x, double y, double z, double xRotate, double yRotate, double zRotate){
+  new (this) CCARObject3D(model,modelType,objectName, objectDescription,sca,x,y,z);
   xRotate = xRotate;
   yRotate = yRotate;
   zRotate = zRotate;
 }
 
 void CCARObject3D::draw3D(){
+  m_dBearing = 360.0f - RAD_TO_DEG(Atan2(xTranslate, zTranslate));
+  m_dBearing > 360.0f ? m_dBearing -= 360.0f : true;
+  m_dDistance = sqrt((xTranslate*xTranslate)+(zTranslate*zTranslate));
+//  printf("\nDistance: %f, bearing: %f", m_dDistance, m_dBearing);
+  
+  
   glPushMatrix();
   glTranslatef(xTranslate, yTranslate, zTranslate);
   glScalef(scale, scale, scale );
@@ -71,36 +78,31 @@ void CCARObject3D::draw3D(){
     if (rotationValue > 360)
       rotationValue = 0;
     else
-      rotationValue += arc4random()%5;
+      rotationValue += 3;
     glRotatef(yRotate + rotationValue, 0, 1, 0);
   }else
     glRotatef(yRotate, 0, 1, 0);
   glRotatef(xRotate, 1, 0, 0);
   glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
   model3D->draw3D();
-  cocos2d::ccColor4F red = ccc4FFromccc4B(cocos2d::ccc4(255.0f,0.0f,0.0f,230.0f));
   if(m_bModelBox)
-    drawBox(3.0f, red);
+    drawBox(3.0f, cocos2d::ccc4(0.0f,255.0f,0.0f,230.0f));
   calculateScreenBox();
   glPopMatrix();
 }
+CCARGeo3DObject::CCARGeo3DObject(){}
 
-CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, double lon, double lat){
-
-//  m_pNormalImage = CCSprite::spriteWithFile("White_Crystal.png");
-//  m_pSelectedImage = NULL;
-//  m_pDisabledImage = NULL;
-//  
-//  m_tAnchorPoint = ccp(0.5f, 0.5f);
-//  m_pListener = this;
-//  m_pfnSelector = menu_selector(ArScene::menuCloseCallback);
-//  m_bIsEnabled = true;
-//  m_bIsSelected = false;
+CCARGeo3DObject::CCARGeo3DObject(std::string filename, CCARModelType modelType,std::string objectName,std::string objectDescription, double lon, double lat){
   
-  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuCloseCallback));
+  initFromNormalImage("transparent.png", NULL, NULL, this, menu_selector(ArScene::menuObjectPress));
   
+  m_sObjectName = objectName;
+  m_sDescription = objectDescription;
+  m_labelDistance = NULL;
+  m_labelName = NULL;
+//  m_layerDescription = NULL;
   isRotating = true;
-  m_bModelBox = true;
+  m_bModelBox = false;
   m_bScreenBox = true;
   m_size = CCSize(20.0f,20.0f);
   scale = 1.0f;
@@ -113,40 +115,42 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType, dou
   longitude = lon;
   latitude = lat;
   altitude = 0.0f;
-  model3D = ArScene::loadModel(model, modelType);
+  model3D = ArScene::loadModel(filename, modelType);
 }
 
-CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,double sca , double lon, double lat){
-  new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType, lon, lat);
+
+CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription ,double sca , double lon, double lat){
+  new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType,objectName,objectDescription, lon, lat);
   scale = sca;
 }
-CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,double sca , double lon, double lat, double alt){
-  new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType,scale, lon, lat);
+CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription,double sca , double lon, double lat, double alt){
+  new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType,objectName, objectDescription,scale, lon, lat);
   altitude = alt;
 }
 
 void CCARGeo3DObject::draw3D(){
   cocos2d::CCLocation userlocation = ArScene::getUserlocation();
-  double distanceValue = cocos2d::CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userlocation.latitude,(double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
-  double bearing = cocos2d::CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( (double)userlocation.latitude, (double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
+  m_dDistance = cocos2d::CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userlocation.latitude,(double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
+  m_dBearing = cocos2d::CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( (double)userlocation.latitude, (double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
   
+  m_dBearing = RAD_TO_DEG(m_dBearing);
   double angleC,x,z;
-  if (bearing*(180/_pi) > 0.0f && bearing*(180/_pi) < 90.f) {//1
-    angleC = 90.0f - bearing*(180/_pi);
-    x = - cos(angleC*(_pi/180))*distanceValue;
-    z = sin(angleC*(_pi/180))*distanceValue;
-  }else if (bearing*(180/_pi) > 90.0f && bearing*(180/_pi) < 180.0f){ //2
-    angleC = 180.0f - bearing*(180/_pi);
-    x = -sin(angleC*(_pi/180))*distanceValue;
-    z = -cos(angleC*(_pi/180))*distanceValue;
-  }else if (bearing*(180/_pi) > 180.0f && bearing*(180/_pi) < 270.0f){ //3
-    angleC = 270.0f - bearing*(180/_pi);
-    x = cos(angleC*(_pi/180))*distanceValue;
-    z = - sin(angleC*(_pi/180))*distanceValue;
-  }else{ //4
-    angleC = 360.0f - bearing*(180/_pi);
-    x = sin(angleC*(_pi/180))*distanceValue;
-    z = cos(angleC*(_pi/180))*distanceValue;
+  if (m_dBearing > 0.0f && m_dBearing < 90.f) {           //1
+    angleC = 90.0f - m_dBearing;
+    x = - cos(DEG_TO_RAD(angleC))*m_dDistance;
+    z = sin(DEG_TO_RAD(angleC))*m_dDistance;
+  }else if (m_dBearing > 90.0f && m_dBearing < 180.0f){   //2
+    angleC = 180.0f - m_dBearing;
+    x = -sin(DEG_TO_RAD(angleC))*m_dDistance;
+    z = -cos(DEG_TO_RAD(angleC))*m_dDistance;
+  }else if (m_dBearing > 180.0f && m_dBearing < 270.0f){  //3
+    angleC = 270.0f - m_dBearing;
+    x = cos(DEG_TO_RAD(angleC))*m_dDistance;
+    z = - sin(DEG_TO_RAD(angleC))*m_dDistance;
+  }else{                                                  //4
+    angleC = 360.0f - m_dBearing;
+    x = sin(DEG_TO_RAD(angleC))*m_dDistance;
+    z = cos(DEG_TO_RAD(angleC))*m_dDistance;
   }
   
   glPushMatrix();
@@ -156,7 +160,7 @@ void CCARGeo3DObject::draw3D(){
     if (rotationValue > 360)
       rotationValue = 0;
     else
-      rotationValue += arc4random()%5;
+      rotationValue += 1;
     glRotatef(yRotate + rotationValue, 0, 1, 0);
   }else
     glRotatef(yRotate, 0, 1, 0);
@@ -164,9 +168,8 @@ void CCARGeo3DObject::draw3D(){
   glRotatef(zRotate, 0, 0, 1);
   glColor4f(1.0f, 1.0f, 1.0f, 0.9f);
   model3D->draw3D();
-  cocos2d::ccColor4F g = ccc4FFromccc4B(cocos2d::ccc4(0.0f,255.0f,0.0f,230.0f));
   if(m_bModelBox)
-    drawBox(3.0f, g);
+    drawBox(3.0f, ccc4(0.0f,255.0f,0.0f,230.0f));
   calculateScreenBox();
   glPopMatrix();
 }
@@ -186,8 +189,8 @@ void CCARGeneric3DObject::calculateScreenBox(){
     { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMax.z},//111
   };
   
-  cocos2d::ccVertex3F center = {0.0f,0.0f,0.0f};
-  m_vCenter = covert3Dto2d(center);
+//  cocos2d::ccVertex3F center = {(model3D->m_vtxMax.x - (model3D->m_vtxMin.x*0.5f)),(model3D->m_vtxMax.y - (model3D->m_vtxMin.y*0.5f)),(model3D->m_vtxMax.z - (model3D->m_vtxMin.z*0.5f))};
+//  m_vCenter = covert3Dto2d(center);
 
   cocos2d::CCPoint maxPoint = covert3Dto2d(boxVertex[0]);
   cocos2d::CCPoint minPoint = maxPoint;
@@ -206,20 +209,58 @@ void CCARGeneric3DObject::calculateScreenBox(){
       minPoint.y = aux.y;
   }
   
-//  setScaleX((float)(maxPoint.x - minPoint.x)/m_size.width);
-//  setScaleY((float)(maxPoint.y - minPoint.y)/m_size.height);
+  CCSize newSize = CCSize((maxPoint.x - minPoint.x) < 50.0f ? 50.0f: (maxPoint.x - minPoint.x)*0.5f
+                          ,(maxPoint.y - minPoint.y) < 50.0f ? 50.0f: (maxPoint.y - minPoint.y)*0.5f);
+  
+  if (newSize.width > 500.0f) newSize.width = 500.f;
+  if (newSize.height > 500.0f) newSize.height = 500.f;
+  
+  m_vCenter = ccp(((maxPoint.x + minPoint.x)*0.5f), ((maxPoint.y + minPoint.y)*0.5f));
+  
+  this->setPosition(m_vCenter);
 
-  m_size = CCSize(maxPoint.x - minPoint.x, maxPoint.y - minPoint.y);
+  setScaleX((float)newSize.width/m_size.width);
+  setScaleY((float)newSize.height/m_size.height);
 
-  setPosition(m_vCenter);
-  setContentSize(m_size);
   m_vScreenBox[0] = CCPoint(minPoint.x,minPoint.y);
   m_vScreenBox[1] = CCPoint(minPoint.x,maxPoint.y);
   m_vScreenBox[2] = CCPoint(maxPoint.x,minPoint.y);
   m_vScreenBox[3] = CCPoint(maxPoint.x,maxPoint.y);
+  
+  double userHeading = ArScene::getUserHeading();
+  double objectBearing = m_dBearing;
+  double diference = 0.0f;
+  if (userHeading < 90.0f) userHeading += 360.0f;
+  if (objectBearing < 90.0f) objectBearing += 360.0f;
+    
+  if (userHeading > objectBearing) diference =  (userHeading+360.0f) - (objectBearing+360.0f);
+  else diference = (objectBearing+360.0f) - (userHeading+360.0f);
+  
+  if (diference > 90.0f){ 
+    setIsEnabled(false);
+    m_labelDistance->setString("");
+  }else{
+    setIsEnabled(true);
+    this->setPosition(m_vCenter);
+    setScaleX((float)newSize.width/m_size.width);
+    setScaleY((float)newSize.height/m_size.height);
+    char buffer[256];
+    if (m_dDistance > 1000.0f) sprintf(buffer,"%4.1fKm",m_dDistance);
+    else sprintf(buffer,"%4.0fm",m_dDistance);
+//    if (m_layerDescription) {
+//      m_layerDescription->setPosition(m_vCenter);
+//      m_labelDistance->setString("");
+//      m_labelName->setString("");
+//    }else{
+          m_labelDistance->setString(buffer);
+          m_labelName->setString(m_sObjectName.c_str());
+//    }
+    m_labelDistance->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 18));
+    m_labelName->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 8));
+  }
 }
 
-void CCARGeneric3DObject::drawBox(GLfloat lineWidth, cocos2d::ccColor4F color)
+void CCARGeneric3DObject::drawBox(GLfloat lineWidth, cocos2d::ccColor4B color)
 { 
   cocos2d::ccVertex3F boxVectorMax = model3D->m_vtxMax;
   cocos2d::ccVertex3F boxVectorMin = model3D->m_vtxMin;

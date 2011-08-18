@@ -47,7 +47,7 @@ public:
 	bool containsObject(CCObject *pObject);
 	CCSetIterator begin();
 	CCSetIterator end();
-    CCObject* anyObject();
+  CCObject* anyObject();
 
 private:
     std::set<CCObject *> *m_pSet;
