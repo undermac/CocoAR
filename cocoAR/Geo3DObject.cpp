@@ -401,7 +401,14 @@ void ARObjectMenu::setColor(cocos2d::ccColor3B color)
 		}
 	}
 }
-void ARObjectMenu::removeLayerdescription(){
+void ARObjectMenu::removeLayerdescription(CCARGeneric3DObject* pObject){
 	setIsTouchEnabled(false);
-	runAction(CCSequence::actions(CCFadeOut::actionWithDuration(2.0f),NULL));
+	runAction(CCSequence::actions(CCFadeOut::actionWithDuration(2.0f),
+                                CCCallFuncN::actionWithTarget(this,callfuncN_selector(ARObjectMenu::removeMenu))));
+  pObject->m_layerDescription = NULL;
+}
+
+void ARObjectMenu::removeMenu(){
+  removeChild(this, true);
+  
 }

@@ -10,12 +10,16 @@
 //[DONE] Desplegar texto -> 2 días
 //[DONE] Crear cámera delegate -> 2 días
 
-//[TODO]Crear elementos geo 
-//[TODO]Crear elementos posicionados relativos
+//[DONE]Crear elementos geo 
+//[DONE]Crear elementos posicionados relativos
 
-//[TODO] Solucionar BUG -Mirando al Sur- Que lo arrelé el Mac del futuro.
-//[TODO] Click en objetos -> 3 días
-//[TODO] Prueba fiesta -> 3 días
+//[DONE] Solucionar BUG -Mirando al Sur- Que lo arrelé el Mac del futuro.
+//[DONE] Click en objetos -> 3 días
+//[DONE] Prueba fiesta -> 3 días
+
+//[TODO]Al eliminar un objeto, comprobar para eliminar el modelo.
+//[TODO]A más de 1500m, cambiar el escalado del objeto y situarlo en el punto 1500.
+
 //[TODO] Sacar API -> 7 días
 //[TODO] Enlazar API con Orama -> 7 días
 //[TODO] Realizar pruebas rápidas -> 1 día
@@ -395,7 +399,7 @@ void ArScene::ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event){
     if (objects3D[i]->m_bModelBox == true) {
       objects3D[i]->m_bModelBox = false;
       if (objects3D[i]->m_layerDescription !=NULL) {
-        objects3D[i]->m_layerDescription->removeLayerdescription();
+        objects3D[i]->m_layerDescription->removeLayerdescription(objects3D[i]);
       }
     }
   }
@@ -424,7 +428,7 @@ void ArScene::menuObjectPress(CCObject* pSender)
     if (objects3D[i]->m_bModelBox == true && objects3D[i] != myObject) {
       objects3D[i]->m_bModelBox = false;
         if (objects3D[i]->m_layerDescription !=NULL) {
-          objects3D[i]->m_layerDescription->removeLayerdescription();
+          objects3D[i]->m_layerDescription->removeLayerdescription(objects3D[i]);
         }
     }
   }

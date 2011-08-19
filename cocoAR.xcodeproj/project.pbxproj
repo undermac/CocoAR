@@ -13,6 +13,11 @@
 		59059E7913F052E40038EB6C /* CCMobileCameraBackWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59059E7813F052E30038EB6C /* CCMobileCameraBackWrapper.mm */; };
 		591B1DE613F16E07009F59B3 /* explosion17.png in Resources */ = {isa = PBXBuildFile; fileRef = 591B1DE513F16E07009F59B3 /* explosion17.png */; };
 		591B1DE913F1B94E009F59B3 /* Geo3DObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */; };
+		59219DB813FEAF8000BF9498 /* eventSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DB713FEAF8000BF9498 /* eventSync.m */; };
+		59219DBD13FEAFB800BF9498 /* SyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DBC13FEAFB800BF9498 /* SyncHelper.m */; };
+		59219DC613FEAFD300BF9498 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC113FEAFD300BF9498 /* NSObject+SBJSON.m */; };
+		59219DC713FEAFD300BF9498 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC313FEAFD300BF9498 /* NSString+SBJSON.m */; };
+		59219DC813FEAFD300BF9498 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC513FEAFD300BF9498 /* SBJSON.m */; };
 		5948D1CB13FA8A3C00865E31 /* White_Crystal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5948D1CA13FA8A3C00865E31 /* White_Crystal.png */; };
 		595301F113FB1D450047F249 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 595301F013FB1D450047F249 /* transparent.png */; };
 		5971C3D813CC6D1200C5A891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3D713CC6D1200C5A891 /* QuartzCore.framework */; };
@@ -296,6 +301,17 @@
 		591B1DE513F16E07009F59B3 /* explosion17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion17.png; sourceTree = "<group>"; };
 		591B1DE713F1B946009F59B3 /* Geo3DObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geo3DObject.h; sourceTree = "<group>"; };
 		591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geo3DObject.cpp; sourceTree = "<group>"; };
+		59219DB613FEAF8000BF9498 /* eventSync.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = eventSync.h; sourceTree = "<group>"; };
+		59219DB713FEAF8000BF9498 /* eventSync.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = eventSync.m; sourceTree = "<group>"; };
+		59219DBB13FEAFB800BF9498 /* SyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncHelper.h; sourceTree = "<group>"; };
+		59219DBC13FEAFB800BF9498 /* SyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncHelper.m; sourceTree = "<group>"; };
+		59219DBF13FEAFD300BF9498 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		59219DC013FEAFD300BF9498 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		59219DC113FEAFD300BF9498 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		59219DC213FEAFD300BF9498 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		59219DC313FEAFD300BF9498 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		59219DC413FEAFD300BF9498 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		59219DC513FEAFD300BF9498 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
 		5948D1CA13FA8A3C00865E31 /* White_Crystal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = White_Crystal.png; sourceTree = "<group>"; };
 		595301F013FB1D450047F249 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		5971C3D313CC6D1200C5A891 /* cocoAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -752,6 +768,31 @@
 				59059E7813F052E30038EB6C /* CCMobileCameraBackWrapper.mm */,
 			);
 			name = CameraBack;
+			sourceTree = "<group>";
+		};
+		59219DBA13FEAF8700BF9498 /* example */ = {
+			isa = PBXGroup;
+			children = (
+				59219DB613FEAF8000BF9498 /* eventSync.h */,
+				59219DB713FEAF8000BF9498 /* eventSync.m */,
+				59219DBB13FEAFB800BF9498 /* SyncHelper.h */,
+				59219DBC13FEAFB800BF9498 /* SyncHelper.m */,
+			);
+			name = example;
+			sourceTree = "<group>";
+		};
+		59219DBE13FEAFC400BF9498 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				59219DBF13FEAFD300BF9498 /* JSON.h */,
+				59219DC013FEAFD300BF9498 /* NSObject+SBJSON.h */,
+				59219DC113FEAFD300BF9498 /* NSObject+SBJSON.m */,
+				59219DC213FEAFD300BF9498 /* NSString+SBJSON.h */,
+				59219DC313FEAFD300BF9498 /* NSString+SBJSON.m */,
+				59219DC413FEAFD300BF9498 /* SBJSON.h */,
+				59219DC513FEAFD300BF9498 /* SBJSON.m */,
+			);
+			name = JSON;
 			sourceTree = "<group>";
 		};
 		5971C3C813CC6D1100C5A891 = {
@@ -1320,7 +1361,9 @@
 				5971C5C913CC6DAD00C5A891 /* Engine3d */,
 				59059E7613F051E40038EB6C /* CameraBack */,
 				5971C5BF13CC6D9700C5A891 /* Location */,
+				59219DBE13FEAFC400BF9498 /* JSON */,
 				5971C57313CC6D1500C5A891 /* ios */,
+				59219DBA13FEAF8700BF9498 /* example */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1856,6 +1899,11 @@
 				59059E7513F051CB0038EB6C /* CCMobileCameraBack_ios.mm in Sources */,
 				59059E7913F052E40038EB6C /* CCMobileCameraBackWrapper.mm in Sources */,
 				591B1DE913F1B94E009F59B3 /* Geo3DObject.cpp in Sources */,
+				59219DB813FEAF8000BF9498 /* eventSync.m in Sources */,
+				59219DBD13FEAFB800BF9498 /* SyncHelper.m in Sources */,
+				59219DC613FEAFD300BF9498 /* NSObject+SBJSON.m in Sources */,
+				59219DC713FEAFD300BF9498 /* NSString+SBJSON.m in Sources */,
+				59219DC813FEAFD300BF9498 /* SBJSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

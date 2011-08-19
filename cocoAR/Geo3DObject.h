@@ -27,7 +27,8 @@ public:
   GLubyte getOpacity(void);
 	cocos2d::ccColor3B getColor(void);
 	void setColor(cocos2d::ccColor3B color);
-  void removeLayerdescription();
+  void removeLayerdescription(CCARGeneric3DObject* pObject);
+  void removeMenu();
 	virtual cocos2d::CCRGBAProtocol* convertToRGBAProtocol() { return (cocos2d::CCRGBAProtocol*)this; }
 };
 
