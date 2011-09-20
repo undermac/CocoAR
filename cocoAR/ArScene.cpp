@@ -6,35 +6,8 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
-//[DONE] Geolocalización de objetos -> 2 días
-//[DONE] Desplegar texto -> 2 días
-//[DONE] Crear cámera delegate -> 2 días
-
-//[DONE]Crear elementos geo 
-//[DONE]Crear elementos posicionados relativos
-
-//[DONE] Solucionar BUG -Mirando al Sur- Que lo arrelé el Mac del futuro.
-//[DONE] Click en objetos -> 3 días
-//[DONE] Prueba fiesta -> 3 días
-
-//[TODO]Al eliminar un objeto, comprobar para eliminar el modelo.
-//[TODO]A más de 1500m, cambiar el escalado del objeto y situarlo en el punto 1500.
-
-//[TODO] Sacar API -> 7 días
-//[TODO] Enlazar API con Orama -> 7 días
-//[TODO] Realizar pruebas rápidas -> 1 día
-//[TODO] Documentar init -> 3 días
-//[TODO] Documentar Análisis -> 9 días
-//[TODO] Documentar Diseño -> 9 días
-//[TODO] Documentar Implementación 9 días
-//[TODO] Realizar documentación -> 15 días
-
 #include "ArScene.h"
-#include "CCLocationManager.h"
-#include "bMath.h"
-#include <math.h>
-#include "MDLModel.h"
-#include <vector>
+
 
 #define RELEASE 0
 #define DEBUG_GAME 1
@@ -46,9 +19,10 @@
 //3D Test
 #define	TMDL_HELICOPTER	"apache.mdl"
 #define	TMDL_OSPREY	"osprey.mdl"
+#define TMDL_PRUEBA "barney.mdl" //ERROR
+
 
 #define	MESH_FLECHA "flecha.obj"
-
 #define	MYMESH01 "barracones.obj"
 #define	MYMESH02 "war3farm.obj"
 #define	MYMESH03 "war3mill.obj"
@@ -56,12 +30,17 @@
 #define	MYMESH05 "war3barracks.obj"
 #define	MYMESH06 "war3_buildingsmall.obj"
 #define	MYMESH08 "poste.obj"
+#define MYMESH09 "iglesia.obj"
+#define MYMESH10 "edificio.obj"
+#define MYMESH11 "humanos1.obj"
+#define MYMESH12 "coco.obj"
+#define MYMESH13 "Dark Portal Complete.obj"
 
 //Funtions
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
 
-cocos2d::CCLabelTTF* testInfo1,*testInfo2,*testInfo3;
+
 
 
 GLfloat XCam=0.0f,YCam=1.0f,ZCam=0.0f;
@@ -71,13 +50,12 @@ GLfloat xUp=0.0f, yUp =0.0f, zUp=0.1f;
 
 GLfloat eulerAngles[3];
 
-static cocos2d::CCLocation userLocation;
-static cocos2d::CCHeading userHeading;
-static double adjustedUserHeading;
+cocos2d::CCLocation ArScene::userLocation;
+cocos2d::CCHeading ArScene::userHeading;
+double ArScene::adjustedUserHeading;
 
-static vector<CCARGeneric3DModel*> models3D;
-static vector<CCARGeneric3DObject*> objects3D;
-static vector<CCARGeneric3DObject*> prueba3DObjects;
+vector<CCARGeneric3DModel*> ArScene::models3D;
+vector<CCARGeneric3DObject*> ArScene::objects3D;
 
 USING_NS_CC;
 
@@ -148,8 +126,7 @@ bool ArScene::init()
   pLabelGPS->setPosition(ccp(160,10));
   
   pLabelHeading = CCLabelTTF::labelWithString("" ,LABEL_FONT_TYPE, 18);
-  pLabelHeading->setPosition(ccp(160,470));
-  
+  pLabelHeading->setPosition(ccp(CCDirector::sharedDirector()->getWinSize().width/2, CCDirector::sharedDirector()->getWinSize().height - 20));  
   this->addChild(pLabelLocation,1);
   this->addChild(pLabelGPS,1);
   this->addChild(pLabelHeading,1);
@@ -159,15 +136,15 @@ bool ArScene::init()
   }
   
   // Esto se tiene que hacer desde fuera...
-  this->loadModel(TMDL_HELICOPTER, CCARType_TMDLModel);
-  this->loadModel(TMDL_OSPREY, CCARType_TMDLModel);
-  this->loadModel(MESH_FLECHA, CCARType_Mesh);
-  this->loadModel(MYMESH01, CCARType_Mesh);
-  this->loadModel(MYMESH02, CCARType_Mesh);
-  this->loadModel(MYMESH03, CCARType_Mesh);
-  this->loadModel(MYMESH04, CCARType_Mesh);
-  this->loadModel(MYMESH05, CCARType_Mesh);
-  this->loadModel(MYMESH08, CCARType_Mesh);
+//  this->loadModel(TMDL_HELICOPTER, CCARType_TMDLModel);
+//  this->loadModel(TMDL_OSPREY, CCARType_TMDLModel);
+//  this->loadModel(MESH_FLECHA, CCARType_Mesh);
+//  this->loadModel(MYMESH01, CCARType_Mesh);
+//  this->loadModel(MYMESH02, CCARType_Mesh);
+//  this->loadModel(MYMESH03, CCARType_Mesh);
+//  this->loadModel(MYMESH04, CCARType_Mesh);
+//  this->loadModel(MYMESH05, CCARType_Mesh);
+//  this->loadModel(MYMESH08, CCARType_Mesh);
   
   
   
@@ -249,8 +226,9 @@ void ArScene::visit()
 	glCullFace(GL_FRONT);
 	glDisable(GL_CULL_FACE);	
   
-  
+
   for(unsigned int i=0; i< objects3D.size(); i++){
+    objects3D[i]->locateObject();
     objects3D[i]->draw3D();
     //Se reordenan los objetos en el cocos2d
     reorderChild(objects3D[i], objects3D[i]->m_dDistance);
@@ -266,8 +244,6 @@ void ArScene::visit()
   
   CC_ENABLE_DEFAULT_GL_STATES();
 	glClear(GL_DEPTH_BUFFER_BIT);
-  
-  loadObjectsButtons();
   
   CCLayer::visit();
   
@@ -432,12 +408,10 @@ void ArScene::menuObjectPress(CCObject* pSender)
         }
     }
   }
-  
   if (myObject->m_bModelBox == false)
     myObject->m_bModelBox = true;
   else
     myObject->m_bModelBox = false;
-  
 }
 
 
@@ -481,20 +455,14 @@ void ArScene::loadTest()
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
   
-  CCARGeneric3DObject* object = NULL; 
-  
-  object = addARObject(new CCARObject3D(MYMESH08, CCARType_Mesh,"Objeto MYMESH08","Descripción MYMESH08", 0.5f, 300.0f,  0.0f, 300.0f));  
-  object = addARObject(new CCARObject3D(MYMESH03, CCARType_Mesh,"Objeto MYMESH03","Descripción MYMESH03", 0.1f, -300.0f,  0.0f,  300.0f));
-  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA1","Descripción MESH_FLECHA1",  0.5f,  300.0f,  0.0f, -300.0f));
-  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA2","Descripción MESH_FLECHA2", 0.5f, -300.0f,  0.0f, -300.0f));
-  object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Objeto MYMESH02", "Descripción MYMESH02", 0.3,-7.856292128562927f , 42.34511443500709f));//Universidad
+  CCARGeneric3DObject* object = NULL;
+//  object = addARObject(new CCARObject3D(MYMESH10, CCARType_Mesh,"Objeto MYMESH08","Descripción MYMESH08", 0.1f, -500.0f,  0.0f, -500.0f));
+//  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA1","Descripción MESH_FLECHA1",  0.5f,  300.0f,  0.0f, -300.0f));
+  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Plaza libre","", 1.0f, -300.0f,  0.0f, -300.0f));
+  object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Una Casa", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 0.3,-7.856292128562927f , 42.34511443500709f));//Universidad
+    object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Ría de Ferrol", "Descripción Ría de ferrol", 0.3,-8.245668411254883f , 43.494541820367246f));//Universidad
 }
 
-
-void ArScene::execTest()
-{
-  
-}
 
 void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4B color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination)
 {
@@ -540,11 +508,6 @@ void drawFloor(){
   glColor4f(1.0f,1.0f,1.0f,1.0f);
 }
 
-
-void ArScene::loadObjectsButtons(){
-  
-}
-
 CCARGeneric3DObject* ArScene::addARObject(CCARGeneric3DObject* object){
   objects3D.push_back(object);
   object->m_labelDistance = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
@@ -554,18 +517,28 @@ CCARGeneric3DObject* ArScene::addARObject(CCARGeneric3DObject* object){
   addChild(object->m_labelDistance, 0);
   addChild(object->m_labelName, 0);
   m_pMenu->addChild(object, 5);
+  
   return object;
 }
 
 void ArScene::deleteARObject(CCARGeneric3DObject* object){
+  CCARGeneric3DModel* myModel = findModel(object->model3D->modelName);
+  bool unique = true;
   
-  for(unsigned int i=0; i< models3D.size(); i++){
+  for(unsigned int i=0; i< objects3D.size(); i++){
     if (objects3D[i] == object) {
       m_pMenu->removeChild(object, true);
       removeChild(object->m_labelName, true);
       removeChild(object->m_labelDistance, true);
       delete object;
+    }else{
+      if (myModel == objects3D[i]->model3D) {
+        unique = false;
+      }
     }
+  }
+  if (unique) {
+    delete myModel;
   }
 }
 

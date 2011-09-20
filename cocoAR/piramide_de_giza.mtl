@@ -1,0 +1,73 @@
+# Alias Wavefront MTL File Exported from SketchUp
+# with OBJexporter (c) 2010-2011 TIG
+# Made for 'piramide_de_giza.obj'
+
+newmtl Default_Material
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+
+newmtl Material2
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material2.PNG
+
+newmtl DarkGoldenrod1
+Ka 0.000000 0.000000 0.000000
+Kd 0.721569 0.568627 0.349020
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+
+newmtl WhiteSmoke
+Ka 0.000000 0.000000 0.000000
+Kd 0.960784 0.960784 0.960784
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+
+#Distorted-Textures
+newmtl Material21
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material21.PNG
+
+newmtl Material22
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material22.PNG
+
+newmtl Material23
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material23.PNG
+
+newmtl Material24
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material24.PNG
+
+newmtl Material25
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material25.PNG
+
+newmtl Material26
+Ka 0.000000 0.000000 0.000000
+Kd 0.619608 0.537255 0.474510
+Ks 0.000000 0.000000 0.000000
+d 1.000000
+map_Kd piramide_de_giza_Textures/Material26.PNG
+
+#EOF

@@ -249,6 +249,8 @@ void my_MaterialVBO::RenderVBO()
 	GLboolean state = 0;
 
 	if (m_Material.textureID) 
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);//GL_WRAP
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glBindTexture(GL_TEXTURE_2D, m_Material.textureID);
 
 	glGetBooleanv(GL_DEPTH_WRITEMASK, &state);
@@ -286,6 +288,7 @@ void my_MaterialVBO::RenderVBO()
 	glDisableClientState(GL_COLOR_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glEnable(GL_TEXTURE_2D);
+  
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_uiIndexVBO);
 	glDrawElements(GL_TRIANGLES, m_iNumTriangles*3, GL_UNSIGNED_SHORT, (GLvoid*)0); 

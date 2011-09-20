@@ -12,6 +12,7 @@
     UIWindow *window;
     RootViewController	*viewController;
 }
+@property (nonatomic, retain) UITabBarController *tab;
 
 @end
 

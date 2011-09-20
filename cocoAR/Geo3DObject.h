@@ -6,13 +6,21 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
-#include "cocos2d.h"
+
+
 
 #ifndef cocoAR_Geo3DObject_h
 #define cocoAR_Geo3DObject_h
+#include "cocos2d.h"
+#include <math.h>
+#include "CCLocationManager.h"
+#include "Matrix.h"
+#include "Vector.h"
+#include "bMath.h"
 
 
 class CCARGeneric3DObject;
+class ArScene;
 
 class ARObjectMenu : public cocos2d::CCLayer,public cocos2d::CCRGBAProtocol
 {
@@ -76,6 +84,7 @@ public:
   cocos2d::CCSize m_size;
   
   virtual void draw3D()=0;
+  virtual void locateObject()=0;
   bool isRotating;
   bool showScreenBox;
   bool m_bModelBox;
@@ -89,6 +98,9 @@ protected:
   void calculateScreenBox();
   void drawBox(GLfloat lineWidth, cocos2d::ccColor4B color);
   int rotationValue; // Cambiar a private
+  double m_dXValue;
+  double m_dYValue;
+  double m_dZValue;
   
 };
 
@@ -101,6 +113,7 @@ public:
   CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double x, double y, double z);
   CCARObject3D(std::string filename, CCARModelType modelType, std::string objectName,std::string objectDescription, double scale, double x, double y, double z, double xRotate, double yRotate, double zRotate);
   void draw3D();
+  void locateObject();
 };
 
 class CCARGeo3DObject: public CCARGeneric3DObject
@@ -116,6 +129,7 @@ public:
   double altitude;
   
   void draw3D();
+  void locateObject();
 };
 
 #endif

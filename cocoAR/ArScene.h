@@ -6,25 +6,23 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
-#include "cocos2d.h"
-#include "CCLocationManagerDelegate.h"
-#include "CCLocationManager.h"
-#include "CCMobileCameraBack.h"
-#include "CCMobileCameraBackDelegate.h"
-#include "Geo3DObject.h"
-#include "mesh.h"
-#include "Geo3DObject.h"
+
 
 #ifndef ARcocos_ArScene_h
 #define ARcocos_ArScene_h
+#include "cocos2d.h"
+#include "Geo3DObject.h"
+#include "CCLocationManager.h"
+#include "CCMobileCameraBack.h"
+#include "bMath.h"
+#include <math.h>
+#include <vector>
+#include "MDLModel.h"
+#include "mesh.h"
 
 
-void test1Init();
-void test1();
-void test2Init();
-void test2();
 void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4B color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
-void drawFloor();
+
 
 
 class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate, public cocos2d::CCMobileCameraBackDelegate
@@ -67,14 +65,21 @@ public:
   //test
   bool testEnable;
   void loadTest();
-  void execTest();
+  void drawFloor();
   
   //Location
-  void loadObjectsButtons();
   void drawAr3DObjects();
   
+  cocos2d::CCLabelTTF* testInfo1,*testInfo2,*testInfo3;
   cocos2d::CCLabelTTF* pLabelLocation, *pLabelHeading, *pLabelGPS;
   cocos2d::CCMenu* m_pMenu;
+  
+  static cocos2d::CCLocation userLocation;
+  static cocos2d::CCHeading userHeading;
+  static double adjustedUserHeading;
+  
+  static vector<CCARGeneric3DModel*> models3D;
+  static vector<CCARGeneric3DObject*> objects3D;
   
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(ArScene);

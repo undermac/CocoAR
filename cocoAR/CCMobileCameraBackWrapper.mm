@@ -25,28 +25,28 @@ static MobileCameraBackDispacher* s_pMobileCameraBackDispacher;
 }
 
 - (id)init{
-  camera = [[UIImagePickerController alloc] init];
-  camera.delegate = self;
-  camera.navigationBarHidden = YES;
-  camera.toolbarHidden = YES;
-  camera.sourceType = UIImagePickerControllerSourceTypeCamera;
-  camera.showsCameraControls = NO;
 
-  
-// [OMG CODE HARDCORE BUG ]
-//  UIView *overView = [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
-//  camera.cameraOverlayView = overView;
-//  overView.userInteractionEnabled = YES;
-//  CGFloat camScaleup = 1.54;
-//  camera.cameraViewTransform = CGAffineTransformScale(camera.cameraViewTransform, camScaleup, camScaleup);
-  
-  CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
-  camera.cameraViewTransform = translate;
-  CGAffineTransform scale = CGAffineTransformScale(translate, 1.54, 1.54);
-  camera.cameraViewTransform = scale;
-  
-  [[[UIApplication sharedApplication] keyWindow] addSubview:camera.view];
-  [[[UIApplication sharedApplication] keyWindow] sendSubviewToBack:camera.view];
+  camera = [[UIImagePickerController alloc] init];
+  if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    camera.delegate = self;
+    camera.navigationBarHidden = YES;
+    camera.toolbarHidden = YES;
+    camera.sourceType = UIImagePickerControllerSourceTypeCamera;
+    camera.showsCameraControls = NO;
+    
+    CGAffineTransform translate = CGAffineTransformMakeTranslation(0.0, 27.0);
+    camera.cameraViewTransform = translate;
+    CGAffineTransform scale = CGAffineTransformScale(translate, 1.54, 1.54);
+    camera.cameraViewTransform = scale;
+    
+    [[[UIApplication sharedApplication] keyWindow] addSubview:camera.view];
+    [[[UIApplication sharedApplication] keyWindow] sendSubviewToBack:camera.view];
+  }else{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Camera no available" message:@"Sorry, your device does not have a camera." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    [alert release];
+  }
+
   
   return self;
 }

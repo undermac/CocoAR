@@ -26,17 +26,20 @@ static LocationDispatcher* s_pLocationDispatcher;
 
 - (id)init
 {
-  if ([CLLocationManager locationServicesEnabled]){
+  if ([CLLocationManager locationServicesEnabled] && [CLLocationManager headingAvailable]){
     self.delegateWrappers = [NSMutableArray arrayWithCapacity:4];
     locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
     locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
     locationManager.distanceFilter = kCLDistanceFilterNone;
+    
     [locationManager startUpdatingLocation];
-  }
-  if ([CLLocationManager headingAvailable]) {
     locationManager.headingFilter = 1;
     [locationManager startUpdatingHeading];
+  }else{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Location detection not available" message:@"Sorry, your device is not supported." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    [alert release];
   }
   return self;
 }

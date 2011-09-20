@@ -12,9 +12,11 @@
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
+#import "FavoriteStreetListViewController.h"
+#import "PreferencesViewController.h"
 
 @implementation AppController
-
+@synthesize tab;
 #pragma mark -
 #pragma mark Application lifecycle
 
@@ -27,6 +29,10 @@ static AppDelegate s_sharedApplication;
 
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
+  
+  
+    tab = [[UITabBarController alloc] init];
+
     EAGLView *__glView = [EAGLView viewWithFrame: [window bounds]
                                      pixelFormat: kEAGLColorFormatRGBA8
                                      depthFormat: GL_DEPTH_COMPONENT16_OES
@@ -45,8 +51,33 @@ static AppDelegate s_sharedApplication;
     __glView.backgroundColor = [UIColor clearColor];
 
     // Set RootViewController to window
-    window.rootViewController = viewController;
-    [window makeKeyAndVisible];
+  viewController.title = @"Ver";
+  viewController.tabBarItem.image = [UIImage imageNamed:@"camera_tab.png"];
+  
+  FavoriteStreetListViewController *favoriteViewController = [[FavoriteStreetListViewController alloc]init];
+  favoriteViewController.title = @"Favoritos";
+  favoriteViewController.tabBarItem.image = [UIImage imageNamed:@"ic_tab_unselected_fav.png"];
+  
+  PreferencesViewController *preferencesViewController = [[PreferencesViewController alloc]init];
+  preferencesViewController.title = @"Preferencias";
+  preferencesViewController.tabBarItem.image = [UIImage imageNamed:@"gear2.png"];
+  
+  UINavigationController *favNavController = [[[UINavigationController alloc]init] autorelease];
+  UINavigationController *prefsNavController = [[[UINavigationController alloc]init] autorelease];
+  
+  [favNavController pushViewController:favoriteViewController animated:NO];
+  [prefsNavController pushViewController:preferencesViewController animated:NO];
+  
+  tab.viewControllers = [NSArray arrayWithObjects:viewController,favNavController,prefsNavController,nil];
+  
+  window.rootViewController = tab;
+  
+//  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aviso" message:@"Esto es un prototipo." 
+//                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//  [alert show];
+//  [alert release];
+//  [window addSubview:tab.view];
+  [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     

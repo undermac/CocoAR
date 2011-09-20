@@ -6,16 +6,9 @@
 //  Copyright 2011 Artifact. All rights reserved.
 //
 
-#include <iostream>
-#include "cocos2d.h"
+
 #include "Geo3DObject.h"
 #include "ArScene.h"
-#include "bMath.h"
-#include <math.h>
-#include "CCLocationManager.h"
-#include "Matrix.h"
-#include "Vector.h"
-
 #define LABEL_FONT_TYPE "Thonburi"
 
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
@@ -43,6 +36,9 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::strin
   xRotate = 0.0f;
   yRotate = 0.0f;
   zRotate = 0.0f;
+  m_dXValue = 0;
+  m_dYValue = 0;
+  m_dZValue = 0;
   m_size = CCSize(20.0f,20.0f);
   
   model3D = ArScene::loadModel(model, modelType);
@@ -64,13 +60,13 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::strin
   zRotate = zRotate;
 }
 
-void CCARObject3D::draw3D(){
+void CCARObject3D::locateObject(){
   m_dBearing = 360.0f - RAD_TO_DEG(Atan2(xTranslate, zTranslate));
   m_dBearing > 360.0f ? m_dBearing -= 360.0f : true;
   m_dDistance = sqrt((xTranslate*xTranslate)+(zTranslate*zTranslate));
-//  printf("\nDistance: %f, bearing: %f", m_dDistance, m_dBearing);
-  
-  
+}
+
+void CCARObject3D::draw3D(){
   glPushMatrix();
   glTranslatef(xTranslate, yTranslate, zTranslate);
   glScalef(scale, scale, scale );
@@ -79,7 +75,7 @@ void CCARObject3D::draw3D(){
     if (rotationValue > 360)
       rotationValue = 0;
     else
-      rotationValue += 3;
+      rotationValue += 1;
     glRotatef(yRotate + rotationValue, 0, 1, 0);
   }else
     glRotatef(yRotate, 0, 1, 0);
@@ -116,6 +112,9 @@ CCARGeo3DObject::CCARGeo3DObject(std::string filename, CCARModelType modelType,s
   longitude = lon;
   latitude = lat;
   altitude = 0.0f;
+  m_dXValue = 0;
+  m_dYValue = 0;
+  m_dZValue = 0;
   model3D = ArScene::loadModel(filename, modelType);
 }
 
@@ -129,33 +128,38 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,std:
   altitude = alt;
 }
 
-void CCARGeo3DObject::draw3D(){
+void CCARGeo3DObject::locateObject(){
   cocos2d::CCLocation userlocation = ArScene::getUserlocation();
-  m_dDistance = cocos2d::CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userlocation.latitude,(double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
-  m_dBearing = cocos2d::CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( (double)userlocation.latitude, (double)userlocation.longitude , (double)this->latitude, (double)this->longitude);
+  m_dDistance = cocos2d::CCLocationManager::sharedCCLocationManager()->distanceFromLocation( (double)userlocation.latitude,(double)userlocation.longitude , (double)latitude, (double)longitude);
+  m_dBearing = cocos2d::CCLocationManager::sharedCCLocationManager()->bearingBetweenStartLocation( (double)userlocation.latitude, (double)userlocation.longitude , (double)latitude, (double)longitude);
   
   m_dBearing = RAD_TO_DEG(m_dBearing);
-  double angleC,x,z;
+  double angleC;
   if (m_dBearing > 0.0f && m_dBearing < 90.f) {           //1
     angleC = 90.0f - m_dBearing;
-    x = - cos(DEG_TO_RAD(angleC))*m_dDistance;
-    z = sin(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dXValue = - cos(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dZValue = sin(DEG_TO_RAD(angleC))*m_dDistance;
   }else if (m_dBearing > 90.0f && m_dBearing < 180.0f){   //2
     angleC = 180.0f - m_dBearing;
-    x = -sin(DEG_TO_RAD(angleC))*m_dDistance;
-    z = -cos(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dXValue = -sin(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dZValue = -cos(DEG_TO_RAD(angleC))*m_dDistance;
   }else if (m_dBearing > 180.0f && m_dBearing < 270.0f){  //3
     angleC = 270.0f - m_dBearing;
-    x = cos(DEG_TO_RAD(angleC))*m_dDistance;
-    z = - sin(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dXValue = cos(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dZValue = - sin(DEG_TO_RAD(angleC))*m_dDistance;
   }else{                                                  //4
     angleC = 360.0f - m_dBearing;
-    x = sin(DEG_TO_RAD(angleC))*m_dDistance;
-    z = cos(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dXValue = sin(DEG_TO_RAD(angleC))*m_dDistance;
+    m_dZValue = cos(DEG_TO_RAD(angleC))*m_dDistance;
   }
+}
+
+void CCARGeo3DObject::draw3D(){
+  
+
   
   glPushMatrix();
-  glTranslatef(xTranslate + x, yTranslate, zTranslate + z);
+  glTranslatef(xTranslate + m_dXValue, yTranslate, zTranslate + m_dZValue);
   glScalef(scale, scale, scale );
   if (isRotating) {
     if (rotationValue > 360)
@@ -190,8 +194,13 @@ void CCARGeneric3DObject::calculateScreenBox(){
     { model3D->m_vtxMax.x, model3D->m_vtxMax.y,  model3D->m_vtxMax.z},//111
   };
   
-//  cocos2d::ccVertex3F center = {(model3D->m_vtxMax.x - (model3D->m_vtxMin.x*0.5f)),(model3D->m_vtxMax.y - (model3D->m_vtxMin.y*0.5f)),(model3D->m_vtxMax.z - (model3D->m_vtxMin.z*0.5f))};
-//  m_vCenter = covert3Dto2d(center);
+  cocos2d::ccVertex3F center = {((model3D->m_vtxMax.x + model3D->m_vtxMin.x)*0.5f),(model3D->m_vtxMax.y + model3D->m_vtxMin.y)*0.5f,(model3D->m_vtxMax.z + model3D->m_vtxMin.z)*0.5f};
+  m_vCenter = covert3Dto2d(center);
+  
+  cocos2d::ccVertex3F labelPoint = {((model3D->m_vtxMax.x + model3D->m_vtxMin.x)*0.5f),model3D->m_vtxMin.y,(model3D->m_vtxMax.z + model3D->m_vtxMin.z)*0.5f};
+  
+  cocos2d::CCPoint vLabels = covert3Dto2d(labelPoint);
+  m_vCenter = covert3Dto2d(center);
 
   cocos2d::CCPoint maxPoint = covert3Dto2d(boxVertex[0]);
   cocos2d::CCPoint minPoint = maxPoint;
@@ -215,8 +224,6 @@ void CCARGeneric3DObject::calculateScreenBox(){
   
   if (newSize.width > 500.0f) newSize.width = 500.f;
   if (newSize.height > 500.0f) newSize.height = 500.f;
-  
-  m_vCenter = ccp(((maxPoint.x + minPoint.x)*0.5f), ((maxPoint.y + minPoint.y)*0.5f));
   
   this->setPosition(m_vCenter);
 
@@ -247,7 +254,7 @@ void CCARGeneric3DObject::calculateScreenBox(){
     setScaleX((float)newSize.width/m_size.width);
     setScaleY((float)newSize.height/m_size.height);
     char buffer[256];
-    if (m_dDistance > 1000.0f) sprintf(buffer,"%4.1fKm",m_dDistance);
+    if (m_dDistance > 1000.0f) sprintf(buffer,"%4.1fKm",m_dDistance*0.001);
     else sprintf(buffer,"%4.0fm",m_dDistance);
     if (m_layerDescription) {
       m_layerDescription->setPosition(m_vCenter);
@@ -257,9 +264,12 @@ void CCARGeneric3DObject::calculateScreenBox(){
           m_labelDistance->setString(buffer);
           m_labelName->setString(m_sObjectName.c_str());
     }
-    m_labelDistance->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 18));
-    m_labelName->setPosition(ccp(((maxPoint.x + minPoint.x)*0.5f), minPoint.y - 8));
+    m_labelDistance->setPosition(ccp(vLabels.x, vLabels.y - 20));
+    m_labelName->setPosition(ccp(vLabels.x, vLabels.y - 12));
   }
+}
+
+void CCARGeneric3DObject::locateObject(){
 }
 
 void CCARGeneric3DObject::drawBox(GLfloat lineWidth, cocos2d::ccColor4B color)
@@ -322,17 +332,22 @@ ARObjectMenu::ARObjectMenu(CCNode *pObject){
   setIsTouchEnabled(true);
 	setIsVisible(true);
   
-  //300x156 fondoObjeto.png
   
+  //300x156 fondoObjeto.png
   CCSprite* my_background = CCSprite::spriteWithFile("fondoObjeto.png");
   my_background->setPosition(ccp(0, 0));
   addChild(my_background,0);
 
+  CCARGeneric3DObject* myObject = (CCARGeneric3DObject*)pObject;
   
-  m_labelName = CCLabelTTF::labelWithString("Nombre", CCSize(270,15) , CCTextAlignmentCenter ,LABEL_FONT_TYPE, 16);
+  char buffer[256];
+  sprintf(buffer,"%s",myObject->m_sObjectName.c_str());
+  
+  m_labelName = CCLabelTTF::labelWithString( buffer , CCSize(270,15) , CCTextAlignmentCenter ,LABEL_FONT_TYPE, 16);
   m_labelName->setPosition(ccp(0,65));
   
-  m_labelDescription = CCLabelTTF::labelWithString("DESCRIPCION", CCSize(270,85) , CCTextAlignmentLeft, LABEL_FONT_TYPE, 14);
+  sprintf(buffer,"%s",myObject->m_sDescription.c_str());
+  m_labelDescription = CCLabelTTF::labelWithString(buffer, CCSize(270,85) , CCTextAlignmentLeft, LABEL_FONT_TYPE, 14);
   m_labelDescription->setPosition(ccp(0,50));
   
   addChild(m_labelName,1);
