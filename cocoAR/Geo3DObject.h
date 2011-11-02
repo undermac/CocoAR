@@ -17,6 +17,7 @@
 #include "Matrix.h"
 #include "Vector.h"
 #include "bMath.h"
+#include "CCARModelType.h"
 
 
 class CCARGeneric3DObject;
@@ -39,12 +40,6 @@ public:
   void removeMenu();
 	virtual cocos2d::CCRGBAProtocol* convertToRGBAProtocol() { return (cocos2d::CCRGBAProtocol*)this; }
 };
-
-typedef enum 
-{
-	CCARType_Mesh,
-	CCARType_TMDLModel,
-} CCARModelType;
 
 class CCARGeneric3DModel
 {
@@ -69,29 +64,23 @@ public:
   std::string m_sObjectName, m_sDescription;
   
   double scale;
-  double xRotate;
-  double yRotate;
-  double zRotate;
+  double xRotate,yRotate,zRotate;
   
-  double xTranslate;
-  double yTranslate;
-  double zTranslate;
+  double xTranslate,yTranslate,zTranslate;
   
-  double m_dDistance;
-  double m_dBearing;
+  double m_dDistance,m_dBearing;
   
   cocos2d::CCPoint m_vCenter;
   cocos2d::CCSize m_size;
   
   virtual void draw3D()=0;
   virtual void locateObject()=0;
-  bool isRotating;
-  bool showScreenBox;
-  bool m_bModelBox;
-  bool m_bScreenBox;
+
+  bool isRotating,showScreenBox,m_bModelBox,m_bScreenBox,m_bNew,m_bDelete ;
   cocos2d::CCPoint m_vScreenBox[8];
   cocos2d::CCLabelTTF* m_labelDistance, *m_labelName;
   ARObjectMenu* m_layerDescription;
+  void selectedObject();
 private:
   cocos2d::CCPoint covert3Dto2d(cocos2d::ccVertex3F);
 protected:

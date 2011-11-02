@@ -7,6 +7,8 @@
 //
 
 #import "FavoriteStreetListViewController.h"
+#import "ArViewController.h"
+#import "CCAR_GeoObject.h"
 
 @implementation FavoriteStreetListViewController
 
@@ -32,10 +34,21 @@
                                                  delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
   [alert show];
   [alert release];
+  
+
 }
 
 - (void)viewDidLoad
 {
+  CCAR_GeoObject* prueba;
+  prueba.name = @"----- Ria de ferrol ----";
+  prueba.description = @"La puta ria de ferrol";
+  prueba->scale = 0.3;
+  prueba->longitude = 0;
+  prueba->latitude = 0;
+  
+  
+  [ArViewController addObject:nil];
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

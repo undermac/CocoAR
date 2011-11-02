@@ -15,6 +15,8 @@
 #import "FavoriteStreetListViewController.h"
 #import "PreferencesViewController.h"
 
+#import "ArViewController.h"
+
 @implementation AppController
 @synthesize tab;
 #pragma mark -
@@ -42,17 +44,17 @@ static AppDelegate s_sharedApplication;
                                  numberOfSamples: 0 ];
     
     // Use RootViewController manage EAGLView 
-    viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
-    viewController.wantsFullScreenLayout = YES;
-    viewController.view = __glView;
+    ArViewController *arViewController = [[ArViewController alloc] init];
+    arViewController.wantsFullScreenLayout = YES;
+    arViewController.view = __glView;
   
     __glView.opaque = NO;
     __glView.alpha = 1.0;
     __glView.backgroundColor = [UIColor clearColor];
 
-    // Set RootViewController to window
-  viewController.title = @"Ver";
-  viewController.tabBarItem.image = [UIImage imageNamed:@"camera_tab.png"];
+
+  arViewController.title = @"Ver";
+  arViewController.tabBarItem.image = [UIImage imageNamed:@"camera_tab.png"];
   
   FavoriteStreetListViewController *favoriteViewController = [[FavoriteStreetListViewController alloc]init];
   favoriteViewController.title = @"Favoritos";
@@ -68,21 +70,19 @@ static AppDelegate s_sharedApplication;
   [favNavController pushViewController:favoriteViewController animated:NO];
   [prefsNavController pushViewController:preferencesViewController animated:NO];
   
-  tab.viewControllers = [NSArray arrayWithObjects:viewController,favNavController,prefsNavController,nil];
+  tab.viewControllers = [NSArray arrayWithObjects:prefsNavController,favNavController,arViewController,nil];
   
+  // Set RootViewController to window
   window.rootViewController = tab;
-  
-//  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Aviso" message:@"Esto es un prototipo." 
-//                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//  [alert show];
-//  [alert release];
-//  [window addSubview:tab.view];
+  tab.selectedIndex = 0;
+
   [window makeKeyAndVisible];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
-    
-    cocos2d::CCApplication::sharedApplication().run();
-    return YES;
+        
+//  cocos2d::CCApplication::sharedApplication().run();
+  
+  return YES;
 }
 
 

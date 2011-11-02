@@ -288,12 +288,16 @@
 		5975146513F8034900BE0A11 /* CELSPDER.OBJ in Resources */ = {isa = PBXBuildFile; fileRef = 5975146213F8034900BE0A11 /* CELSPDER.OBJ */; };
 		5975146613F8034900BE0A11 /* CELSPDER.TIF in Resources */ = {isa = PBXBuildFile; fileRef = 5975146313F8034900BE0A11 /* CELSPDER.TIF */; };
 		5975146813F8038200BE0A11 /* CELSPDER.png in Resources */ = {isa = PBXBuildFile; fileRef = 5975146713F8038200BE0A11 /* CELSPDER.png */; };
+		59952D1114618C41000FACBA /* CCAR_GenericObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 59952D1014618C41000FACBA /* CCAR_GenericObject.m */; };
+		59952D1414618C53000FACBA /* CCAR_Object.m in Sources */ = {isa = PBXBuildFile; fileRef = 59952D1314618C53000FACBA /* CCAR_Object.m */; };
+		59952D1714618C60000FACBA /* CCAR_GeoObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 59952D1614618C60000FACBA /* CCAR_GeoObject.m */; };
 		5996E9F113F3262D0019F9A1 /* coco 5757.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F013F3262D0019F9A1 /* coco 5757.png */; };
 		5996E9F413F326960019F9A1 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F313F326960019F9A1 /* Default.png */; };
 		5996E9F613F32C610019F9A1 /* icono.png in Resources */ = {isa = PBXBuildFile; fileRef = 5996E9F513F32C610019F9A1 /* icono.png */; };
 		59A42AA6140170FB00C3D2F2 /* cocojavi_sinfondo.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA3140170DA00C3D2F2 /* cocojavi_sinfondo.png */; };
 		59A42AA7140170FB00C3D2F2 /* cocoarPrueba.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA4140170DA00C3D2F2 /* cocoarPrueba.mtl */; };
 		59A42AA8140170FB00C3D2F2 /* cocoarPrueba.obj in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */; };
+		59B4FB66144C328B005197A5 /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59B4FB65144C328B005197A5 /* ArViewController.mm */; };
 		59D87B1D14019DDF0053BF72 /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1914019DDF0053BF72 /* A.png */; };
 		59D87B1E14019DDF0053BF72 /* coco.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1A14019DDF0053BF72 /* coco.png */; };
 		59D87B1F14019DDF0053BF72 /* coco.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1B14019DDF0053BF72 /* coco.mtl */; };
@@ -345,6 +349,7 @@
 		59D87B7E1401ABB60053BF72 /* villa407.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B6D1401ABB60053BF72 /* villa407.jpg */; };
 		59D87B7F1401ABB60053BF72 /* estatua.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B6E1401ABB60053BF72 /* estatua.mtl */; };
 		59D87B801401ABB60053BF72 /* estatua.obj in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B6F1401ABB60053BF72 /* estatua.obj */; };
+		59E06A8D144DE18700FC0CD4 /* ArSceneController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */; };
 		59E6E73214251090001D8813 /* FavoriteStreetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59E6E72C14251090001D8813 /* FavoriteStreetListViewController.m */; };
 		59E6E73314251090001D8813 /* FavoriteStreetListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E6E72D14251090001D8813 /* FavoriteStreetListViewController.xib */; };
 		59E6E73414251090001D8813 /* Favorites-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59E6E72E14251090001D8813 /* Favorites-icon.png */; };
@@ -805,12 +810,22 @@
 		5975146213F8034900BE0A11 /* CELSPDER.OBJ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CELSPDER.OBJ; sourceTree = "<group>"; };
 		5975146313F8034900BE0A11 /* CELSPDER.TIF */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = CELSPDER.TIF; sourceTree = "<group>"; };
 		5975146713F8038200BE0A11 /* CELSPDER.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CELSPDER.png; sourceTree = "<group>"; };
+		59952D0F14618C41000FACBA /* CCAR_GenericObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAR_GenericObject.h; sourceTree = "<group>"; };
+		59952D1014618C41000FACBA /* CCAR_GenericObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAR_GenericObject.m; sourceTree = "<group>"; };
+		59952D1214618C53000FACBA /* CCAR_Object.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAR_Object.h; sourceTree = "<group>"; };
+		59952D1314618C53000FACBA /* CCAR_Object.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAR_Object.m; sourceTree = "<group>"; };
+		59952D1514618C60000FACBA /* CCAR_GeoObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAR_GeoObject.h; sourceTree = "<group>"; };
+		59952D1614618C60000FACBA /* CCAR_GeoObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAR_GeoObject.m; sourceTree = "<group>"; };
+		59952D1A14619098000FACBA /* ArSceneItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArSceneItem.h; sourceTree = "<group>"; };
 		5996E9F013F3262D0019F9A1 /* coco 5757.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coco 5757.png"; sourceTree = "<group>"; };
 		5996E9F313F326960019F9A1 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5996E9F513F32C610019F9A1 /* icono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icono.png; sourceTree = "<group>"; };
 		59A42AA3140170DA00C3D2F2 /* cocojavi_sinfondo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cocojavi_sinfondo.png; sourceTree = "<group>"; };
 		59A42AA4140170DA00C3D2F2 /* cocoarPrueba.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoarPrueba.mtl; sourceTree = "<group>"; };
 		59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoarPrueba.obj; sourceTree = "<group>"; };
+		59ACD02E14509917009B3544 /* ArModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArModels.h; sourceTree = "<group>"; };
+		59B4FB64144C328B005197A5 /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
+		59B4FB65144C328B005197A5 /* ArViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArViewController.mm; sourceTree = "<group>"; };
 		59D87B1914019DDF0053BF72 /* A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A.png; sourceTree = "<group>"; };
 		59D87B1A14019DDF0053BF72 /* coco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coco.png; sourceTree = "<group>"; };
 		59D87B1B14019DDF0053BF72 /* coco.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coco.mtl; sourceTree = "<group>"; };
@@ -862,6 +877,8 @@
 		59D87B6D1401ABB60053BF72 /* villa407.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = villa407.jpg; sourceTree = "<group>"; };
 		59D87B6E1401ABB60053BF72 /* estatua.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = estatua.mtl; sourceTree = "<group>"; };
 		59D87B6F1401ABB60053BF72 /* estatua.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = estatua.obj; sourceTree = "<group>"; };
+		59E06A8A144DE17900FC0CD4 /* ArSceneController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArSceneController.h; sourceTree = "<group>"; };
+		59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArSceneController.mm; sourceTree = "<group>"; };
 		59E6E72B14251090001D8813 /* FavoriteStreetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteStreetListViewController.h; sourceTree = "<group>"; };
 		59E6E72C14251090001D8813 /* FavoriteStreetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteStreetListViewController.m; sourceTree = "<group>"; };
 		59E6E72D14251090001D8813 /* FavoriteStreetListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavoriteStreetListViewController.xib; sourceTree = "<group>"; };
@@ -872,6 +889,7 @@
 		59E6E73714251136001D8813 /* camera_tab.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera_tab.png; sourceTree = "<group>"; };
 		59E6E73814251136001D8813 /* gear2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gear2.png; sourceTree = "<group>"; };
 		59E6E73B14251142001D8813 /* ic_tab_unselected_fav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_tab_unselected_fav.png; sourceTree = "<group>"; };
+		59E777A214503CCB0018FC84 /* CCARModelType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCARModelType.h; sourceTree = "<group>"; };
 		59F094CD13FD966900F3E137 /* fondoObjeto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fondoObjeto.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1491,15 +1509,18 @@
 		5971C57C13CC6D1500C5A891 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				59059E6613F04C680038EB6C /* AppController.h */,
-				59059E6713F04C690038EB6C /* AppController.mm */,
-				59E6E72A14251080001D8813 /* New Group */,
 				5971C57D13CC6D1500C5A891 /* AppDelegate.h */,
 				5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */,
+				59059E6613F04C680038EB6C /* AppController.h */,
+				59059E6713F04C690038EB6C /* AppController.mm */,
+				59E6E72A14251080001D8813 /* Example */,
 				5971C58E13CC6D6800C5A891 /* ArScene.h */,
 				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
-				591B1DE713F1B946009F59B3 /* Geo3DObject.h */,
-				591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */,
+				59952D1814618D96000FACBA /* Models */,
+				59B4FB64144C328B005197A5 /* ArViewController.h */,
+				59B4FB65144C328B005197A5 /* ArViewController.mm */,
+				59E06A8A144DE17900FC0CD4 /* ArSceneController.h */,
+				59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */,
 				59F094CD13FD966900F3E137 /* fondoObjeto.png */,
 				59B846D913FEE52000B47C6C /* Puente */,
 				5971C5E013CC6DDA00C5A891 /* tinyXML */,
@@ -1719,6 +1740,24 @@
 			name = "Araña";
 			sourceTree = "<group>";
 		};
+		59952D1814618D96000FACBA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59ACD02E14509917009B3544 /* ArModels.h */,
+				59952D1A14619098000FACBA /* ArSceneItem.h */,
+				59E777A214503CCB0018FC84 /* CCARModelType.h */,
+				59952D0F14618C41000FACBA /* CCAR_GenericObject.h */,
+				59952D1014618C41000FACBA /* CCAR_GenericObject.m */,
+				59952D1214618C53000FACBA /* CCAR_Object.h */,
+				59952D1314618C53000FACBA /* CCAR_Object.m */,
+				59952D1514618C60000FACBA /* CCAR_GeoObject.h */,
+				59952D1614618C60000FACBA /* CCAR_GeoObject.m */,
+				591B1DE713F1B946009F59B3 /* Geo3DObject.h */,
+				591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		59A42AA2140170D500C3D2F2 /* cocoarPrueba */ = {
 			isa = PBXGroup;
 			children = (
@@ -1817,7 +1856,7 @@
 			path = estatua;
 			sourceTree = "<group>";
 		};
-		59E6E72A14251080001D8813 /* New Group */ = {
+		59E6E72A14251080001D8813 /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				59E6E73714251136001D8813 /* camera_tab.png */,
@@ -1831,7 +1870,7 @@
 				59E6E73014251090001D8813 /* PreferencesViewController.m */,
 				59E6E73114251090001D8813 /* PreferencesViewController.xib */,
 			);
-			name = "New Group";
+			name = Example;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2232,6 +2271,11 @@
 				59219DC813FEAFD300BF9498 /* SBJSON.m in Sources */,
 				59E6E73214251090001D8813 /* FavoriteStreetListViewController.m in Sources */,
 				59E6E73514251090001D8813 /* PreferencesViewController.m in Sources */,
+				59B4FB66144C328B005197A5 /* ArViewController.mm in Sources */,
+				59E06A8D144DE18700FC0CD4 /* ArSceneController.mm in Sources */,
+				59952D1114618C41000FACBA /* CCAR_GenericObject.m in Sources */,
+				59952D1414618C53000FACBA /* CCAR_Object.m in Sources */,
+				59952D1714618C60000FACBA /* CCAR_GeoObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2306,11 +2350,14 @@
 				GCC_PREFIX_HEADER = cocoAR/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = cocoAR/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "armv7 armv6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2324,12 +2371,15 @@
 				GCC_PREFIX_HEADER = cocoAR/Prefix.pch;
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = cocoAR/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = (
 					"-lxml2",
 					"-lz",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv6";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

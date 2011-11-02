@@ -9,8 +9,9 @@
 
 #include "Geo3DObject.h"
 #include "ArScene.h"
-#define LABEL_FONT_TYPE "Thonburi"
+#include "ArSceneController.h"
 
+#define LABEL_FONT_TYPE "Thonburi"
 #define DEG_TO_RAD(X) (X*M_PI/180.0)
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
 
@@ -29,6 +30,8 @@ CCARObject3D::CCARObject3D(std::string model, CCARModelType modelType,std::strin
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
+  m_bNew = true;
+  m_bDelete = false;
   scale = 1.0f;
   xTranslate = 0.0f;
   yTranslate = 0.0f;
@@ -87,6 +90,7 @@ void CCARObject3D::draw3D(){
   calculateScreenBox();
   glPopMatrix();
 }
+
 CCARGeo3DObject::CCARGeo3DObject(){}
 
 CCARGeo3DObject::CCARGeo3DObject(std::string filename, CCARModelType modelType,std::string objectName,std::string objectDescription, double lon, double lat){
@@ -101,6 +105,8 @@ CCARGeo3DObject::CCARGeo3DObject(std::string filename, CCARModelType modelType,s
   isRotating = true;
   m_bModelBox = false;
   m_bScreenBox = true;
+  m_bNew = true;
+  m_bDelete = false;
   m_size = CCSize(20.0f,20.0f);
   scale = 1.0f;
   xTranslate = 0.0f;
@@ -123,6 +129,7 @@ CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,std:
   new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType,objectName,objectDescription, lon, lat);
   scale = sca;
 }
+
 CCARGeo3DObject::CCARGeo3DObject(std::string model, CCARModelType modelType,std::string objectName,std::string objectDescription,double sca , double lon, double lat, double alt){
   new (this) CCARGeo3DObject::CCARGeo3DObject(model, modelType,objectName, objectDescription,scale, lon, lat);
   altitude = alt;
@@ -155,9 +162,6 @@ void CCARGeo3DObject::locateObject(){
 }
 
 void CCARGeo3DObject::draw3D(){
-  
-
-  
   glPushMatrix();
   glTranslatef(xTranslate + m_dXValue, yTranslate, zTranslate + m_dZValue);
   glScalef(scale, scale, scale );
@@ -179,8 +183,11 @@ void CCARGeo3DObject::draw3D(){
   glPopMatrix();
 }
 
-void CCARGeneric3DObject::calculateScreenBox(){
+void CCARGeneric3DObject::selectedObject(){
+  arSceneObjectSelected(this);
+}
 
+void CCARGeneric3DObject::calculateScreenBox(){
   
   cocos2d::ccVertex3F boxVertex[8] = 
   {
@@ -277,14 +284,6 @@ void CCARGeneric3DObject::drawBox(GLfloat lineWidth, cocos2d::ccColor4B color)
   cocos2d::ccVertex3F boxVectorMax = model3D->m_vtxMax;
   cocos2d::ccVertex3F boxVectorMin = model3D->m_vtxMin;
   
-//  cocos2d::ccColor4F r = ccc4FFromccc4B(cocos2d::ccc4(1.0f,0.0f,0.0f,1.0f));
-//  cocos2d::ccColor4F g = ccc4FFromccc4B(cocos2d::ccc4(0.0f,1.0f,0.0f,1.0f));
-//  cocos2d::ccColor4F b = ccc4FFromccc4B(cocos2d::ccc4(0.0f,0.0f,1.0f,1.0f));
-//    
-//  ccDraw3DLine(10.0f,r, 0.0f, 0.0f, 0.0f, 80.0f, 0.0f, 0.0f);  // x
-//  ccDraw3DLine(10.0f,g, 0.0f, 0.0f, 0.0f, 0.0f, 80.0f, 0.0f);  // y
-//  ccDraw3DLine(10.0f,b, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 80.0f);  // z
-  
   ccDraw3DLine(lineWidth,color, boxVectorMax.x, boxVectorMax.y, boxVectorMin.z, boxVectorMax.x, boxVectorMax.y, boxVectorMax.z);  // 1 2
   ccDraw3DLine(lineWidth,color, boxVectorMax.x, boxVectorMax.y, boxVectorMin.z, boxVectorMin.x, boxVectorMax.y, boxVectorMin.z);  // 1 3
   ccDraw3DLine(lineWidth,color, boxVectorMax.x, boxVectorMax.y, boxVectorMin.z, boxVectorMax.x, boxVectorMin.y, boxVectorMin.z);  // 1 4  
@@ -326,36 +325,46 @@ cocos2d::CCPoint CCARGeneric3DObject::covert3Dto2d(cocos2d::ccVertex3F vertex){
   return ccp(xPos, yPos);
 }
 
+
+
 ARObjectMenu::ARObjectMenu(CCNode *pObject){
-  m_labelName = NULL;
-  m_labelDescription = NULL;
-  setIsTouchEnabled(true);
-	setIsVisible(true);
   
+//  CCARGeneric3DObject* selectedObject = (CCARGeneric3DObject*)pObject;
+//  
+//  printf("touched %s", selectedObject->m_sObjectName.c_str());
+  
+//  m_labelName = NULL;
+//  m_labelDescription = NULL;
+//  setIsTouchEnabled(true);
+//	setIsVisible(true);
   
   //300x156 fondoObjeto.png
-  CCSprite* my_background = CCSprite::spriteWithFile("fondoObjeto.png");
-  my_background->setPosition(ccp(0, 0));
-  addChild(my_background,0);
-
-  CCARGeneric3DObject* myObject = (CCARGeneric3DObject*)pObject;
+//-------------------------------------------------------------------------------
   
-  char buffer[256];
-  sprintf(buffer,"%s",myObject->m_sObjectName.c_str());
+//  CCSprite* my_background = CCSprite::spriteWithFile("fondoObjeto.png");
+//  my_background->setPosition(ccp(0, 0));
+//  addChild(my_background,0);
+//
+//  CCARGeneric3DObject* myObject = (CCARGeneric3DObject*)pObject;
+//  
+//  char buffer[256];
+//  sprintf(buffer,"%s",myObject->m_sObjectName.c_str());
+//  
+//  m_labelName = CCLabelTTF::labelWithString( buffer , CCSize(270,15) , CCTextAlignmentCenter ,LABEL_FONT_TYPE, 16);
+//  m_labelName->setPosition(ccp(0,65));
+//  
+//  sprintf(buffer,"%s",myObject->m_sDescription.c_str());
+//  m_labelDescription = CCLabelTTF::labelWithString(buffer, CCSize(270,85) , CCTextAlignmentLeft, LABEL_FONT_TYPE, 14);
+//  m_labelDescription->setPosition(ccp(0,50));
+//  
+//  addChild(m_labelName,1);
+//  addChild(m_labelDescription,1);
+//
+//  setOpacity(200);
+//  
+//  runAction(CCSequence::actions(CCFadeIn::actionWithDuration(3.0f),NULL));
   
-  m_labelName = CCLabelTTF::labelWithString( buffer , CCSize(270,15) , CCTextAlignmentCenter ,LABEL_FONT_TYPE, 16);
-  m_labelName->setPosition(ccp(0,65));
-  
-  sprintf(buffer,"%s",myObject->m_sDescription.c_str());
-  m_labelDescription = CCLabelTTF::labelWithString(buffer, CCSize(270,85) , CCTextAlignmentLeft, LABEL_FONT_TYPE, 14);
-  m_labelDescription->setPosition(ccp(0,50));
-  
-  addChild(m_labelName,1);
-  addChild(m_labelDescription,1);
-
-  setOpacity(200);
-  
-  runAction(CCSequence::actions(CCFadeIn::actionWithDuration(3.0f),NULL));
+//-------------------------------------------------------------------------------
   
   //  CGSize maxSize = { CCDirector::sharedDirector()->getWinSize().width - 50, CCDirector::sharedDirector()->getWinSize().height - 50 };
   //  CGSize actualSize = [pObject->m_sDescription sizeWithFont:[UIFont fontWithName:@"Thonburi" size:14]
@@ -365,6 +374,8 @@ ARObjectMenu::ARObjectMenu(CCNode *pObject){
 ARObjectMenu::~ARObjectMenu(){
   
 }
+
+
 
 void ARObjectMenu::setOpacity(GLubyte var)
 {
