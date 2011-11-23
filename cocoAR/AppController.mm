@@ -8,12 +8,14 @@
 #import <UIKit/UIKit.h>
 #import "AppController.h"
 #import "cocos2d.h"
+#import "CCDirector.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
 
 #import "RootViewController.h"
 #import "FavoriteStreetListViewController.h"
 #import "PreferencesViewController.h"
+#import "DetailArViewController.h"
 
 #import "ArViewController.h"
 
@@ -42,9 +44,11 @@ static AppDelegate s_sharedApplication;
                                       sharegroup: nil
                                    multiSampling: NO
                                  numberOfSamples: 0 ];
-    
+  [__glView setMultipleTouchEnabled:YES];  
+  
+  
     // Use RootViewController manage EAGLView 
-    ArViewController *arViewController = [[ArViewController alloc] init];
+    ArViewController *arViewController = [ArViewController sharedInstance]; 
     arViewController.wantsFullScreenLayout = YES;
     arViewController.view = __glView;
   
@@ -66,11 +70,15 @@ static AppDelegate s_sharedApplication;
   
   UINavigationController *favNavController = [[[UINavigationController alloc]init] autorelease];
   UINavigationController *prefsNavController = [[[UINavigationController alloc]init] autorelease];
+  UINavigationController *arNavController = [[UINavigationController alloc]init];
+  
+  arViewController.navigator = arNavController;
   
   [favNavController pushViewController:favoriteViewController animated:NO];
   [prefsNavController pushViewController:preferencesViewController animated:NO];
+  [arNavController pushViewController:arViewController animated:NO];
   
-  tab.viewControllers = [NSArray arrayWithObjects:prefsNavController,favNavController,arViewController,nil];
+  tab.viewControllers = [NSArray arrayWithObjects:prefsNavController,favNavController,arNavController,nil];
   
   // Set RootViewController to window
   window.rootViewController = tab;
@@ -78,9 +86,10 @@ static AppDelegate s_sharedApplication;
 
   [window makeKeyAndVisible];
 
-    [[UIApplication sharedApplication] setStatusBarHidden: YES];
+  [[UIApplication sharedApplication] setStatusBarHidden: YES];
         
 //  cocos2d::CCApplication::sharedApplication().run();
+  
   
   return YES;
 }

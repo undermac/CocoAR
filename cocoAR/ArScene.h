@@ -23,7 +23,8 @@
 
 void ccDraw3DLine(GLfloat lineWidth, cocos2d::ccColor4B color, GLfloat xOrigin, GLfloat yOrigin, GLfloat zOrigin, GLfloat xDestination, GLfloat yDestination, GLfloat zDestination);
 
-
+static vector<CCARGeneric3DModel*> models3D;
+static vector<CCARGeneric3DObject*> objects3D;
 
 class ArScene : public cocos2d::CCLayer, public cocos2d::CCLocationManagerDelegate, public cocos2d::CCMobileCameraBackDelegate
 {
@@ -77,9 +78,6 @@ public:
   static cocos2d::CCLocation userLocation;
   static cocos2d::CCHeading userHeading;
   static double adjustedUserHeading;
-  
-  static vector<CCARGeneric3DModel*> models3D;
-  static vector<CCARGeneric3DObject*> objects3D;
   
 	// implement the "static node()" method manually
 	LAYER_NODE_FUNC(ArScene);

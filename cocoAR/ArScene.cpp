@@ -8,7 +8,6 @@
 
 #include "ArScene.h"
 
-
 #define RELEASE 0
 #define DEBUG_GAME 1
 
@@ -21,6 +20,7 @@
 #define RAD_TO_DEG(X) (X*180.0/M_PI)
 
 #include "ArModels.h"
+#include "ArSceneController.h"
 
 
 GLfloat XCam=0.0f,YCam=1.0f,ZCam=0.0f;
@@ -34,8 +34,8 @@ cocos2d::CCLocation ArScene::userLocation;
 cocos2d::CCHeading ArScene::userHeading;
 double ArScene::adjustedUserHeading;
 
-vector<CCARGeneric3DModel*> ArScene::models3D;
-vector<CCARGeneric3DObject*> ArScene::objects3D;
+//vector<CCARGeneric3DModel*> ArScene::models3D;
+//vector<CCARGeneric3DObject*> ArScene::objects3D;
 
 USING_NS_CC;
 
@@ -87,7 +87,7 @@ bool ArScene::init()
   m_pMenu = CCMenu::menuWithItems(NULL);
 	m_pMenu->setPosition( CCPointZero );
 	this->addChild(m_pMenu, 1);
-  
+
   testInfo1 = CCLabelTTF::labelWithString("", LABEL_FONT_TYPE, 12);
   testInfo1->setPosition(ccp(160,450));
   this->addChild(testInfo1,1);
@@ -113,6 +113,16 @@ bool ArScene::init()
   
   if (testEnable) {
     loadTest();
+  }
+  
+  if (getObjectQueue() != NULL) {
+    vector<CCARGeneric3DObject*>::iterator it;
+    
+    for (it = getObjectQueue()->begin(); it != getObjectQueue()->end(); it++)
+    {
+      CCARGeneric3DObject *pObject= *it;
+      addARObject(pObject);
+    }
   }
   
   this->schedule( schedule_selector(ArScene::arUpdate) );
@@ -451,12 +461,12 @@ void ArScene::loadTest()
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_HELICOPTER, CCARType_TMDLModel,0.5f, 100.0f,0.0,0.0f));
   //  prueba3DObjects.push_back(new CCARObject3D(TMDL_OSPREY, CCARType_TMDLModel,0.5f, -100.0f,0.0f,0.0f));
   
-  CCARGeneric3DObject* object = NULL;
-  object = addARObject(new CCARObject3D(MYMESH10, CCARType_Mesh,"Objeto MYMESH08","Descripción MYMESH08", 0.1f, -500.0f,  0.0f, -500.0f));
-  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA1","Descripción MESH_FLECHA1",  0.5f,  300.0f,  0.0f, -300.0f));
-  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Plaza libre","", 1.0f, -300.0f,  0.0f, -300.0f));
-  object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Una Casa", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 0.3,-7.856292128562927f , 42.34511443500709f));//Universidad
-    object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Ría de Ferrol", "Descripción Ría de ferrol", 0.3,-8.245668411254883f , 43.494541820367246f));//Universidad
+//  CCARGeneric3DObject* object = NULL;
+//  object = addARObject(new CCARObject3D(MYMESH10, CCARType_Mesh,"Objeto MYMESH08","Descripción MYMESH08", 0.1f, -500.0f,  0.0f, -500.0f));
+//  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Objeto MESH_FLECHA1","Descripción MESH_FLECHA1",  0.5f,  300.0f,  0.0f, -300.0f));
+//  object = addARObject(new CCARObject3D(MESH_FLECHA, CCARType_Mesh,"Plaza libre","", 1.0f, -300.0f,  0.0f, -300.0f));
+//  object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Una Casa", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", 0.3,-7.856292128562927f , 42.34511443500709f));//Universidad
+//    object = addARObject(new CCARGeo3DObject(MYMESH02, CCARType_Mesh,"Ría de Ferrol", "Descripción Ría de ferrol", 0.3,-8.245668411254883f , 43.494541820367246f));//Universidad
 }
 
 

@@ -297,6 +297,9 @@
 		59A42AA6140170FB00C3D2F2 /* cocojavi_sinfondo.png in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA3140170DA00C3D2F2 /* cocojavi_sinfondo.png */; };
 		59A42AA7140170FB00C3D2F2 /* cocoarPrueba.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA4140170DA00C3D2F2 /* cocoarPrueba.mtl */; };
 		59A42AA8140170FB00C3D2F2 /* cocoarPrueba.obj in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */; };
+		59A51C47147CF211003896E0 /* ArSceneItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59A51C46147CF211003896E0 /* ArSceneItem.mm */; };
+		59B4F2F3147CFC8D0038FE7A /* DetailArViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */; };
+		59B4F308147D44AA0038FE7A /* coco.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B4F307147D44A90038FE7A /* coco.png */; };
 		59B4FB66144C328B005197A5 /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59B4FB65144C328B005197A5 /* ArViewController.mm */; };
 		59D87B1D14019DDF0053BF72 /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1914019DDF0053BF72 /* A.png */; };
 		59D87B1E14019DDF0053BF72 /* coco.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1A14019DDF0053BF72 /* coco.png */; };
@@ -823,7 +826,11 @@
 		59A42AA3140170DA00C3D2F2 /* cocojavi_sinfondo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cocojavi_sinfondo.png; sourceTree = "<group>"; };
 		59A42AA4140170DA00C3D2F2 /* cocoarPrueba.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoarPrueba.mtl; sourceTree = "<group>"; };
 		59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoarPrueba.obj; sourceTree = "<group>"; };
+		59A51C46147CF211003896E0 /* ArSceneItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArSceneItem.mm; sourceTree = "<group>"; };
 		59ACD02E14509917009B3544 /* ArModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArModels.h; sourceTree = "<group>"; };
+		59B4F2F1147CFC8D0038FE7A /* DetailArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailArViewController.h; sourceTree = "<group>"; };
+		59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailArViewController.m; sourceTree = "<group>"; };
+		59B4F307147D44A90038FE7A /* coco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coco.png; sourceTree = "<group>"; };
 		59B4FB64144C328B005197A5 /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
 		59B4FB65144C328B005197A5 /* ArViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArViewController.mm; sourceTree = "<group>"; };
 		59D87B1914019DDF0053BF72 /* A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A.png; sourceTree = "<group>"; };
@@ -962,6 +969,7 @@
 				5996E9F513F32C610019F9A1 /* icono.png */,
 				5996E9F313F326960019F9A1 /* Default.png */,
 				5996E9F013F3262D0019F9A1 /* coco 5757.png */,
+				59B4F307147D44A90038FE7A /* coco.png */,
 				5971C3E713CC6D1200C5A891 /* cocoAR */,
 				5971C3D613CC6D1200C5A891 /* Frameworks */,
 				5971C3D413CC6D1200C5A891 /* Products */,
@@ -1521,6 +1529,8 @@
 				59B4FB65144C328B005197A5 /* ArViewController.mm */,
 				59E06A8A144DE17900FC0CD4 /* ArSceneController.h */,
 				59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */,
+				59B4F2F1147CFC8D0038FE7A /* DetailArViewController.h */,
+				59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */,
 				59F094CD13FD966900F3E137 /* fondoObjeto.png */,
 				59B846D913FEE52000B47C6C /* Puente */,
 				5971C5E013CC6DDA00C5A891 /* tinyXML */,
@@ -1745,6 +1755,7 @@
 			children = (
 				59ACD02E14509917009B3544 /* ArModels.h */,
 				59952D1A14619098000FACBA /* ArSceneItem.h */,
+				59A51C46147CF211003896E0 /* ArSceneItem.mm */,
 				59E777A214503CCB0018FC84 /* CCARModelType.h */,
 				59952D0F14618C41000FACBA /* CCAR_GenericObject.h */,
 				59952D1014618C41000FACBA /* CCAR_GenericObject.m */,
@@ -2132,6 +2143,7 @@
 				59E6E73914251136001D8813 /* camera_tab.png in Resources */,
 				59E6E73A14251136001D8813 /* gear2.png in Resources */,
 				59E6E73C14251142001D8813 /* ic_tab_unselected_fav.png in Resources */,
+				59B4F308147D44AA0038FE7A /* coco.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2276,6 +2288,8 @@
 				59952D1114618C41000FACBA /* CCAR_GenericObject.m in Sources */,
 				59952D1414618C53000FACBA /* CCAR_Object.m in Sources */,
 				59952D1714618C60000FACBA /* CCAR_GeoObject.m in Sources */,
+				59A51C47147CF211003896E0 /* ArSceneItem.mm in Sources */,
+				59B4F2F3147CFC8D0038FE7A /* DetailArViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

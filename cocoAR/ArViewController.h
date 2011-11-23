@@ -12,19 +12,24 @@
 #ifdef __OBJC__
 #import <UIKit/UIKit.h>
 #import "CCAR_GenericObject.h"
+#import "DetailArViewController.h"
 
-@interface ArViewController : UIViewController{
+
+
+@interface ArViewController : UIViewController <ModalViewControllerDelegate>{
   UIView *arView;
   bool running;
+  UINavigationController* navigator;
 }
 
-+ (void)objectSelected:(CCAR_GenericObject *)object;
-+ (void)screenTouched:(CCAR_GenericObject *)object;
+@property (retain, nonatomic) UINavigationController* navigator;
 
-+ (bool)addObject:(CCAR_GenericObject *)object;
-+ (bool)addObjects:(NSArray*)objects;
-+ (bool)removeObject:(CCAR_GenericObject *)object;
-+ (bool)modifyObject:(CCAR_GenericObject *)object;
++ (ArViewController *) sharedInstance;
+- (void)objectSelected:(CCAR_GenericObject *)selectedObject;
+- (void)screenTouched:(CCAR_GenericObject *)object;
+- (bool)addObject:(CCAR_GenericObject *)object;
+- (bool)removeObject:(CCAR_GenericObject *)object;
+- (bool)modifyObject:(CCAR_GenericObject *)object;
 
 @end
 

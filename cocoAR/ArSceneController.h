@@ -14,9 +14,10 @@
 #import "Geo3DObject.h"
 //#import "ArSceneController.h"
 
-
 void arSceneObjectSelected(CCARGeneric3DObject* selectedObject);
 void arSceneScreenTouched();
+
+vector<CCARGeneric3DObject*>* getObjectQueue();
 
 CCARGeneric3DObject* arSceneAddObject(CCARGeneric3DObject* newObject);
 CCARGeneric3DObject* arSceneRemoveObject(CCARGeneric3DObject* selectedObject);

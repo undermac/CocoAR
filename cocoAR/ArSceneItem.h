@@ -8,13 +8,20 @@
 
 #ifndef cocoAR_ArSceneItem_h
 #define cocoAR_ArSceneItem_h
+#include <vector>
+#include "CCAR_GenericObject.h"
+#include "Geo3DObject.h"
 
-typedef struct 
+
+class ArSceneItem
 {
+  public:
   CCARGeneric3DObject* internalObject;
   CCAR_GenericObject* externalObject;
-} ArSceneItem;
+};
 
-static vector<ArSceneItem> arSceneItems;
+static vector<ArSceneItem*>* arSceneItems;
+
+vector<ArSceneItem*>* getArSceneItems();
 
 #endif

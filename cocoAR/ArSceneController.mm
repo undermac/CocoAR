@@ -9,20 +9,40 @@
 #include <iostream>
 #import "ArViewController.h"
 #import "ArScene.h"
+#import "CCDirector.h"
+#import "CCScene.h"
 #import "ArSceneItem.h"
 
+vector<CCARGeneric3DObject*> *objectQueue;
+
 void arSceneObjectSelected(CCARGeneric3DObject* selectedObject){
-  for(unsigned int i=0; i< arSceneItems.size(); i++){
-    if (selectedObject == arSceneItems[i].internalObject) {
-        [ArViewController objectSelected:arSceneItems[i].externalObject];
+  vector<ArSceneItem*>::iterator it;
+  
+	for (it = getArSceneItems()->begin(); it != getArSceneItems()->end(); it++)
+	{
+		ArSceneItem *selectedArSceneItem= *it;
+    if (selectedObject == selectedArSceneItem->internalObject) {
+      [[ArViewController sharedInstance] objectSelected:selectedArSceneItem->externalObject];
     }
   }
 }
 
 CCARGeneric3DObject* arSceneAddObject(CCARGeneric3DObject* newObject){
-  ArScene* cocoAR = (ArScene*)ArScene::scene();
+  cocos2d::CCScene* runningScene = cocos2d::CCDirector::sharedDirector()->getRunningScene();
+  if (runningScene == NULL){
+    if (objectQueue == NULL) {
+      objectQueue = new vector<CCARGeneric3DObject *>;
+    }
+    objectQueue->push_back(newObject);
+    return NULL;
+  }
   
-  return cocoAR->addARObject(newObject);
+  ArScene* cocoAr = (ArScene*) runningScene;
+  return cocoAr->addARObject(newObject);
+}
+
+vector<CCARGeneric3DObject*>* getObjectQueue(){
+  return objectQueue;
 }
 
 void arSceneScreenTouched(){

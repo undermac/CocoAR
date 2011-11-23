@@ -6,6 +6,7 @@
 //  Copyright (c) 2011 Artifact. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import "FavoriteStreetListViewController.h"
 #import "ArViewController.h"
 #import "CCAR_GeoObject.h"
@@ -30,26 +31,30 @@
 }
 
 - (void) viewDidAppear:(BOOL)animated{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Lista de Favoritos" message:@"Aquí el usuario podrá visualizar las localizaciones que marque como favoritos.\nPor ejemplo: casa" 
-                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
-  [alert release];
+//  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Lista de Favoritos" message:@"Aquí el usuario podrá visualizar las localizaciones que marque como favoritos.\nPor ejemplo: casa" 
+//                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//  [alert show];
+//  [alert release];
   
-
+  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(addExample)];
 }
 
+- (void) addExample{
+  CCAR_GeoObject* prueba = [[[CCAR_GeoObject alloc] init] retain];
+  
+  prueba.nameModel = [NSString stringWithFormat:@"barracones.obj"];
+  prueba.name = [NSString stringWithFormat:@"La puta ria de ferrol"];
+  prueba.description = [NSString stringWithFormat:@"La puta ria de ferrol"];
+  prueba->scale = 0.3;
+  prueba->longitude =  -7.856292128562927f;
+  prueba->latitude = 42.34511443500709f;
+  
+  [[ArViewController sharedInstance] addObject:prueba];
+}
 - (void)viewDidLoad
 {
-  CCAR_GeoObject* prueba;
-  prueba.name = @"----- Ria de ferrol ----";
-  prueba.description = @"La puta ria de ferrol";
-  prueba->scale = 0.3;
-  prueba->longitude = 0;
-  prueba->latitude = 0;
-  
-  
-  [ArViewController addObject:nil];
-    [super viewDidLoad];
+
+  [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }
 
