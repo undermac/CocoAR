@@ -95,31 +95,16 @@ static ArViewController* _sharedMySingleton = nil;
 
   DetailArViewController* viewController = [[DetailArViewController alloc] initWithCCARGenericObject:selectedObject];
   
-//  [self.navigationController pushViewController:viewController animated:YES];
-
-//  [UIView beginAnimations:@"View Flip" context:nil];
-//  [UIView setAnimationDuration:0.90];
-//  [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-//  
-//  [UIView setAnimationTransition:
-//   UIViewAnimationTransitionCurlDown
-//                         forView:self.navigationController.view cache:NO];
-  
-  
   [self.navigationController pushViewController:viewController animated:YES];
-//  [self.navigationController presentModalViewController:viewController animated:YES];
-  
-//  [UIView commitAnimations];
 }
 
 - (bool)addObject:(CCAR_GenericObject *)object{
 
   ArSceneItem* myArSceneItem = new ArSceneItem;
-//  vector<ArSceneItem*>* test = getArSceneItems();
   
   myArSceneItem->externalObject = object;
   
-  if (object.nameModel) {
+  if (!object.nameModel) {
     string stringNameModel = MESH_FLECHA;
     object.nameModel = [[NSString alloc] initWithCString:MESH_FLECHA encoding:[NSString defaultCStringEncoding]];
   }
@@ -133,7 +118,13 @@ static ArViewController* _sharedMySingleton = nil;
   if ([object isKindOfClass:[CCAR_Object class]]) {
     CCAR_Object* myObj = (CCAR_Object *) object;
     
-    myArSceneItem->internalObject = new CCARObject3D([myObj.nameModel UTF8String], myObj.modelType ,[myObj.name UTF8String], [myObj.description UTF8String], myObj->scale ,myObj->x , myObj->y,myObj->z);
+    myArSceneItem->internalObject = new CCARObject3D(
+																																																					[myObj.nameModel UTF8String], 
+																																																					myObj.modelType ,
+																																																					[myObj.name UTF8String], 
+																																																					[myObj.description UTF8String],
+																																																					myObj->scale ,myObj->x , 
+																																																					myObj->y,myObj->z);
     
     arSceneAddObject( myArSceneItem->internalObject);
     getArSceneItems()->push_back(myArSceneItem);
@@ -141,7 +132,11 @@ static ArViewController* _sharedMySingleton = nil;
   }else if ([object isKindOfClass:[CCAR_GeoObject class]]){
     CCAR_GeoObject* myObj = (CCAR_GeoObject *) object;
     
-    myArSceneItem->internalObject = new CCARGeo3DObject( [myObj.nameModel UTF8String] , CCARType_Mesh ,[myObj.name UTF8String] ,[myObj.description UTF8String] , myObj->scale,myObj->longitude , myObj->latitude);
+    myArSceneItem->internalObject = new CCARGeo3DObject( [myObj.nameModel UTF8String] , 
+																																																								CCARType_Mesh ,[myObj.name UTF8String] ,
+																																																								[myObj.description UTF8String] , 
+																																																								myObj->scale,myObj->longitude , 
+																																																								myObj->latitude);
     
     arSceneAddObject( myArSceneItem->internalObject);
     
@@ -151,15 +146,26 @@ static ArViewController* _sharedMySingleton = nil;
   return true;
 }
 
-- (void)screenTouched:(CCAR_GenericObject *)object{
- 
-}
-
 - (bool)removeObject:(CCAR_GenericObject *)object{
+		vector<ArSceneItem*>*vector = getArSceneItems();
+		if (vector == NULL) {
+				return NO;
+		}
+
+		arSceneRemoveObject(findObject(object));
   
   return YES;
 }
 - (bool)modifyObject:(CCAR_GenericObject *)object{
+		
+		vector<ArSceneItem*>*vector = getArSceneItems();
+		if (vector == NULL) {
+				return NO;
+		}
+		
+		arSceneRemoveObject(findObject(object));
+		
+		[self addObject:object];
   
   return YES;
 }

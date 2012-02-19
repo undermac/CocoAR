@@ -30,10 +30,10 @@
 #pragma mark - View lifecycle
 
 - (void) viewDidAppear:(BOOL)animated{
-  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Preferencias" message:@"Aquí estarán las preferencias de la aplicación:\nFiltro de categorías\nDistancia máxima\nInformación adicional" 
-                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-  [alert show];
-  [alert release];
+//  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Preferencias" message:@"Aquí estarán las preferencias de la aplicación:\nFiltro de categorías\nDistancia máxima\nInformación adicional" 
+//                                                 delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//  [alert show];
+//  [alert release];
 }
 
 - (void)viewDidLoad

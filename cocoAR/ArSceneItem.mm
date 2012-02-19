@@ -15,3 +15,19 @@ vector<ArSceneItem*>* getArSceneItems(){
   }
   return arSceneItems;  
 }
+
+
+CCARGeneric3DObject* findObject(CCAR_GenericObject *obj){
+  vector<ArSceneItem*>::iterator it;
+		CCARGeneric3DObject* toret = NULL;
+		
+		for (it = getArSceneItems()->begin(); it != getArSceneItems()->end(); it++)
+		{
+				ArSceneItem *selectedArSceneItem= *it;
+				if (selectedArSceneItem->externalObject == obj) {
+						toret = selectedArSceneItem->internalObject;
+						break;
+				}
+  }
+		return toret;
+}

@@ -22,13 +22,19 @@
 		5911B5BA1401CE5300B30CC4 /* Material26.PNG in Resources */ = {isa = PBXBuildFile; fileRef = 5911B5B11401CE4F00B30CC4 /* Material26.PNG */; };
 		5911B5BB1401CE5300B30CC4 /* piramide_de_giza.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 5911B5B21401CE4F00B30CC4 /* piramide_de_giza.mtl */; };
 		5911B5BC1401CE5300B30CC4 /* piramide_de_giza.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5911B5B31401CE5100B30CC4 /* piramide_de_giza.obj */; };
+		59171B0D1484D76B002A96BD /* SyncHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 59171B0C1484D76B002A96BD /* SyncHelper.m */; };
 		591B1DE613F16E07009F59B3 /* explosion17.png in Resources */ = {isa = PBXBuildFile; fileRef = 591B1DE513F16E07009F59B3 /* explosion17.png */; };
 		591B1DE913F1B94E009F59B3 /* Geo3DObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */; };
+		591BA6DC147E9DA20037A074 /* star_txt.png in Resources */ = {isa = PBXBuildFile; fileRef = 591BA6D9147E9DA20037A074 /* star_txt.png */; };
+		591BA6DD147E9DA20037A074 /* star.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 591BA6DA147E9DA20037A074 /* star.mtl */; };
+		591BA6DE147E9DA20037A074 /* star.obj in Resources */ = {isa = PBXBuildFile; fileRef = 591BA6DB147E9DA20037A074 /* star.obj */; };
 		59219DC613FEAFD300BF9498 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC113FEAFD300BF9498 /* NSObject+SBJSON.m */; };
 		59219DC713FEAFD300BF9498 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC313FEAFD300BF9498 /* NSString+SBJSON.m */; };
 		59219DC813FEAFD300BF9498 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 59219DC513FEAFD300BF9498 /* SBJSON.m */; };
 		5948D1CB13FA8A3C00865E31 /* White_Crystal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5948D1CA13FA8A3C00865E31 /* White_Crystal.png */; };
 		595301F113FB1D450047F249 /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = 595301F013FB1D450047F249 /* transparent.png */; };
+		596E2468149611CD00D30D7C /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 596E2467149611CC00D30D7C /* ArViewController.mm */; };
+		596E246B149611E200D30D7C /* DetailArViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 596E246A149611E200D30D7C /* DetailArViewController.m */; };
 		5971C3D813CC6D1200C5A891 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3D713CC6D1200C5A891 /* QuartzCore.framework */; };
 		5971C3DA13CC6D1200C5A891 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3D913CC6D1200C5A891 /* OpenGLES.framework */; };
 		5971C3DC13CC6D1200C5A891 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5971C3DB13CC6D1200C5A891 /* OpenAL.framework */; };
@@ -180,10 +186,6 @@
 		5971C5DC13CC6DC200C5A891 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5D313CC6DC200C5A891 /* Quaternion.cpp */; };
 		5971C5DD13CC6DC200C5A891 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5D413CC6DC200C5A891 /* Matrix.cpp */; };
 		5971C5DE13CC6DC200C5A891 /* Vector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5D713CC6DC200C5A891 /* Vector.cpp */; };
-		5971C5E713CC6DFF00C5A891 /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5E213CC6DFE00C5A891 /* tinyxml.cpp */; };
-		5971C5E813CC6DFF00C5A891 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5E413CC6DFE00C5A891 /* tinyxmlerror.cpp */; };
-		5971C5E913CC6DFF00C5A891 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5E513CC6DFF00C5A891 /* tinyxmlparser.cpp */; };
-		5971C5EA13CC6DFF00C5A891 /* tinystr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5971C5E613CC6DFF00C5A891 /* tinystr.cpp */; };
 		5971C65213CC6E6300C5A891 /* M0CM0.png.swatch in Resources */ = {isa = PBXBuildFile; fileRef = 5971C5EE13CC6E6300C5A891 /* M0CM0.png.swatch */; };
 		5971C65313CC6E6300C5A891 /* barracones.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 5971C5EF13CC6E6300C5A891 /* barracones.mtl */; };
 		5971C65413CC6E6300C5A891 /* barracones.obj in Resources */ = {isa = PBXBuildFile; fileRef = 5971C5F013CC6E6300C5A891 /* barracones.obj */; };
@@ -298,9 +300,7 @@
 		59A42AA7140170FB00C3D2F2 /* cocoarPrueba.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA4140170DA00C3D2F2 /* cocoarPrueba.mtl */; };
 		59A42AA8140170FB00C3D2F2 /* cocoarPrueba.obj in Resources */ = {isa = PBXBuildFile; fileRef = 59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */; };
 		59A51C47147CF211003896E0 /* ArSceneItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59A51C46147CF211003896E0 /* ArSceneItem.mm */; };
-		59B4F2F3147CFC8D0038FE7A /* DetailArViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */; };
 		59B4F308147D44AA0038FE7A /* coco.png in Resources */ = {isa = PBXBuildFile; fileRef = 59B4F307147D44A90038FE7A /* coco.png */; };
-		59B4FB66144C328B005197A5 /* ArViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 59B4FB65144C328B005197A5 /* ArViewController.mm */; };
 		59D87B1D14019DDF0053BF72 /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1914019DDF0053BF72 /* A.png */; };
 		59D87B1E14019DDF0053BF72 /* coco.png in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1A14019DDF0053BF72 /* coco.png */; };
 		59D87B1F14019DDF0053BF72 /* coco.mtl in Resources */ = {isa = PBXBuildFile; fileRef = 59D87B1B14019DDF0053BF72 /* coco.mtl */; };
@@ -387,9 +387,14 @@
 		5911B5B11401CE4F00B30CC4 /* Material26.PNG */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Material26.PNG; sourceTree = "<group>"; };
 		5911B5B21401CE4F00B30CC4 /* piramide_de_giza.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = piramide_de_giza.mtl; sourceTree = "<group>"; };
 		5911B5B31401CE5100B30CC4 /* piramide_de_giza.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = piramide_de_giza.obj; sourceTree = "<group>"; };
+		59171B0B1484D76B002A96BD /* SyncHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncHelper.h; sourceTree = "<group>"; };
+		59171B0C1484D76B002A96BD /* SyncHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncHelper.m; sourceTree = "<group>"; };
 		591B1DE513F16E07009F59B3 /* explosion17.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion17.png; sourceTree = "<group>"; };
 		591B1DE713F1B946009F59B3 /* Geo3DObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geo3DObject.h; sourceTree = "<group>"; };
 		591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Geo3DObject.cpp; sourceTree = "<group>"; };
+		591BA6D9147E9DA20037A074 /* star_txt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star_txt.png; sourceTree = "<group>"; };
+		591BA6DA147E9DA20037A074 /* star.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.mtl; sourceTree = "<group>"; };
+		591BA6DB147E9DA20037A074 /* star.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.obj; sourceTree = "<group>"; };
 		59219DBF13FEAFD300BF9498 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		59219DC013FEAFD300BF9498 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		59219DC113FEAFD300BF9498 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -399,6 +404,10 @@
 		59219DC513FEAFD300BF9498 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
 		5948D1CA13FA8A3C00865E31 /* White_Crystal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = White_Crystal.png; sourceTree = "<group>"; };
 		595301F013FB1D450047F249 /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
+		596E2466149611CC00D30D7C /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
+		596E2467149611CC00D30D7C /* ArViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArViewController.mm; sourceTree = "<group>"; };
+		596E2469149611E200D30D7C /* DetailArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailArViewController.h; sourceTree = "<group>"; };
+		596E246A149611E200D30D7C /* DetailArViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailArViewController.m; sourceTree = "<group>"; };
 		5971C3D313CC6D1200C5A891 /* cocoAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocoAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5971C3D713CC6D1200C5A891 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5971C3D913CC6D1200C5A891 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -703,12 +712,6 @@
 		5971C5D613CC6DC200C5A891 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
 		5971C5D713CC6DC200C5A891 /* Vector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vector.cpp; sourceTree = "<group>"; };
 		5971C5D813CC6DC200C5A891 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
-		5971C5E113CC6DFE00C5A891 /* tinystr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinystr.h; sourceTree = "<group>"; };
-		5971C5E213CC6DFE00C5A891 /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
-		5971C5E313CC6DFE00C5A891 /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
-		5971C5E413CC6DFE00C5A891 /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
-		5971C5E513CC6DFF00C5A891 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
-		5971C5E613CC6DFF00C5A891 /* tinystr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinystr.cpp; sourceTree = "<group>"; };
 		5971C5EE13CC6E6300C5A891 /* M0CM0.png.swatch */ = {isa = PBXFileReference; lastKnownFileType = file; path = M0CM0.png.swatch; sourceTree = "<group>"; };
 		5971C5EF13CC6E6300C5A891 /* barracones.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barracones.mtl; sourceTree = "<group>"; };
 		5971C5F013CC6E6300C5A891 /* barracones.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = barracones.obj; sourceTree = "<group>"; };
@@ -828,11 +831,7 @@
 		59A42AA5140170E600C3D2F2 /* cocoarPrueba.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocoarPrueba.obj; sourceTree = "<group>"; };
 		59A51C46147CF211003896E0 /* ArSceneItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArSceneItem.mm; sourceTree = "<group>"; };
 		59ACD02E14509917009B3544 /* ArModels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArModels.h; sourceTree = "<group>"; };
-		59B4F2F1147CFC8D0038FE7A /* DetailArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailArViewController.h; sourceTree = "<group>"; };
-		59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailArViewController.m; sourceTree = "<group>"; };
 		59B4F307147D44A90038FE7A /* coco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coco.png; sourceTree = "<group>"; };
-		59B4FB64144C328B005197A5 /* ArViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArViewController.h; sourceTree = "<group>"; };
-		59B4FB65144C328B005197A5 /* ArViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ArViewController.mm; sourceTree = "<group>"; };
 		59D87B1914019DDF0053BF72 /* A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A.png; sourceTree = "<group>"; };
 		59D87B1A14019DDF0053BF72 /* coco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coco.png; sourceTree = "<group>"; };
 		59D87B1B14019DDF0053BF72 /* coco.mtl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coco.mtl; sourceTree = "<group>"; };
@@ -963,6 +962,73 @@
 			name = JSON;
 			sourceTree = "<group>";
 		};
+		596E246414960FF900D30D7C /* API Object-c */ = {
+			isa = PBXGroup;
+			children = (
+				596E246C1496163E00D30D7C /* View Controllers */,
+				596E246D1496164B00D30D7C /* Models */,
+			);
+			name = "API Object-c";
+			sourceTree = "<group>";
+		};
+		596E24651496104F00D30D7C /* API Internal */ = {
+			isa = PBXGroup;
+			children = (
+				5971C5C913CC6DAD00C5A891 /* Engine3d */,
+				596E246E1496165C00D30D7C /* View Controllers */,
+				596E246F1496166D00D30D7C /* Models */,
+			);
+			name = "API Internal";
+			sourceTree = "<group>";
+		};
+		596E246C1496163E00D30D7C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				596E2466149611CC00D30D7C /* ArViewController.h */,
+				596E2467149611CC00D30D7C /* ArViewController.mm */,
+				596E2469149611E200D30D7C /* DetailArViewController.h */,
+				596E246A149611E200D30D7C /* DetailArViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		596E246D1496164B00D30D7C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59952D0F14618C41000FACBA /* CCAR_GenericObject.h */,
+				59952D1014618C41000FACBA /* CCAR_GenericObject.m */,
+				59952D1214618C53000FACBA /* CCAR_Object.h */,
+				59952D1314618C53000FACBA /* CCAR_Object.m */,
+				59952D1514618C60000FACBA /* CCAR_GeoObject.h */,
+				59952D1614618C60000FACBA /* CCAR_GeoObject.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		596E246E1496165C00D30D7C /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5971C58E13CC6D6800C5A891 /* ArScene.h */,
+				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
+				59E06A8A144DE17900FC0CD4 /* ArSceneController.h */,
+				59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		596E246F1496166D00D30D7C /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				59ACD02E14509917009B3544 /* ArModels.h */,
+				59952D1A14619098000FACBA /* ArSceneItem.h */,
+				59A51C46147CF211003896E0 /* ArSceneItem.mm */,
+				59E777A214503CCB0018FC84 /* CCARModelType.h */,
+				591B1DE713F1B946009F59B3 /* Geo3DObject.h */,
+				591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		5971C3C813CC6D1100C5A891 = {
 			isa = PBXGroup;
 			children = (
@@ -1015,9 +1081,14 @@
 		5971C3E813CC6D1200C5A891 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				59F094CD13FD966900F3E137 /* fondoObjeto.png */,
 				595301F013FB1D450047F249 /* transparent.png */,
+				59B846D913FEE52000B47C6C /* Puente */,
 				5948D1CA13FA8A3C00865E31 /* White_Crystal.png */,
 				591B1DE513F16E07009F59B3 /* explosion17.png */,
+				591BA6D9147E9DA20037A074 /* star_txt.png */,
+				591BA6DA147E9DA20037A074 /* star.mtl */,
+				591BA6DB147E9DA20037A074 /* star.obj */,
 				5975145F13F8033700BE0A11 /* Araña */,
 				5971C5EB13CC6E1C00C5A891 /* 3d_set */,
 				5971C3E913CC6D1200C5A891 /* CloseNormal.png */,
@@ -1521,23 +1592,11 @@
 				5971C57E13CC6D1500C5A891 /* AppDelegate.cpp */,
 				59059E6613F04C680038EB6C /* AppController.h */,
 				59059E6713F04C690038EB6C /* AppController.mm */,
-				59E6E72A14251080001D8813 /* Example */,
-				5971C58E13CC6D6800C5A891 /* ArScene.h */,
-				5971C58F13CC6D6800C5A891 /* ArScene.cpp */,
-				59952D1814618D96000FACBA /* Models */,
-				59B4FB64144C328B005197A5 /* ArViewController.h */,
-				59B4FB65144C328B005197A5 /* ArViewController.mm */,
-				59E06A8A144DE17900FC0CD4 /* ArSceneController.h */,
-				59E06A8C144DE18700FC0CD4 /* ArSceneController.mm */,
-				59B4F2F1147CFC8D0038FE7A /* DetailArViewController.h */,
-				59B4F2F2147CFC8D0038FE7A /* DetailArViewController.m */,
-				59F094CD13FD966900F3E137 /* fondoObjeto.png */,
-				59B846D913FEE52000B47C6C /* Puente */,
-				5971C5E013CC6DDA00C5A891 /* tinyXML */,
-				5971C5C913CC6DAD00C5A891 /* Engine3d */,
+				596E246414960FF900D30D7C /* API Object-c */,
+				596E24651496104F00D30D7C /* API Internal */,
 				59059E7613F051E40038EB6C /* CameraBack */,
 				5971C5BF13CC6D9700C5A891 /* Location */,
-				59219DBE13FEAFC400BF9498 /* JSON */,
+				59E6E72A14251080001D8813 /* Example */,
 				5971C57313CC6D1500C5A891 /* ios */,
 			);
 			name = Classes;
@@ -1577,19 +1636,6 @@
 				5971C5D813CC6DC200C5A891 /* Vector.h */,
 			);
 			name = Engine3d;
-			sourceTree = "<group>";
-		};
-		5971C5E013CC6DDA00C5A891 /* tinyXML */ = {
-			isa = PBXGroup;
-			children = (
-				5971C5E113CC6DFE00C5A891 /* tinystr.h */,
-				5971C5E213CC6DFE00C5A891 /* tinyxml.cpp */,
-				5971C5E313CC6DFE00C5A891 /* tinyxml.h */,
-				5971C5E413CC6DFE00C5A891 /* tinyxmlerror.cpp */,
-				5971C5E513CC6DFF00C5A891 /* tinyxmlparser.cpp */,
-				5971C5E613CC6DFF00C5A891 /* tinystr.cpp */,
-			);
-			name = tinyXML;
 			sourceTree = "<group>";
 		};
 		5971C5EB13CC6E1C00C5A891 /* 3d_set */ = {
@@ -1750,25 +1796,6 @@
 			name = "Araña";
 			sourceTree = "<group>";
 		};
-		59952D1814618D96000FACBA /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				59ACD02E14509917009B3544 /* ArModels.h */,
-				59952D1A14619098000FACBA /* ArSceneItem.h */,
-				59A51C46147CF211003896E0 /* ArSceneItem.mm */,
-				59E777A214503CCB0018FC84 /* CCARModelType.h */,
-				59952D0F14618C41000FACBA /* CCAR_GenericObject.h */,
-				59952D1014618C41000FACBA /* CCAR_GenericObject.m */,
-				59952D1214618C53000FACBA /* CCAR_Object.h */,
-				59952D1314618C53000FACBA /* CCAR_Object.m */,
-				59952D1514618C60000FACBA /* CCAR_GeoObject.h */,
-				59952D1614618C60000FACBA /* CCAR_GeoObject.m */,
-				591B1DE713F1B946009F59B3 /* Geo3DObject.h */,
-				591B1DE813F1B94D009F59B3 /* Geo3DObject.cpp */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		59A42AA2140170D500C3D2F2 /* cocoarPrueba */ = {
 			isa = PBXGroup;
 			children = (
@@ -1870,6 +1897,7 @@
 		59E6E72A14251080001D8813 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				59219DBE13FEAFC400BF9498 /* JSON */,
 				59E6E73714251136001D8813 /* camera_tab.png */,
 				59E6E73814251136001D8813 /* gear2.png */,
 				59E6E73B14251142001D8813 /* ic_tab_unselected_fav.png */,
@@ -1880,6 +1908,8 @@
 				59E6E72F14251090001D8813 /* PreferencesViewController.h */,
 				59E6E73014251090001D8813 /* PreferencesViewController.m */,
 				59E6E73114251090001D8813 /* PreferencesViewController.xib */,
+				59171B0B1484D76B002A96BD /* SyncHelper.h */,
+				59171B0C1484D76B002A96BD /* SyncHelper.m */,
 			);
 			name = Example;
 			sourceTree = "<group>";
@@ -2144,6 +2174,9 @@
 				59E6E73A14251136001D8813 /* gear2.png in Resources */,
 				59E6E73C14251142001D8813 /* ic_tab_unselected_fav.png in Resources */,
 				59B4F308147D44AA0038FE7A /* coco.png in Resources */,
+				591BA6DC147E9DA20037A074 /* star_txt.png in Resources */,
+				591BA6DD147E9DA20037A074 /* star.mtl in Resources */,
+				591BA6DE147E9DA20037A074 /* star.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2269,10 +2302,6 @@
 				5971C5DC13CC6DC200C5A891 /* Quaternion.cpp in Sources */,
 				5971C5DD13CC6DC200C5A891 /* Matrix.cpp in Sources */,
 				5971C5DE13CC6DC200C5A891 /* Vector.cpp in Sources */,
-				5971C5E713CC6DFF00C5A891 /* tinyxml.cpp in Sources */,
-				5971C5E813CC6DFF00C5A891 /* tinyxmlerror.cpp in Sources */,
-				5971C5E913CC6DFF00C5A891 /* tinyxmlparser.cpp in Sources */,
-				5971C5EA13CC6DFF00C5A891 /* tinystr.cpp in Sources */,
 				59059E6A13F04C6D0038EB6C /* AppController.mm in Sources */,
 				59059E6B13F04C6D0038EB6C /* RootViewController.mm in Sources */,
 				59059E7513F051CB0038EB6C /* CCMobileCameraBack_ios.mm in Sources */,
@@ -2283,13 +2312,14 @@
 				59219DC813FEAFD300BF9498 /* SBJSON.m in Sources */,
 				59E6E73214251090001D8813 /* FavoriteStreetListViewController.m in Sources */,
 				59E6E73514251090001D8813 /* PreferencesViewController.m in Sources */,
-				59B4FB66144C328B005197A5 /* ArViewController.mm in Sources */,
 				59E06A8D144DE18700FC0CD4 /* ArSceneController.mm in Sources */,
 				59952D1114618C41000FACBA /* CCAR_GenericObject.m in Sources */,
 				59952D1414618C53000FACBA /* CCAR_Object.m in Sources */,
 				59952D1714618C60000FACBA /* CCAR_GeoObject.m in Sources */,
 				59A51C47147CF211003896E0 /* ArSceneItem.mm in Sources */,
-				59B4F2F3147CFC8D0038FE7A /* DetailArViewController.m in Sources */,
+				59171B0D1484D76B002A96BD /* SyncHelper.m in Sources */,
+				596E2468149611CD00D30D7C /* ArViewController.mm in Sources */,
+				596E246B149611E200D30D7C /* DetailArViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

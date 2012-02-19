@@ -24,4 +24,6 @@ static vector<ArSceneItem*>* arSceneItems;
 
 vector<ArSceneItem*>* getArSceneItems();
 
+CCARGeneric3DObject* findObject(CCAR_GenericObject *);
+
 #endif

@@ -26,6 +26,6 @@
 #define MYMESH10 "edificio.obj"
 #define MYMESH11 "humanos1.obj"
 #define MYMESH12 "coco.obj"
-#define MYMESH13 "Dark Portal Complete.obj"
+#define MYMESH13 "star.obj"
 
 #endif

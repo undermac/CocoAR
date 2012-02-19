@@ -16,7 +16,7 @@
 
 
 
-@interface ArViewController : UIViewController <ModalViewControllerDelegate>{
+@interface ArViewController : UIViewController {
   UIView *arView;
   bool running;
   UINavigationController* navigator;
@@ -25,11 +25,14 @@
 @property (retain, nonatomic) UINavigationController* navigator;
 
 + (ArViewController *) sharedInstance;
-- (void)objectSelected:(CCAR_GenericObject *)selectedObject;
-- (void)screenTouched:(CCAR_GenericObject *)object;
+
 - (bool)addObject:(CCAR_GenericObject *)object;
 - (bool)removeObject:(CCAR_GenericObject *)object;
 - (bool)modifyObject:(CCAR_GenericObject *)object;
+
+//Delegated method
+- (void)objectSelected:(CCAR_GenericObject *)selectedObject;
+
 
 @end
 

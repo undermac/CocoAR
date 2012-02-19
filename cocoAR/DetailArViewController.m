@@ -7,6 +7,8 @@
 //
 
 #import "DetailArViewController.h"
+#import "CCAR_Object.h"
+#import "CCAR_GeoObject.h"
 
 @implementation DetailArViewController
 
@@ -97,13 +99,47 @@
     cell.textLabel.text = m_pObject.nameModel;
   }
   if ([sectionName isEqualToString:@"Localización"]) {
-    cell.textLabel.text = m_pObject.nameModel;
+    if ([m_pObject isKindOfClass:[CCAR_GeoObject class]]) {
+      CCAR_GeoObject* geoObject = (CCAR_GeoObject *)m_pObject;
+      cell.textLabel.text = [NSString stringWithFormat:@"Objeto Geolocalizado en Latitud: %f , Longitud %f", geoObject.latitude, geoObject.longitude];
+    }else if ([m_pObject isKindOfClass:[CCAR_Object class]]){
+      CCAR_Object* object = (CCAR_Object *)m_pObject;
+      cell.textLabel.text = [NSString stringWithFormat:@"Objeto posicionado en X: %f , Y: %f , Z: %f", object.x,object.y,object.z];
+    }else{
+      cell.textLabel.text = [NSString stringWithString:@"Type not found"];
+    }
   }
+  cell.textLabel.numberOfLines = 0;
+  cell.textLabel.lineBreakMode = UILineBreakModeWordWrap;
+  cell.textLabel.font = [UIFont systemFontOfSize:16.0f];
   return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return [m_aSection objectAtIndex:section]; 
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  CGFloat toRet = 30.0f;
+  
+  NSString* sectionName = @"";
+  
+  if ([m_aSection count]>= indexPath.section) {
+    sectionName = [m_aSection objectAtIndex:indexPath.section];
+  }
+  if ([sectionName isEqualToString:@"Nombre"]) {
+    CGSize theSize = [m_pObject.name sizeWithFont:[UIFont systemFontOfSize:16.0f] constrainedToSize:CGSizeMake(265.0f, 9999.0f) lineBreakMode:UILineBreakModeWordWrap];
+    toRet = theSize.height + 14;
+  }
+  if ([sectionName isEqualToString:@"Descipción"]) {
+    CGSize theSize = [m_pObject.description sizeWithFont:[UIFont systemFontOfSize:16.0f] constrainedToSize:CGSizeMake(265.0f, 9999.0f) lineBreakMode:UILineBreakModeWordWrap];
+    toRet = theSize.height + 14;
+  }
+  if ([sectionName isEqualToString:@"Modelo 3D"]) {
+    CGSize theSize = [m_pObject.nameModel sizeWithFont:[UIFont systemFontOfSize:16.0f] constrainedToSize:CGSizeMake(265.0f, 9999.0f) lineBreakMode:UILineBreakModeWordWrap];
+    toRet = theSize.height + 14;
+  }
+  return toRet < 44.0f ? 44.0f:toRet;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

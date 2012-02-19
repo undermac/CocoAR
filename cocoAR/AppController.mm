@@ -11,6 +11,7 @@
 #import "CCDirector.h"
 #import "EAGLView.h"
 #import "AppDelegate.h"
+#import "SyncHelper.h"
 
 #import "RootViewController.h"
 #import "FavoriteStreetListViewController.h"
@@ -18,9 +19,15 @@
 #import "DetailArViewController.h"
 
 #import "ArViewController.h"
+#import "CCAR_GeoObject.h"
+#import "ArModels.h"
 
 @implementation AppController
 @synthesize tab;
+@synthesize locationManager;
+@synthesize delegate;
+
+
 #pragma mark -
 #pragma mark Application lifecycle
 
@@ -28,6 +35,12 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+  
+  self.locationManager = [[[CLLocationManager alloc] init] autorelease];
+  self.locationManager.delegate = self; 
+  self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+  locationManager.distanceFilter = kCLDistanceFilterNone;
+  [self.locationManager startUpdatingLocation];
     
     // Override point for customization after application launch.
 
@@ -83,6 +96,43 @@ static AppDelegate s_sharedApplication;
   // Set RootViewController to window
   window.rootViewController = tab;
   tab.selectedIndex = 0;
+  
+
+  NSSet* models = [[NSSet alloc] initWithObjects:
+                            [NSString stringWithCString:MESH_FLECHA encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH01 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH02 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH03 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH05 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH06 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH08 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH12 encoding:[NSString defaultCStringEncoding]],
+                            [NSString stringWithCString:MYMESH13 encoding:[NSString defaultCStringEncoding]], nil];
+  
+  NSDictionary* serverDic = [SyncHelper fetchInfoWithLastSync:@"20110101000000" fromLocation:self.locationManager.location ];
+  
+  for(NSDictionary* selected in [serverDic objectForKey:@"eventsToSync"])
+  {
+    CCAR_GeoObject* place = [[CCAR_GeoObject alloc] init];
+    
+    NSString* pString = nil;
+    for (NSDictionary* selectedEvent in [selected objectForKey:@"placeEvents"]) {
+      pString = [NSString stringWithFormat:@"Evento: %@ \nFecha %@ \n", [selectedEvent objectForKey:@"eventName"], [selectedEvent objectForKey:@"eventDate"]];
+    }
+    
+    [pString retain];
+    place.nameModel = [[models anyObject] retain];
+    place.name = [[selected objectForKey:@"placeName"] retain];
+    place.description = pString;
+    place->scale = 0.7;
+    place->longitude = [[selected objectForKey:@"placeLon"] doubleValue];
+    place->latitude = [[selected objectForKey:@"placeLat"] doubleValue];
+    
+    [[ArViewController sharedInstance] addObject:place];
+  }
+  NSLog(@"%@", serverDic);
+  
+  [self.locationManager stopUpdatingLocation];
 
   [window makeKeyAndVisible];
 

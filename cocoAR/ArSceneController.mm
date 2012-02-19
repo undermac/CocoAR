@@ -45,15 +45,37 @@ vector<CCARGeneric3DObject*>* getObjectQueue(){
   return objectQueue;
 }
 
-void arSceneScreenTouched(){
-  
-}
-
 CCARGeneric3DObject* arSceneRemoveObject(CCARGeneric3DObject* selectedObject){
+  vector<CCARGeneric3DObject *>::iterator it;
   
-  return NULL;
+  cocos2d::CCScene* runningScene = cocos2d::CCDirector::sharedDirector()->getRunningScene();
+  if (runningScene == NULL){
+    if (objectQueue == NULL) {
+      objectQueue = new vector<CCARGeneric3DObject *>;
+    }
+    
+    it = std::find(objectQueue->begin(), objectQueue->end(), selectedObject);
+    
+    if (it != objectQueue->end()) {
+			objectQueue->erase(it);
+		}
+    return NULL;
+  }
+  
+  ArScene* cocoAr = (ArScene*) runningScene;
+  cocoAr->deleteARObject(selectedObject);
+  return selectedObject;
 }
 CCARGeneric3DObject* arSceneModifyObject(CCARGeneric3DObject* selectedObject){
-
-  return NULL;
+  cocos2d::CCScene* runningScene = cocos2d::CCDirector::sharedDirector()->getRunningScene();
+  if (runningScene == NULL){
+    if (objectQueue == NULL) {
+      objectQueue = new vector<CCARGeneric3DObject *>;
+    }
+    objectQueue->push_back(selectedObject);
+    return NULL;
+  }
+  
+  ArScene* cocoAr = (ArScene*) runningScene;
+  return cocoAr->addARObject(selectedObject);
 }
